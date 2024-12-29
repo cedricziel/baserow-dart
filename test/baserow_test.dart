@@ -164,6 +164,7 @@ void main() {
           ),
         ],
         includeFieldMetadata: true,
+        viewId: 123,
       );
 
       final params = options.toQueryParameters();
@@ -172,6 +173,7 @@ void main() {
       expect(params['order_by'], equals('-name'));
       expect(params['filters'], isNotEmpty);
       expect(params['include'], equals('field_metadata'));
+      expect(params['view_id'], equals('123'));
     });
 
     test('handles ascending order correctly', () {

@@ -118,6 +118,9 @@ class ListRowsOptions {
   /// Whether to include field metadata
   final bool includeFieldMetadata;
 
+  /// Optional view ID to scope the request to a particular view
+  final int? viewId;
+
   const ListRowsOptions({
     this.page,
     this.size,
@@ -125,6 +128,7 @@ class ListRowsOptions {
     this.descending,
     this.filters,
     this.includeFieldMetadata = false,
+    this.viewId,
   });
 
   Map<String, dynamic> toQueryParameters() {
@@ -136,6 +140,7 @@ class ListRowsOptions {
       if (filters != null && filters!.isNotEmpty)
         'filters': jsonEncode(filters!.map((f) => f.toJson()).toList()),
       if (includeFieldMetadata) 'include': 'field_metadata',
+      if (viewId != null) 'view_id': viewId.toString(),
     };
   }
 }

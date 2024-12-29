@@ -63,7 +63,7 @@ void main() async {
           print('    - ${field.name} (Type: ${field.type})');
         }
 
-        // Example: List rows with filtering and pagination
+        // Example: List rows with filtering, pagination, and view scoping
         final rowsResponse = await authenticatedClient.listRows(
           table.id,
           options: ListRowsOptions(
@@ -78,6 +78,7 @@ void main() async {
                 value: 'active',
               ),
             ],
+            viewId: 456, // Optional: Scope request to a specific view
           ),
         );
 
