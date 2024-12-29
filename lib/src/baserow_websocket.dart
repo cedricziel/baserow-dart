@@ -358,6 +358,27 @@ class BaserowWebSocket {
     this.token,
   });
 
+  /// Error handler for WebSocket errors
+  void Function(Object error)? onError;
+
+  /// Handler for WebSocket disconnections
+  void Function()? onDisconnect;
+
+  /// Maximum number of reconnection attempts
+  static const int _maxReconnectAttempts = 5;
+
+  /// Delay between reconnection attempts in milliseconds
+  static const int _reconnectDelay = 1000;
+
+  /// Timeout for initial connection in milliseconds
+  static const int _connectionTimeout = 5000;
+
+  /// Current number of reconnection attempts
+  int _reconnectAttempts = 0;
+
+  /// Timer for reconnection attempts
+  Timer? _reconnectTimer;
+
   /// Connects to the Baserow WebSocket server
   Future<void> connect() async {
     if (_isConnected) return;
@@ -369,49 +390,107 @@ class BaserowWebSocket {
       uri = uri.replace(queryParameters: {'token': token});
     }
 
-    _channel = WebSocketChannel.connect(uri);
-    _isConnected = true;
+    try {
+      // Create a completer to handle the connection timeout
+      final completer = Completer<void>();
+      Timer? timeoutTimer;
 
-    // Listen for incoming messages
-    _channel!.stream.listen(
-      (message) {
-        final data = json.decode(message as String) as Map<String, dynamic>;
-        final event = BaserowEvent.fromJson(data);
-
-        // Forward the event to the appropriate subscription stream based on event type
-        if (event is BaserowRowEvent || event is BaserowTableEvent || event is BaserowFieldEvent) {
-          final tableId = event is BaserowRowEvent
-              ? event.tableId
-              : event is BaserowTableEvent
-                  ? event.tableId
-                  : (event as BaserowFieldEvent).tableId;
-          final subscription = _tableSubscriptions[tableId];
-          if (subscription != null) {
-            subscription.add(event);
-          }
+      // Set up the timeout
+      timeoutTimer = Timer(Duration(milliseconds: _connectionTimeout), () {
+        if (!completer.isCompleted) {
+          completer.completeError(
+              TimeoutException('WebSocket connection timeout'));
         }
+      });
 
-        if (event.workspaceId != null) {
-          final subscription = _workspaceSubscriptions[event.workspaceId];
-          if (subscription != null) {
-            subscription.add(event);
-          }
-        }
+      // Attempt to connect
+      _channel = WebSocketChannel.connect(uri);
+      _isConnected = true;
 
-        if (event is BaserowApplicationEvent) {
-          final subscription = _applicationSubscriptions[event.applicationId];
-          if (subscription != null) {
-            subscription.add(event);
+      // Wait for the first message or error to confirm connection
+      final subscription = _channel!.stream.listen(
+        (message) {
+          if (!completer.isCompleted) {
+            timeoutTimer?.cancel();
+            completer.complete();
           }
+
+          final data = json.decode(message as String) as Map<String, dynamic>;
+          final event = BaserowEvent.fromJson(data);
+
+          // Forward the event to the appropriate subscription stream based on event type
+          if (event is BaserowRowEvent ||
+              event is BaserowTableEvent ||
+              event is BaserowFieldEvent) {
+            final tableId = event is BaserowRowEvent
+                ? event.tableId
+                : event is BaserowTableEvent
+                    ? event.tableId
+                    : (event as BaserowFieldEvent).tableId;
+            final subscription = _tableSubscriptions[tableId];
+            if (subscription != null) {
+              subscription.add(event);
+            }
+          }
+
+          if (event.workspaceId != null) {
+            final subscription = _workspaceSubscriptions[event.workspaceId];
+            if (subscription != null) {
+              subscription.add(event);
+            }
+          }
+
+          if (event is BaserowApplicationEvent) {
+            final subscription = _applicationSubscriptions[event.applicationId];
+            if (subscription != null) {
+              subscription.add(event);
+            }
+          }
+        },
+        onError: (error) {
+          if (!completer.isCompleted) {
+            timeoutTimer?.cancel();
+            completer.completeError(error);
+          }
+          onError?.call(error);
+          _handleDisconnect();
+          _attemptReconnect();
+        },
+        onDone: () {
+          if (!completer.isCompleted) {
+            timeoutTimer?.cancel();
+            completer.complete();
+          }
+          onDisconnect?.call();
+          _handleDisconnect();
+          _attemptReconnect();
+        },
+      );
+
+      // Wait for the connection to be established or timeout
+      await completer.future;
+      _reconnectAttempts = 0; // Reset reconnection attempts on successful connection
+    } catch (e) {
+      _handleDisconnect();
+      rethrow;
+    }
+  }
+
+  /// Attempts to reconnect to the WebSocket server
+  void _attemptReconnect() {
+    if (_reconnectAttempts >= _maxReconnectAttempts || _isConnected) return;
+
+    _reconnectTimer?.cancel();
+    _reconnectTimer = Timer(
+      Duration(milliseconds: _reconnectDelay * (_reconnectAttempts + 1)),
+      () async {
+        _reconnectAttempts++;
+        try {
+          await connect();
+        } catch (e) {
+          // If reconnection fails, try again
+          _attemptReconnect();
         }
-      },
-      onError: (error) {
-        print('WebSocket error: $error');
-        _handleDisconnect();
-      },
-      onDone: () {
-        print('WebSocket connection closed');
-        _handleDisconnect();
       },
     );
   }
@@ -553,6 +632,7 @@ class BaserowWebSocket {
 
   /// Closes the WebSocket connection
   void close() {
+    _reconnectTimer?.cancel();
     if (!_isConnected) return;
 
     // Unsubscribe from all subscriptions
