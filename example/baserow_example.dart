@@ -63,24 +63,65 @@ void main() async {
           print('    - ${field.name} (Type: ${field.type})');
         }
 
-        // List some rows from the table
-        final rows = await authenticatedClient.listRows(table.id);
-        print('    First ${rows.length > 5 ? 5 : rows.length} rows:');
-        for (final row in rows.take(5)) {
-          print('    - $row');
+        // Example: List rows with filtering and pagination
+        final rowsResponse = await authenticatedClient.listRows(
+          table.id,
+          options: ListRowsOptions(
+            page: 1,
+            size: 5,
+            orderBy: 'id',
+            descending: true,
+            filters: [
+              RowFilter(
+                field: 'status',
+                operator: FilterOperator.equal,
+                value: 'active',
+              ),
+            ],
+          ),
+        );
+
+        print('    Found ${rowsResponse.count} total rows');
+        print('    First page rows:');
+        for (final row in rowsResponse.results) {
+          print('    - Row ${row.id}: ${row.fields}');
         }
+
+        // Example: Create multiple rows
+        final newRows = await authenticatedClient.createRows(
+          table.id,
+          [
+            {
+              'Name': 'John Doe',
+              'Email': 'john@example.com',
+              'Status': 'active',
+            },
+            {
+              'Name': 'Jane Smith',
+              'Email': 'jane@example.com',
+              'Status': 'pending',
+            },
+          ],
+        );
+        print('Created ${newRows.length} new rows');
+
+        // Example: Update multiple rows
+        final updates = {
+          newRows[0].id: {'Status': 'inactive'},
+          newRows[1].id: {'Status': 'active'},
+        };
+        final updatedRows =
+            await authenticatedClient.updateRows(table.id, updates);
+        print('Updated ${updatedRows.length} rows');
+
+        // Example: Delete multiple rows
+        await authenticatedClient.deleteRows(
+          table.id,
+          [newRows[0].id, newRows[1].id],
+        );
+        print('Deleted the test rows');
       }
     }
-
-    // Example of creating a new row (commented out)
-    // final newRow = await authenticatedClient.createRow(
-    //   123, // Replace with actual table ID
-    //   {
-    //     'Name': 'John Doe',
-    //     'Email': 'john@example.com',
-    //   },
-    // );
-    // print('Created new row: $newRow');
   } catch (e) {
     print('Error: $e');
   } finally {

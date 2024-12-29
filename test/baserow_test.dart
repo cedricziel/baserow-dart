@@ -50,6 +50,171 @@ void main() {
     });
   });
 
+  group('Row', () {
+    test('creates from JSON', () {
+      final json = {
+        'id': 1,
+        'order': 1,
+        'fields': {
+          'Name': 'John Doe',
+          'Email': 'john@example.com',
+        },
+      };
+
+      final row = Row.fromJson(json);
+      expect(row.id, equals(1));
+      expect(row.order, equals(1));
+      expect(row.fields['Name'], equals('John Doe'));
+      expect(row.fields['Email'], equals('john@example.com'));
+    });
+
+    test('converts to JSON', () {
+      final row = Row(
+        id: 1,
+        order: 1,
+        fields: {
+          'Name': 'John Doe',
+          'Email': 'john@example.com',
+        },
+      );
+
+      final json = row.toJson();
+      expect(json['id'], equals(1));
+      expect(json['order'], equals(1));
+      expect(json['fields']['Name'], equals('John Doe'));
+      expect(json['fields']['Email'], equals('john@example.com'));
+    });
+  });
+
+  group('RowFilter', () {
+    test('creates filter with value', () {
+      final filter = RowFilter(
+        field: 'status',
+        operator: FilterOperator.equal,
+        value: 'active',
+      );
+
+      final json = filter.toJson();
+      expect(json['field'], equals('status'));
+      expect(json['type'], equals('equal'));
+      expect(json['value'], equals('active'));
+    });
+
+    test('creates filter without value for empty/not_empty operators', () {
+      final emptyFilter = RowFilter(
+        field: 'status',
+        operator: FilterOperator.isEmpty,
+      );
+
+      final json = emptyFilter.toJson();
+      expect(json['field'], equals('status'));
+      expect(json['type'], equals('empty'));
+      expect(json.containsKey('value'), isFalse);
+    });
+
+    test('converts all filter operators correctly', () {
+      final operatorMap = {
+        FilterOperator.equal: 'equal',
+        FilterOperator.notEqual: 'not_equal',
+        FilterOperator.greaterThan: 'greater_than',
+        FilterOperator.greaterThanOrEqual: 'greater_than_or_equal',
+        FilterOperator.lessThan: 'less_than',
+        FilterOperator.lessThanOrEqual: 'less_than_or_equal',
+        FilterOperator.contains: 'contains',
+        FilterOperator.containsNot: 'contains_not',
+        FilterOperator.hasFileType: 'has_file_type',
+        FilterOperator.isEmpty: 'empty',
+        FilterOperator.isNotEmpty: 'not_empty',
+      };
+
+      operatorMap.forEach((operator, expectedStr) {
+        final filter = RowFilter(
+          field: 'test',
+          operator: operator,
+          value: operator == FilterOperator.isEmpty ||
+                  operator == FilterOperator.isNotEmpty
+              ? null
+              : 'test',
+        );
+
+        final json = filter.toJson();
+        expect(json['type'], equals(expectedStr));
+      });
+    });
+  });
+
+  group('ListRowsOptions', () {
+    test('creates empty query parameters when no options set', () {
+      final options = ListRowsOptions();
+      final params = options.toQueryParameters();
+      expect(params, isEmpty);
+    });
+
+    test('creates query parameters with all options', () {
+      final options = ListRowsOptions(
+        page: 2,
+        size: 10,
+        orderBy: 'name',
+        descending: true,
+        filters: [
+          RowFilter(
+            field: 'status',
+            operator: FilterOperator.equal,
+            value: 'active',
+          ),
+        ],
+        includeFieldMetadata: true,
+      );
+
+      final params = options.toQueryParameters();
+      expect(params['page'], equals('2'));
+      expect(params['size'], equals('10'));
+      expect(params['order_by'], equals('-name'));
+      expect(params['filters'], isNotEmpty);
+      expect(params['include'], equals('field_metadata'));
+    });
+
+    test('handles ascending order correctly', () {
+      final options = ListRowsOptions(
+        orderBy: 'name',
+        descending: false,
+      );
+
+      final params = options.toQueryParameters();
+      expect(params['order_by'], equals('name'));
+    });
+  });
+
+  group('RowsResponse', () {
+    test('creates from JSON', () {
+      final json = {
+        'count': 2,
+        'next': 'http://api.baserow.io/api/database/rows/table/1/?page=2',
+        'previous': null,
+        'results': [
+          {
+            'id': 1,
+            'order': 1,
+            'fields': {'Name': 'John Doe'},
+          },
+          {
+            'id': 2,
+            'order': 2,
+            'fields': {'Name': 'Jane Smith'},
+          },
+        ],
+      };
+
+      final response = RowsResponse.fromJson(json);
+      expect(response.count, equals(2));
+      expect(response.next, isNotNull);
+      expect(response.previous, isNull);
+      expect(response.results, hasLength(2));
+      expect(response.results[0].fields['Name'], equals('John Doe'));
+      expect(response.results[1].fields['Name'], equals('Jane Smith'));
+    });
+  });
+
   group('BaserowClient', () {
     late BaserowClient tokenClient;
     late BaserowClient jwtClient;

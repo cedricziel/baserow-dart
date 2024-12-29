@@ -48,6 +48,147 @@ class AuthResponse {
       );
 }
 
+/// Filter operator for querying rows
+enum FilterOperator {
+  equal,
+  notEqual,
+  greaterThan,
+  greaterThanOrEqual,
+  lessThan,
+  lessThanOrEqual,
+  contains,
+  containsNot,
+  hasFileType,
+  isEmpty,
+  isNotEmpty,
+}
+
+/// Represents a filter condition for querying rows
+class RowFilter {
+  final String field;
+  final FilterOperator operator;
+  final dynamic value;
+
+  const RowFilter({
+    required this.field,
+    required this.operator,
+    this.value,
+  });
+
+  Map<String, dynamic> toJson() {
+    final operatorStr = switch (operator) {
+      FilterOperator.equal => 'equal',
+      FilterOperator.notEqual => 'not_equal',
+      FilterOperator.greaterThan => 'greater_than',
+      FilterOperator.greaterThanOrEqual => 'greater_than_or_equal',
+      FilterOperator.lessThan => 'less_than',
+      FilterOperator.lessThanOrEqual => 'less_than_or_equal',
+      FilterOperator.contains => 'contains',
+      FilterOperator.containsNot => 'contains_not',
+      FilterOperator.hasFileType => 'has_file_type',
+      FilterOperator.isEmpty => 'empty',
+      FilterOperator.isNotEmpty => 'not_empty',
+    };
+
+    return {
+      'field': field,
+      'type': operatorStr,
+      if (value != null) 'value': value,
+    };
+  }
+}
+
+/// Options for listing rows
+class ListRowsOptions {
+  /// The page number to fetch (1-based)
+  final int? page;
+
+  /// The number of rows per page
+  final int? size;
+
+  /// The field to order by
+  final String? orderBy;
+
+  /// Whether to order in descending order
+  final bool? descending;
+
+  /// Filters to apply
+  final List<RowFilter>? filters;
+
+  /// Whether to include field metadata
+  final bool includeFieldMetadata;
+
+  const ListRowsOptions({
+    this.page,
+    this.size,
+    this.orderBy,
+    this.descending,
+    this.filters,
+    this.includeFieldMetadata = false,
+  });
+
+  Map<String, dynamic> toQueryParameters() {
+    return {
+      if (page != null) 'page': page.toString(),
+      if (size != null) 'size': size.toString(),
+      if (orderBy != null)
+        'order_by': descending == true ? '-$orderBy' : orderBy,
+      if (filters != null && filters!.isNotEmpty)
+        'filters': jsonEncode(filters!.map((f) => f.toJson()).toList()),
+      if (includeFieldMetadata) 'include': 'field_metadata',
+    };
+  }
+}
+
+/// Response from listing rows
+class RowsResponse {
+  final int count;
+  final String? next;
+  final String? previous;
+  final List<Row> results;
+
+  RowsResponse({
+    required this.count,
+    this.next,
+    this.previous,
+    required this.results,
+  });
+
+  factory RowsResponse.fromJson(Map<String, dynamic> json) => RowsResponse(
+        count: json['count'] as int,
+        next: json['next'] as String?,
+        previous: json['previous'] as String?,
+        results: (json['results'] as List<dynamic>)
+            .map((row) => Row.fromJson(row as Map<String, dynamic>))
+            .toList(),
+      );
+}
+
+/// Represents a row in a Baserow table
+class Row {
+  final int id;
+  final int order;
+  final Map<String, dynamic> fields;
+
+  Row({
+    required this.id,
+    required this.order,
+    required this.fields,
+  });
+
+  factory Row.fromJson(Map<String, dynamic> json) => Row(
+        id: json['id'] as int,
+        order: json['order'] as int,
+        fields: json['fields'] as Map<String, dynamic>,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'order': order,
+        'fields': fields,
+      };
+}
+
 /// The main Baserow client class for interacting with the Baserow API.
 class BaserowClient {
   final BaserowConfig config;
@@ -103,8 +244,13 @@ class BaserowClient {
   }
 
   /// Performs a GET request to the Baserow API
-  Future<Map<String, dynamic>> get(String path) async {
-    final url = Uri.parse('${config.baseUrl}/api/$path');
+  Future<Map<String, dynamic>> get(String path,
+      [Map<String, dynamic>? queryParams]) async {
+    var url = Uri.parse('${config.baseUrl}/api/$path');
+    if (queryParams != null) {
+      url = url.replace(queryParameters: queryParams);
+    }
+
     final response = await _httpClient.get(
       url,
       headers: createHeaders(),
@@ -197,37 +343,100 @@ class BaserowClient {
         .toList();
   }
 
-  /// Lists all rows in a table
-  Future<List<Map<String, dynamic>>> listRows(int tableId) async {
-    final response = await get('database/rows/table/$tableId/');
-    final List<dynamic> data = response['results'] as List<dynamic>;
+  /// Lists rows in a table with optional filtering and pagination
+  Future<RowsResponse> listRows(
+    int tableId, {
+    ListRowsOptions options = const ListRowsOptions(),
+  }) async {
+    final response = await get(
+      'database/rows/table/$tableId/',
+      options.toQueryParameters(),
+    );
 
-    return data.cast<Map<String, dynamic>>();
+    return RowsResponse.fromJson(response);
   }
 
   /// Creates a new row in a table
-  Future<Map<String, dynamic>> createRow(
+  Future<Row> createRow(
     int tableId,
     Map<String, dynamic> fields,
   ) async {
-    return post('database/rows/table/$tableId/', {'fields': fields});
+    final response = await post(
+      'database/rows/table/$tableId/',
+      {'fields': fields},
+    );
+
+    return Row.fromJson(response);
+  }
+
+  /// Creates multiple rows in a table
+  Future<List<Row>> createRows(
+    int tableId,
+    List<Map<String, dynamic>> fieldsList,
+  ) async {
+    final response = await post(
+      'database/rows/table/$tableId/batch/',
+      {
+        'items': fieldsList.map((fields) => {'fields': fields}).toList()
+      },
+    );
+
+    final List<dynamic> items = response['items'] as List<dynamic>;
+    return items
+        .map((item) => Row.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
 
   /// Updates an existing row in a table
-  Future<Map<String, dynamic>> updateRow(
+  Future<Row> updateRow(
     int tableId,
     int rowId,
     Map<String, dynamic> fields,
   ) async {
-    return patch(
+    final response = await patch(
       'database/rows/table/$tableId/$rowId/',
       {'fields': fields},
     );
+
+    return Row.fromJson(response);
+  }
+
+  /// Updates multiple rows in a table
+  Future<List<Row>> updateRows(
+    int tableId,
+    Map<int, Map<String, dynamic>> updates,
+  ) async {
+    final items = updates.entries
+        .map((entry) => {
+              'id': entry.key,
+              'fields': entry.value,
+            })
+        .toList();
+
+    final response = await patch(
+      'database/rows/table/$tableId/batch/',
+      {'items': items},
+    );
+
+    final List<dynamic> updatedItems = response['items'] as List<dynamic>;
+    return updatedItems
+        .map((item) => Row.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
 
   /// Deletes a row from a table
   Future<void> deleteRow(int tableId, int rowId) async {
     await delete('database/rows/table/$tableId/$rowId/');
+  }
+
+  /// Deletes multiple rows from a table
+  Future<void> deleteRows(int tableId, List<int> rowIds) async {
+    await post(
+      'database/rows/table/$tableId/batch-delete/',
+      {
+        'items': rowIds.map((id) => {'id': id}).toList()
+      },
+    );
   }
 
   /// Closes the HTTP client
