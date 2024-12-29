@@ -253,6 +253,109 @@ try {
 - [Baserow API Documentation](https://baserow.io/docs/apis%2Frest-api)
 - [Issue Tracker](https://github.com/cedricziel/baserow-dart/issues)
 
+## Testing Support
+
+The SDK provides built-in testing utilities to help you write tests for applications that use Baserow. These utilities make it easy to mock both REST API calls and WebSocket real-time events.
+
+### Installation
+
+Add the SDK to your dev_dependencies in `pubspec.yaml`:
+
+```yaml
+dev_dependencies:
+  baserow: ^0.0.3
+  test: ^1.24.0
+```
+
+### Mocking REST API Calls
+
+```dart
+import 'package:baserow/baserow.dart';
+import 'package:baserow/src/testing.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test('fetching rows', () async {
+    // Create a mock client
+    final mockClient = BaserowTestUtils.createMockClient();
+
+    // Configure mock responses
+    when(mockClient.listRows(1)).thenAnswer((_) async => RowsResponse(
+          count: 1,
+          next: null,
+          previous: null,
+          results: [
+            Row(id: 1, order: 1, fields: {'name': 'Test Row'}),
+          ],
+        ));
+
+    // Use the mock client
+    final rows = await mockClient.listRows(1);
+    expect(rows.results.first.fields['name'], equals('Test Row'));
+  });
+}
+```
+
+### Testing Real-time Events
+
+```dart
+import 'package:baserow/baserow.dart';
+import 'package:baserow/src/testing.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test('receiving real-time updates', () async {
+    // Create a mock WebSocket
+    final mockWebSocket = BaserowTestUtils.createMockWebSocket();
+    await mockWebSocket.connect();
+
+    // Subscribe to table events
+    final subscription = mockWebSocket.subscribeToTable(1);
+
+    // Emit a test event
+    mockWebSocket.emitTableEvent(
+      1,
+      'row_created',
+      {
+        'row_id': 1,
+        'values': {'name': 'New Row'},
+      },
+    );
+
+    // Verify the event was received
+    await expectLater(
+      subscription,
+      emits(isA<BaserowTableEvent>()
+          .having((e) => e.type, 'type', 'row_created')
+          .having((e) => e.tableId, 'tableId', 1)),
+    );
+  });
+}
+```
+
+### Testing Error Handling
+
+```dart
+test('handling WebSocket errors', () async {
+  final mockWebSocket = BaserowTestUtils.createMockWebSocket();
+  await mockWebSocket.connect();
+
+  var errorReceived = false;
+  mockWebSocket.onError = (error) {
+    errorReceived = true;
+  };
+
+  // Simulate an error
+  mockWebSocket.emitError(Exception('Test error'));
+
+  // Verify error was handled
+  await Future.delayed(Duration.zero);
+  expect(errorReceived, isTrue);
+});
+```
+
+For more examples, check out the [testing examples](example/testing_example.dart) in the repository.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
