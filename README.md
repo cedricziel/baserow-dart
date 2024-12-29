@@ -25,7 +25,7 @@ Add this package to your project's `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  baserow: ^1.0.0
+  baserow: ^0.0.3
 ```
 
 Then run:
@@ -36,7 +36,23 @@ dart pub get
 
 ## Usage
 
-### Basic Setup
+### Authentication
+
+#### API Token Authentication
+
+```dart
+import 'package:baserow/baserow.dart';
+
+// Create a client instance with API token
+final client = BaserowClient(
+  config: BaserowConfig(
+    baseUrl: 'https://api.baserow.io',
+    token: 'YOUR_API_TOKEN',
+  ),
+);
+```
+
+#### JWT Authentication
 
 ```dart
 import 'package:baserow/baserow.dart';
@@ -45,10 +61,44 @@ import 'package:baserow/baserow.dart';
 final client = BaserowClient(
   config: BaserowConfig(
     baseUrl: 'https://api.baserow.io',
-    token: 'YOUR_API_TOKEN',
+    authType: BaserowAuthType.jwt,
+  ),
+);
+
+// Login to obtain JWT tokens
+final authResponse = await client.login('your.email@example.com', 'your_password');
+print('JWT Token: ${authResponse.token}');
+print('Refresh Token: ${authResponse.refreshToken}');
+
+// Create a new client with the JWT token
+final authenticatedClient = BaserowClient(
+  config: BaserowConfig(
+    baseUrl: 'https://api.baserow.io',
+    token: authResponse.token,
+    authType: BaserowAuthType.jwt,
+  ),
+);
+
+// You can verify if the token is still valid
+final isValid = await authenticatedClient.verifyToken(authResponse.token);
+
+// When the token expires, you can refresh it
+final newToken = await authenticatedClient.refreshToken(authResponse.refreshToken);
+
+// Create a new client with the refreshed token
+final refreshedClient = BaserowClient(
+  config: BaserowConfig(
+    baseUrl: 'https://api.baserow.io',
+    token: newToken,
+    authType: BaserowAuthType.jwt,
   ),
 );
 ```
+
+The JWT authentication flow provides more security features compared to API tokens, including:
+- Token expiration and refresh capabilities
+- Token verification
+- User information included in the auth response (`authResponse.user`)
 
 ### Listing Databases and Tables
 
