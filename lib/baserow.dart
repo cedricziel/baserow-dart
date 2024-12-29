@@ -1,8 +1,4 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
-library;
+/// A Dart client library for interacting with the Baserow API.
+library baserow;
 
 export 'src/baserow_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
