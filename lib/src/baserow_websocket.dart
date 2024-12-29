@@ -120,11 +120,11 @@ class BaserowPageEvent extends BaserowEvent {
   final Map<String, dynamic> pageData;
 
   BaserowPageEvent({
-    required String type,
+    required super.type,
     required this.pageData,
-    int? workspaceId,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.workspaceId,
+    super.page,
+  });
 
   factory BaserowPageEvent.fromJson(Map<String, dynamic> json) =>
       BaserowPageEvent(
@@ -145,15 +145,16 @@ class BaserowPageEvent extends BaserowEvent {
 
 /// Represents a workspace event
 class BaserowWorkspaceEvent extends BaserowEvent {
+  @override
   final int workspaceId;
   final Map<String, dynamic> workspace;
 
   BaserowWorkspaceEvent({
-    required String type,
+    required super.type,
     required this.workspaceId,
     required this.workspace,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.page,
+  });
 
   factory BaserowWorkspaceEvent.fromJson(Map<String, dynamic> json) =>
       BaserowWorkspaceEvent(
@@ -178,12 +179,12 @@ class BaserowApplicationEvent extends BaserowEvent {
   final Map<String, dynamic> application;
 
   BaserowApplicationEvent({
-    required String type,
+    required super.type,
     required this.applicationId,
     required this.application,
-    int? workspaceId,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.workspaceId,
+    super.page,
+  });
 
   factory BaserowApplicationEvent.fromJson(Map<String, dynamic> json) =>
       BaserowApplicationEvent(
@@ -210,12 +211,12 @@ class BaserowDatabaseEvent extends BaserowEvent {
   final Map<String, dynamic> database;
 
   BaserowDatabaseEvent({
-    required String type,
+    required super.type,
     required this.databaseId,
     required this.database,
-    int? workspaceId,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.workspaceId,
+    super.page,
+  });
 
   factory BaserowDatabaseEvent.fromJson(Map<String, dynamic> json) =>
       BaserowDatabaseEvent(
@@ -242,12 +243,12 @@ class BaserowTableEvent extends BaserowEvent {
   final Map<String, dynamic> table;
 
   BaserowTableEvent({
-    required String type,
+    required super.type,
     required this.tableId,
     required this.table,
-    int? workspaceId,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.workspaceId,
+    super.page,
+  });
 
   factory BaserowTableEvent.fromJson(Map<String, dynamic> json) =>
       BaserowTableEvent(
@@ -275,13 +276,13 @@ class BaserowFieldEvent extends BaserowEvent {
   final int tableId;
 
   BaserowFieldEvent({
-    required String type,
+    required super.type,
     required this.fieldId,
     required this.field,
     required this.tableId,
-    int? workspaceId,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.workspaceId,
+    super.page,
+  });
 
   factory BaserowFieldEvent.fromJson(Map<String, dynamic> json) =>
       BaserowFieldEvent(
@@ -311,13 +312,13 @@ class BaserowRowEvent extends BaserowEvent {
   final Map<String, dynamic>? values;
 
   BaserowRowEvent({
-    required String type,
+    required super.type,
     required this.tableId,
     required this.rowId,
     this.values,
-    int? workspaceId,
-    String? page,
-  }) : super(type: type, workspaceId: workspaceId, page: page);
+    super.workspaceId,
+    super.page,
+  });
 
   factory BaserowRowEvent.fromJson(Map<String, dynamic> json) =>
       BaserowRowEvent(

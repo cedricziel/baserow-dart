@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:mockito/mockito.dart';
-import 'baserow_base.dart';
-import 'baserow_websocket.dart';
+import 'package:baserow/baserow.dart';
+import 'package:baserow/src/baserow_websocket.dart';
 
 /// A collection of test utilities for the Baserow SDK.
 ///
@@ -45,15 +45,12 @@ class MockBaserowWebSocket extends BaserowWebSocket {
   MockBaserowWebSocket()
       : super(baseUrl: 'mock://baserow', token: 'mock-token');
 
-  @override
   bool get isConnected => _isConnected;
 
-  @override
   Future<void> connect() async {
     _isConnected = true;
   }
 
-  @override
   Future<void> close() async {
     _isConnected = false;
     await _controller.close();
@@ -103,7 +100,6 @@ class MockBaserowWebSocket extends BaserowWebSocket {
     _controller.addError(error);
   }
 
-  @override
   Stream<BaserowTableEvent> subscribeToTable(int tableId) {
     if (!_isConnected) {
       throw StateError('WebSocket is not connected');
@@ -115,7 +111,6 @@ class MockBaserowWebSocket extends BaserowWebSocket {
     }).map((event) => BaserowTableEvent.fromJson(json.decode(event as String)));
   }
 
-  @override
   Stream<BaserowWorkspaceEvent> subscribeToWorkspace(int workspaceId) {
     if (!_isConnected) {
       throw StateError('WebSocket is not connected');
@@ -128,7 +123,6 @@ class MockBaserowWebSocket extends BaserowWebSocket {
         BaserowWorkspaceEvent.fromJson(json.decode(event as String)));
   }
 
-  @override
   Stream<BaserowApplicationEvent> subscribeToApplication(int applicationId) {
     if (!_isConnected) {
       throw StateError('WebSocket is not connected');

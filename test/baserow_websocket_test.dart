@@ -13,6 +13,7 @@ class MockWebSocketChannel extends StreamChannelMixin<dynamic>
   final StreamController<dynamic> _sinkController = StreamController<dynamic>();
   bool _closed = false;
 
+  @override
   String? get protocol => null;
 
   @override

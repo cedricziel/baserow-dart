@@ -1,5 +1,5 @@
 import 'package:baserow/baserow.dart';
-import 'package:baserow/src/testing.dart';
+import '../test/testing.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
