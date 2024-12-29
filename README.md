@@ -96,6 +96,7 @@ final refreshedClient = BaserowClient(
 ```
 
 The JWT authentication flow provides more security features compared to API tokens, including:
+
 - Token expiration and refresh capabilities
 - Token verification
 - User information included in the auth response (`authResponse.user`)
@@ -118,20 +119,33 @@ for (final db in databases) {
 
 ### Working with Rows
 
-```dart
-// List rows from a table
-final rows = await client.listRows(tableId);
+#### Field Name Formats
 
-// Create a new row
+Baserow supports two formats for field names:
+
+- Default format: Uses field IDs (e.g., `field_123`)
+- User-friendly format: Uses human-readable field names (e.g., `Name`, `Email`)
+
+You can enable user-friendly field names by setting `userFieldNames: true` in the relevant operations.
+
+```dart
+// List rows from a table with user-friendly field names
+final rows = await client.listRows(
+  tableId,
+  options: ListRowsOptions(userFieldNames: true),
+);
+
+// Create a new row with user-friendly field names
 final newRow = await client.createRow(
   tableId,
   {
     'Name': 'John Doe',
     'Email': 'john@example.com',
   },
+  userFieldNames: true,
 );
 
-// Update an existing row
+// Update an existing row with user-friendly field names
 await client.updateRow(
   tableId,
   rowId,
@@ -139,6 +153,7 @@ await client.updateRow(
     'Name': 'Jane Doe',
     'Email': 'jane@example.com',
   },
+  userFieldNames: true,
 );
 
 // Delete a row
@@ -170,6 +185,23 @@ BaserowConfig({
 
 Main client class for interacting with the Baserow API.
 
+#### ListRowsOptions
+
+Options for customizing row listing operations:
+
+```dart
+ListRowsOptions({
+  int? page,                    // The page number to fetch (1-based)
+  int? size,                    // The number of rows per page
+  String? orderBy,              // The field to order by
+  bool? descending,             // Whether to order in descending order
+  List<RowFilter>? filters,     // Filters to apply
+  bool includeFieldMetadata,    // Whether to include field metadata
+  int? viewId,                  // Optional view ID to scope the request
+  bool userFieldNames = false,  // Use human-readable field names instead of field_123
+})
+```
+
 #### Methods
 
 - `Future<List<Database>> listDatabases()`
@@ -199,6 +231,7 @@ Main client class for interacting with the Baserow API.
 ## Error Handling
 
 The library throws `BaserowException` for API errors, which includes:
+
 - Error message
 - HTTP status code
 

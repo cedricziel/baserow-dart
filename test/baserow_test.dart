@@ -1,5 +1,12 @@
+import 'dart:convert';
 import 'package:baserow/baserow.dart';
+import 'package:http/http.dart' as http;
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+
+@GenerateNiceMocks([MockSpec<http.Client>()])
+import 'baserow_test.mocks.dart';
 
 void main() {
   group('BaserowConfig', () {
@@ -165,6 +172,7 @@ void main() {
         ],
         includeFieldMetadata: true,
         viewId: 123,
+        userFieldNames: true,
       );
 
       final params = options.toQueryParameters();
@@ -174,6 +182,16 @@ void main() {
       expect(params['filters'], isNotEmpty);
       expect(params['include'], equals('field_metadata'));
       expect(params['view_id'], equals('123'));
+      expect(params['user_field_names'], equals('true'));
+    });
+
+    test('does not include user_field_names when false', () {
+      final options = ListRowsOptions(
+        userFieldNames: false,
+      );
+
+      final params = options.toQueryParameters();
+      expect(params.containsKey('user_field_names'), isFalse);
     });
 
     test('handles ascending order correctly', () {
@@ -218,54 +236,154 @@ void main() {
   });
 
   group('BaserowClient', () {
-    late BaserowClient tokenClient;
-    late BaserowClient jwtClient;
+    late MockClient mockClient;
+    late BaserowClient client;
+    late Uri lastUri;
+    late Map<String, dynamic> lastRequestBody;
 
     setUp(() {
-      tokenClient = BaserowClient(
+      mockClient = MockClient();
+      client = BaserowClient(
         config: BaserowConfig(
           baseUrl: 'https://api.baserow.io',
           token: 'test-token',
-          authType: BaserowAuthType.token,
         ),
+        httpClient: mockClient,
       );
 
-      jwtClient = BaserowClient(
+      // Setup mock responses
+      when(
+        mockClient.post(
+          any,
+          headers: anyNamed('headers'),
+          body: anyNamed('body'),
+        ),
+      ).thenAnswer((invocation) {
+        lastUri = invocation.positionalArguments[0] as Uri;
+        lastRequestBody =
+            json.decode(invocation.namedArguments[#body] as String);
+
+        // Check if this is a batch operation
+        if (lastUri.path.contains('batch')) {
+          return Future.value(http.Response(
+            json.encode({
+              'items': [
+                {
+                  'id': 1,
+                  'order': 1,
+                  'fields': {'name': 'Test'},
+                }
+              ],
+            }),
+            201,
+          ));
+        }
+
+        return Future.value(http.Response(
+          json.encode({
+            'id': 1,
+            'order': 1,
+            'fields': {'name': 'Test'},
+          }),
+          201,
+        ));
+      });
+
+      when(
+        mockClient.patch(
+          any,
+          headers: anyNamed('headers'),
+          body: anyNamed('body'),
+        ),
+      ).thenAnswer((invocation) {
+        lastUri = invocation.positionalArguments[0] as Uri;
+        lastRequestBody =
+            json.decode(invocation.namedArguments[#body] as String);
+
+        // Check if this is a batch operation
+        if (lastUri.path.contains('batch')) {
+          return Future.value(http.Response(
+            json.encode({
+              'items': [
+                {
+                  'id': 1,
+                  'order': 1,
+                  'fields': {'name': 'Test'},
+                }
+              ],
+            }),
+            200,
+          ));
+        }
+
+        return Future.value(http.Response(
+          json.encode({
+            'id': 1,
+            'order': 1,
+            'fields': {'name': 'Test'},
+          }),
+          200,
+        ));
+      });
+    });
+
+    tearDown(() {
+      client.close();
+    });
+
+    test('includes user_field_names in createRow when enabled', () async {
+      await client.createRow(1, {'name': 'Test'}, userFieldNames: true);
+      expect(lastUri.queryParameters['user_field_names'], equals('true'));
+    });
+
+    test('excludes user_field_names in createRow when disabled', () async {
+      await client.createRow(1, {'name': 'Test'}, userFieldNames: false);
+      expect(lastUri.queryParameters.containsKey('user_field_names'), isFalse);
+    });
+
+    test('includes user_field_names in createRows when enabled', () async {
+      await client.createRows(
+          1,
+          [
+            {'name': 'Test'}
+          ],
+          userFieldNames: true);
+      expect(lastUri.queryParameters['user_field_names'], equals('true'));
+    });
+
+    test('includes user_field_names in updateRow when enabled', () async {
+      await client.updateRow(1, 1, {'name': 'Test'}, userFieldNames: true);
+      expect(lastUri.queryParameters['user_field_names'], equals('true'));
+    });
+
+    test('includes user_field_names in updateRows when enabled', () async {
+      await client.updateRows(
+          1,
+          {
+            1: {'name': 'Test'}
+          },
+          userFieldNames: true);
+      expect(lastUri.queryParameters['user_field_names'], equals('true'));
+    });
+
+    test('creates correct headers', () {
+      final headers = client.createHeaders();
+      expect(headers['Authorization'], equals('Token test-token'));
+      expect(headers['Content-Type'], equals('application/json'));
+    });
+
+    test('creates correct headers with JWT auth', () {
+      final jwtClient = BaserowClient(
         config: BaserowConfig(
           baseUrl: 'https://api.baserow.io',
           token: 'jwt-token',
           authType: BaserowAuthType.jwt,
         ),
       );
-    });
-
-    tearDown(() {
-      tokenClient.close();
-      jwtClient.close();
-    });
-
-    test('creates instance with token config', () {
-      expect(tokenClient.config.baseUrl, equals('https://api.baserow.io'));
-      expect(tokenClient.config.token, equals('test-token'));
-      expect(tokenClient.config.authType, equals(BaserowAuthType.token));
-    });
-
-    test('creates instance with JWT config', () {
-      expect(jwtClient.config.baseUrl, equals('https://api.baserow.io'));
-      expect(jwtClient.config.token, equals('jwt-token'));
-      expect(jwtClient.config.authType, equals(BaserowAuthType.jwt));
-    });
-
-    test('creates correct headers for token auth', () {
-      final headers = tokenClient.createHeaders();
-      expect(headers['Authorization'], equals('Token test-token'));
-      expect(headers['Content-Type'], equals('application/json'));
-    });
-
-    test('creates correct headers for JWT auth', () {
       final headers = jwtClient.createHeaders();
       expect(headers['Authorization'], equals('JWT jwt-token'));
       expect(headers['Content-Type'], equals('application/json'));
+      jwtClient.close();
     });
   });
 

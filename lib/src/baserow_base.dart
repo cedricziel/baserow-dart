@@ -121,6 +121,9 @@ class ListRowsOptions {
   /// Optional view ID to scope the request to a particular view
   final int? viewId;
 
+  /// Whether to use human-readable field names instead of field_123 format
+  final bool userFieldNames;
+
   const ListRowsOptions({
     this.page,
     this.size,
@@ -129,6 +132,7 @@ class ListRowsOptions {
     this.filters,
     this.includeFieldMetadata = false,
     this.viewId,
+    this.userFieldNames = false,
   });
 
   Map<String, dynamic> toQueryParameters() {
@@ -141,6 +145,7 @@ class ListRowsOptions {
         'filters': jsonEncode(filters!.map((f) => f.toJson()).toList()),
       if (includeFieldMetadata) 'include': 'field_metadata',
       if (viewId != null) 'view_id': viewId.toString(),
+      if (userFieldNames) 'user_field_names': 'true',
     };
   }
 }
@@ -201,7 +206,8 @@ class BaserowClient {
 
   BaserowClient({
     required this.config,
-  }) : _httpClient = http.Client();
+    http.Client? httpClient,
+  }) : _httpClient = httpClient ?? http.Client();
 
   /// Creates headers for API requests including authentication if available
   Map<String, String> createHeaders() {
@@ -272,9 +278,12 @@ class BaserowClient {
   }
 
   /// Performs a POST request to the Baserow API
-  Future<Map<String, dynamic>> post(
-      String path, Map<String, dynamic> data) async {
-    final url = Uri.parse('${config.baseUrl}/api/$path');
+  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> data,
+      [Map<String, dynamic>? queryParams]) async {
+    var url = Uri.parse('${config.baseUrl}/api/$path');
+    if (queryParams != null) {
+      url = url.replace(queryParameters: queryParams);
+    }
     final response = await _httpClient.post(
       url,
       headers: createHeaders(),
@@ -292,9 +301,12 @@ class BaserowClient {
   }
 
   /// Performs a PATCH request to the Baserow API
-  Future<Map<String, dynamic>> patch(
-      String path, Map<String, dynamic> data) async {
-    final url = Uri.parse('${config.baseUrl}/api/$path');
+  Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> data,
+      [Map<String, dynamic>? queryParams]) async {
+    var url = Uri.parse('${config.baseUrl}/api/$path');
+    if (queryParams != null) {
+      url = url.replace(queryParameters: queryParams);
+    }
     final response = await _httpClient.patch(
       url,
       headers: createHeaders(),
@@ -364,11 +376,14 @@ class BaserowClient {
   /// Creates a new row in a table
   Future<Row> createRow(
     int tableId,
-    Map<String, dynamic> fields,
-  ) async {
+    Map<String, dynamic> fields, {
+    bool userFieldNames = false,
+  }) async {
+    final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
     final response = await post(
       'database/rows/table/$tableId/',
       {'fields': fields},
+      queryParams,
     );
 
     return Row.fromJson(response);
@@ -377,13 +392,16 @@ class BaserowClient {
   /// Creates multiple rows in a table
   Future<List<Row>> createRows(
     int tableId,
-    List<Map<String, dynamic>> fieldsList,
-  ) async {
+    List<Map<String, dynamic>> fieldsList, {
+    bool userFieldNames = false,
+  }) async {
+    final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
     final response = await post(
       'database/rows/table/$tableId/batch/',
       {
         'items': fieldsList.map((fields) => {'fields': fields}).toList()
       },
+      queryParams,
     );
 
     final List<dynamic> items = response['items'] as List<dynamic>;
@@ -396,11 +414,14 @@ class BaserowClient {
   Future<Row> updateRow(
     int tableId,
     int rowId,
-    Map<String, dynamic> fields,
-  ) async {
+    Map<String, dynamic> fields, {
+    bool userFieldNames = false,
+  }) async {
+    final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
     final response = await patch(
       'database/rows/table/$tableId/$rowId/',
       {'fields': fields},
+      queryParams,
     );
 
     return Row.fromJson(response);
@@ -409,8 +430,9 @@ class BaserowClient {
   /// Updates multiple rows in a table
   Future<List<Row>> updateRows(
     int tableId,
-    Map<int, Map<String, dynamic>> updates,
-  ) async {
+    Map<int, Map<String, dynamic>> updates, {
+    bool userFieldNames = false,
+  }) async {
     final items = updates.entries
         .map((entry) => {
               'id': entry.key,
@@ -418,9 +440,11 @@ class BaserowClient {
             })
         .toList();
 
+    final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
     final response = await patch(
       'database/rows/table/$tableId/batch/',
       {'items': items},
+      queryParams,
     );
 
     final List<dynamic> updatedItems = response['items'] as List<dynamic>;
