@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/cedricziel/baserow-dart/compare/v0.0.2...v0.0.3) (2024-12-29)
+
+
+### Bug Fixes
+
+* publish to pub.dev ([0de5f0b](https://github.com/cedricziel/baserow-dart/commit/0de5f0bd114fa40d7b384d6c8bbec31955e928ab))
+
 ## 0.0.2 (2024-12-29)
 
 
