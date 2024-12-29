@@ -1,5 +1,5 @@
 name: baserow
-description: A baserow client for Dart and Flutter.
+description: A Dart client library for managing Baserow databases and tables.
 version: 1.0.0
 repository: https://github.com/cedricziel/baserow-dart
 
