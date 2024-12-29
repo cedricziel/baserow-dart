@@ -2,6 +2,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 
+/// Authentication type for Baserow
+enum BaserowAuthType {
+  /// Traditional token-based authentication
+  token,
+
+  /// JWT-based authentication
+  jwt
+}
+
 /// The main configuration class for the Baserow client.
 class BaserowConfig {
   /// The base URL of the Baserow instance
@@ -10,10 +19,33 @@ class BaserowConfig {
   /// Optional API token for authentication
   final String? token;
 
+  /// The type of authentication to use
+  final BaserowAuthType authType;
+
   const BaserowConfig({
     required this.baseUrl,
     this.token,
+    this.authType = BaserowAuthType.token,
   });
+}
+
+/// Response from login attempt
+class AuthResponse {
+  final String token;
+  final String refreshToken;
+  final Map<String, dynamic> user;
+
+  AuthResponse({
+    required this.token,
+    required this.refreshToken,
+    required this.user,
+  });
+
+  factory AuthResponse.fromJson(Map<String, dynamic> json) => AuthResponse(
+        token: json['token'] as String,
+        refreshToken: json['refresh_token'] as String,
+        user: json['user'] as Map<String, dynamic>,
+      );
 }
 
 /// The main Baserow client class for interacting with the Baserow API.
@@ -26,16 +58,48 @@ class BaserowClient {
   }) : _httpClient = http.Client();
 
   /// Creates headers for API requests including authentication if available
-  Map<String, String> _createHeaders() {
+  Map<String, String> createHeaders() {
     final headers = {
       'Content-Type': 'application/json',
     };
 
     if (config.token != null) {
-      headers['Authorization'] = 'Token ${config.token}';
+      final prefix = config.authType == BaserowAuthType.jwt ? 'JWT' : 'Token';
+      headers['Authorization'] = '$prefix ${config.token}';
     }
 
     return headers;
+  }
+
+  /// Login with username and password to get JWT token
+  Future<AuthResponse> login(String email, String password) async {
+    final response = await post('user/token-auth/', {
+      'email': email,
+      'password': password,
+    });
+
+    return AuthResponse.fromJson(response);
+  }
+
+  /// Refresh JWT token
+  Future<String> refreshToken(String refreshToken) async {
+    final response = await post('user/token-refresh/', {
+      'refresh_token': refreshToken,
+    });
+
+    return response['token'] as String;
+  }
+
+  /// Verify JWT token
+  Future<bool> verifyToken(String token) async {
+    try {
+      await post('user/token-verify/', {
+        'token': token,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   /// Performs a GET request to the Baserow API
@@ -43,7 +107,7 @@ class BaserowClient {
     final url = Uri.parse('${config.baseUrl}/api/$path');
     final response = await _httpClient.get(
       url,
-      headers: _createHeaders(),
+      headers: createHeaders(),
     );
 
     if (response.statusCode != 200) {
@@ -57,11 +121,12 @@ class BaserowClient {
   }
 
   /// Performs a POST request to the Baserow API
-  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> post(
+      String path, Map<String, dynamic> data) async {
     final url = Uri.parse('${config.baseUrl}/api/$path');
     final response = await _httpClient.post(
       url,
-      headers: _createHeaders(),
+      headers: createHeaders(),
       body: json.encode(data),
     );
 
@@ -76,11 +141,12 @@ class BaserowClient {
   }
 
   /// Performs a PATCH request to the Baserow API
-  Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> patch(
+      String path, Map<String, dynamic> data) async {
     final url = Uri.parse('${config.baseUrl}/api/$path');
     final response = await _httpClient.patch(
       url,
-      headers: _createHeaders(),
+      headers: createHeaders(),
       body: json.encode(data),
     );
 
@@ -99,7 +165,7 @@ class BaserowClient {
     final url = Uri.parse('${config.baseUrl}/api/$path');
     final response = await _httpClient.delete(
       url,
-      headers: _createHeaders(),
+      headers: createHeaders(),
     );
 
     if (response.statusCode != 204) {

@@ -16,28 +16,89 @@ void main() {
       );
       expect(config.baseUrl, equals('https://api.baserow.io'));
       expect(config.token, equals('test-token'));
+      expect(config.authType, equals(BaserowAuthType.token));
+    });
+
+    test('creates instance with JWT auth type', () {
+      final config = BaserowConfig(
+        baseUrl: 'https://api.baserow.io',
+        token: 'jwt-token',
+        authType: BaserowAuthType.jwt,
+      );
+      expect(config.baseUrl, equals('https://api.baserow.io'));
+      expect(config.token, equals('jwt-token'));
+      expect(config.authType, equals(BaserowAuthType.jwt));
+    });
+  });
+
+  group('AuthResponse', () {
+    test('creates from JSON', () {
+      final json = {
+        'token': 'jwt-token',
+        'refresh_token': 'refresh-token',
+        'user': {
+          'id': 1,
+          'email': 'test@example.com',
+        },
+      };
+
+      final response = AuthResponse.fromJson(json);
+      expect(response.token, equals('jwt-token'));
+      expect(response.refreshToken, equals('refresh-token'));
+      expect(response.user['id'], equals(1));
+      expect(response.user['email'], equals('test@example.com'));
     });
   });
 
   group('BaserowClient', () {
-    late BaserowClient client;
+    late BaserowClient tokenClient;
+    late BaserowClient jwtClient;
 
     setUp(() {
-      client = BaserowClient(
+      tokenClient = BaserowClient(
         config: BaserowConfig(
           baseUrl: 'https://api.baserow.io',
           token: 'test-token',
+          authType: BaserowAuthType.token,
+        ),
+      );
+
+      jwtClient = BaserowClient(
+        config: BaserowConfig(
+          baseUrl: 'https://api.baserow.io',
+          token: 'jwt-token',
+          authType: BaserowAuthType.jwt,
         ),
       );
     });
 
     tearDown(() {
-      client.close();
+      tokenClient.close();
+      jwtClient.close();
     });
 
-    test('creates instance with config', () {
-      expect(client.config.baseUrl, equals('https://api.baserow.io'));
-      expect(client.config.token, equals('test-token'));
+    test('creates instance with token config', () {
+      expect(tokenClient.config.baseUrl, equals('https://api.baserow.io'));
+      expect(tokenClient.config.token, equals('test-token'));
+      expect(tokenClient.config.authType, equals(BaserowAuthType.token));
+    });
+
+    test('creates instance with JWT config', () {
+      expect(jwtClient.config.baseUrl, equals('https://api.baserow.io'));
+      expect(jwtClient.config.token, equals('jwt-token'));
+      expect(jwtClient.config.authType, equals(BaserowAuthType.jwt));
+    });
+
+    test('creates correct headers for token auth', () {
+      final headers = tokenClient.createHeaders();
+      expect(headers['Authorization'], equals('Token test-token'));
+      expect(headers['Content-Type'], equals('application/json'));
+    });
+
+    test('creates correct headers for JWT auth', () {
+      final headers = jwtClient.createHeaders();
+      expect(headers['Authorization'], equals('JWT jwt-token'));
+      expect(headers['Content-Type'], equals('application/json'));
     });
   });
 
