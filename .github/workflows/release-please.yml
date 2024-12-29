@@ -1,0 +1,50 @@
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+name: release-please
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          release-type: dart
+      - uses: actions/checkout@v4
+        if: ${{ steps.release.outputs.release_created }}
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Install dependencies
+        run: dart pub get
+        if: ${{ steps.release.outputs.release_created }}
+
+      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      - name: Analyze project source
+        run: dart analyze
+        if: ${{ steps.release.outputs.release_created }}
+
+      # Your project will need to have tests in test/ and a dependency on
+      # package:test for this step to succeed. Note that Flutter projects will
+      # want to change this to 'flutter test'.
+      - name: Run tests
+        run: dart test
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Publish
+        run: dart pub publish --force
+        if: ${{ steps.release.outputs.release_created }}
