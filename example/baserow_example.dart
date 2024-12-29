@@ -51,16 +51,40 @@ void main() async {
 
     // Listen for real-time updates
     subscription.listen((event) {
-      switch (event.type) {
-        case 'row_created':
-          print('Row ${event.rowId} was created: ${event.values}');
-          break;
-        case 'row_updated':
-          print('Row ${event.rowId} was updated: ${event.values}');
-          break;
-        case 'row_deleted':
-          print('Row ${event.rowId} was deleted');
-          break;
+      if (event is BaserowRowEvent) {
+        switch (event.type) {
+          case 'row_created':
+            print('Row ${event.rowId} was created: ${event.values}');
+            break;
+          case 'row_updated':
+            print('Row ${event.rowId} was updated: ${event.values}');
+            break;
+          case 'row_deleted':
+            print('Row ${event.rowId} was deleted');
+            break;
+        }
+      } else if (event is BaserowTableEvent) {
+        print('Table event: ${event.type} - ${event.table}');
+      } else if (event is BaserowFieldEvent) {
+        print('Field event: ${event.type} - ${event.field}');
+      }
+    });
+
+    // Example: Subscribe to workspace updates
+    final workspaceId = 789; // Replace with your actual workspace ID
+    final workspaceSubscription = ws.subscribeToWorkspace(workspaceId);
+    workspaceSubscription.listen((event) {
+      if (event is BaserowWorkspaceEvent) {
+        print('Workspace event: ${event.type} - ${event.workspace}');
+      }
+    });
+
+    // Example: Subscribe to application updates
+    final applicationId = 456; // Replace with your actual application ID
+    final applicationSubscription = ws.subscribeToApplication(applicationId);
+    applicationSubscription.listen((event) {
+      if (event is BaserowApplicationEvent) {
+        print('Application event: ${event.type} - ${event.application}');
       }
     });
 
