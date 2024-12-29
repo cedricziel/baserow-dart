@@ -348,6 +348,7 @@ class BaserowWebSocket {
   final String baseUrl;
   final String? token;
   WebSocketChannel? _channel;
+  StreamSubscription? _channelSubscription;
   final _tableSubscriptions = <int, StreamController<BaserowEvent>>{};
   final _workspaceSubscriptions = <int, StreamController<BaserowEvent>>{};
   final _applicationSubscriptions = <int, StreamController<BaserowEvent>>{};
@@ -398,8 +399,8 @@ class BaserowWebSocket {
       // Set up the timeout
       timeoutTimer = Timer(Duration(milliseconds: _connectionTimeout), () {
         if (!completer.isCompleted) {
-          completer.completeError(
-              TimeoutException('WebSocket connection timeout'));
+          completer
+              .completeError(TimeoutException('WebSocket connection timeout'));
         }
       });
 
@@ -408,7 +409,7 @@ class BaserowWebSocket {
       _isConnected = true;
 
       // Wait for the first message or error to confirm connection
-      final subscription = _channel!.stream.listen(
+      _channelSubscription = _channel!.stream.listen(
         (message) {
           if (!completer.isCompleted) {
             timeoutTimer?.cancel();
@@ -469,7 +470,8 @@ class BaserowWebSocket {
 
       // Wait for the connection to be established or timeout
       await completer.future;
-      _reconnectAttempts = 0; // Reset reconnection attempts on successful connection
+      _reconnectAttempts =
+          0; // Reset reconnection attempts on successful connection
     } catch (e) {
       _handleDisconnect();
       rethrow;
@@ -612,6 +614,8 @@ class BaserowWebSocket {
   /// Handles WebSocket disconnection
   void _handleDisconnect() {
     _isConnected = false;
+    _channelSubscription?.cancel();
+    _channelSubscription = null;
     _channel?.sink.close();
     _channel = null;
 

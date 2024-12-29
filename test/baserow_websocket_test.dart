@@ -6,14 +6,13 @@ import 'package:test/test.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:stream_channel/stream_channel.dart';
-import 'package:async/async.dart';
 
-class MockWebSocketChannel extends StreamChannelMixin<dynamic> implements WebSocketChannel {
+class MockWebSocketChannel extends StreamChannelMixin<dynamic>
+    implements WebSocketChannel {
   final StreamController<dynamic> _controller = StreamController<dynamic>();
   final StreamController<dynamic> _sinkController = StreamController<dynamic>();
   bool _closed = false;
 
-  @override
   String? get protocol => null;
 
   @override
@@ -43,7 +42,7 @@ class MockWebSocketChannel extends StreamChannelMixin<dynamic> implements WebSoc
     _sinkController.close();
   }
 
-  Stream get sinkStream => _sinkController.stream;
+  Stream<dynamic> get sinkStream => _sinkController.stream;
 
   @override
   Future get done => _controller.done;
@@ -130,7 +129,8 @@ void main() {
       mockChannel.close();
 
       // Wait for reconnection attempts
-      await Future.delayed(Duration(milliseconds: 1100)); // Just after first retry
+      await Future.delayed(
+          Duration(milliseconds: 1100)); // Just after first retry
       expect(disconnectCallCount, equals(1));
 
       await Future.delayed(Duration(milliseconds: 1100)); // After second retry
@@ -138,7 +138,7 @@ void main() {
     });
 
     test('calls error handler on WebSocket error', () async {
-      var lastError;
+      Object? lastError;
       webSocket.onError = (error) {
         lastError = error;
       };

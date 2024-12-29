@@ -239,7 +239,6 @@ void main() {
     late MockClient mockClient;
     late BaserowClient client;
     late Uri lastUri;
-    late Map<String, dynamic> lastRequestBody;
 
     setUp(() {
       mockClient = MockClient();
@@ -260,8 +259,6 @@ void main() {
         ),
       ).thenAnswer((invocation) {
         lastUri = invocation.positionalArguments[0] as Uri;
-        lastRequestBody =
-            json.decode(invocation.namedArguments[#body] as String);
 
         // Check if this is a batch operation
         if (lastUri.path.contains('batch')) {
@@ -297,8 +294,6 @@ void main() {
         ),
       ).thenAnswer((invocation) {
         lastUri = invocation.positionalArguments[0] as Uri;
-        lastRequestBody =
-            json.decode(invocation.namedArguments[#body] as String);
 
         // Check if this is a batch operation
         if (lastUri.path.contains('batch')) {

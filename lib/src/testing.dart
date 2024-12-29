@@ -2,10 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:mockito/mockito.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as status;
-import 'package:stream_channel/stream_channel.dart';
-
 import 'baserow_base.dart';
 import 'baserow_websocket.dart';
 
@@ -42,10 +38,12 @@ class MockBaserowClient extends Mock implements BaserowClient {}
 
 /// A mock implementation of [BaserowWebSocket] for testing real-time functionality.
 class MockBaserowWebSocket extends BaserowWebSocket {
-  final StreamController<dynamic> _controller = StreamController<dynamic>.broadcast();
+  final StreamController<dynamic> _controller =
+      StreamController<dynamic>.broadcast();
   bool _isConnected = false;
 
-  MockBaserowWebSocket() : super(baseUrl: 'mock://baserow', token: 'mock-token');
+  MockBaserowWebSocket()
+      : super(baseUrl: 'mock://baserow', token: 'mock-token');
 
   @override
   bool get isConnected => _isConnected;
@@ -74,7 +72,8 @@ class MockBaserowWebSocket extends BaserowWebSocket {
   }
 
   /// Emits a workspace event to all subscribers.
-  void emitWorkspaceEvent(int workspaceId, String type, Map<String, dynamic> data) {
+  void emitWorkspaceEvent(
+      int workspaceId, String type, Map<String, dynamic> data) {
     if (!_isConnected) return;
 
     final event = {
@@ -86,7 +85,8 @@ class MockBaserowWebSocket extends BaserowWebSocket {
   }
 
   /// Emits an application event to all subscribers.
-  void emitApplicationEvent(int applicationId, String type, Map<String, dynamic> data) {
+  void emitApplicationEvent(
+      int applicationId, String type, Map<String, dynamic> data) {
     if (!_isConnected) return;
 
     final event = {
@@ -109,12 +109,10 @@ class MockBaserowWebSocket extends BaserowWebSocket {
       throw StateError('WebSocket is not connected');
     }
 
-    return _controller.stream
-        .where((event) {
-          final decoded = json.decode(event as String);
-          return decoded['table_id'] == tableId;
-        })
-        .map((event) => BaserowTableEvent.fromJson(json.decode(event as String)));
+    return _controller.stream.where((event) {
+      final decoded = json.decode(event as String);
+      return decoded['table_id'] == tableId;
+    }).map((event) => BaserowTableEvent.fromJson(json.decode(event as String)));
   }
 
   @override
@@ -123,12 +121,11 @@ class MockBaserowWebSocket extends BaserowWebSocket {
       throw StateError('WebSocket is not connected');
     }
 
-    return _controller.stream
-        .where((event) {
-          final decoded = json.decode(event as String);
-          return decoded['workspace_id'] == workspaceId;
-        })
-        .map((event) => BaserowWorkspaceEvent.fromJson(json.decode(event as String)));
+    return _controller.stream.where((event) {
+      final decoded = json.decode(event as String);
+      return decoded['workspace_id'] == workspaceId;
+    }).map((event) =>
+        BaserowWorkspaceEvent.fromJson(json.decode(event as String)));
   }
 
   @override
@@ -137,11 +134,10 @@ class MockBaserowWebSocket extends BaserowWebSocket {
       throw StateError('WebSocket is not connected');
     }
 
-    return _controller.stream
-        .where((event) {
-          final decoded = json.decode(event as String);
-          return decoded['application_id'] == applicationId;
-        })
-        .map((event) => BaserowApplicationEvent.fromJson(json.decode(event as String)));
+    return _controller.stream.where((event) {
+      final decoded = json.decode(event as String);
+      return decoded['application_id'] == applicationId;
+    }).map((event) =>
+        BaserowApplicationEvent.fromJson(json.decode(event as String)));
   }
 }

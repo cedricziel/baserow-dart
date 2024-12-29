@@ -119,17 +119,18 @@ void main() {
       final mockClient = BaserowTestUtils.createMockClient();
 
       // Mock a sequence of related operations
-      when(mockClient.createRow(1, {'name': 'Test'}))
-          .thenAnswer((_) async => Row(id: 1, order: 1, fields: {'name': 'Test'}));
+      when(mockClient.createRow(1, {'name': 'Test'})).thenAnswer(
+          (_) async => Row(id: 1, order: 1, fields: {'name': 'Test'}));
 
-      when(mockClient.updateRow(1, 1, {'name': 'Updated Test'}))
-          .thenAnswer((_) async => Row(id: 1, order: 1, fields: {'name': 'Updated Test'}));
+      when(mockClient.updateRow(1, 1, {'name': 'Updated Test'})).thenAnswer(
+          (_) async => Row(id: 1, order: 1, fields: {'name': 'Updated Test'}));
 
       // Execute the operations
       final createdRow = await mockClient.createRow(1, {'name': 'Test'});
       expect(createdRow.fields['name'], equals('Test'));
 
-      final updatedRow = await mockClient.updateRow(1, 1, {'name': 'Updated Test'});
+      final updatedRow =
+          await mockClient.updateRow(1, 1, {'name': 'Updated Test'});
       expect(updatedRow.fields['name'], equals('Updated Test'));
 
       // Verify the sequence
