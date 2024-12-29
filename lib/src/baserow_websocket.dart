@@ -348,6 +348,7 @@ class BaserowWebSocket {
   final String baseUrl;
   final String? token;
   WebSocketChannel? _channel;
+  final Future<WebSocketChannel> Function(Uri uri)? _channelFactory;
   StreamSubscription? _channelSubscription;
   final _tableSubscriptions = <int, StreamController<BaserowEvent>>{};
   final _workspaceSubscriptions = <int, StreamController<BaserowEvent>>{};
@@ -357,7 +358,8 @@ class BaserowWebSocket {
   BaserowWebSocket({
     required this.baseUrl,
     this.token,
-  });
+    Future<WebSocketChannel> Function(Uri uri)? channelFactory,
+  }) : _channelFactory = channelFactory;
 
   /// Error handler for WebSocket errors
   void Function(Object error)? onError;
@@ -404,8 +406,9 @@ class BaserowWebSocket {
         }
       });
 
-      // Attempt to connect
-      _channel = WebSocketChannel.connect(uri);
+      // Attempt to connect using the provided factory or default WebSocketChannel.connect
+      _channel =
+          await (_channelFactory?.call(uri) ?? WebSocketChannel.connect(uri));
       _isConnected = true;
 
       // Wait for the first message or error to confirm connection
@@ -417,6 +420,13 @@ class BaserowWebSocket {
           }
 
           final data = json.decode(message as String) as Map<String, dynamic>;
+          final type = data['type'] as String;
+
+          // Skip processing for connection_established message
+          if (type == 'connection_established') {
+            return;
+          }
+
           final event = BaserowEvent.fromJson(data);
 
           // Forward the event to the appropriate subscription stream based on event type
@@ -564,7 +574,7 @@ class BaserowWebSocket {
   }
 
   /// Unsubscribes from updates for a specific table
-  void unsubscribeFromTable(int tableId) {
+  Future<void> unsubscribeFromTable(int tableId) async {
     if (!_isConnected) return;
 
     final subscription = _tableSubscriptions.remove(tableId);
@@ -575,12 +585,14 @@ class BaserowWebSocket {
         data: {'table_id': tableId},
       );
       _channel!.sink.add(json.encode(message.toJson()));
-      subscription.close();
+      await subscription.close();
+      // Ensure all listeners are removed and the stream is closed
+      await subscription.stream.drain();
     }
   }
 
   /// Unsubscribes from updates for a specific workspace
-  void unsubscribeFromWorkspace(int workspaceId) {
+  Future<void> unsubscribeFromWorkspace(int workspaceId) async {
     if (!_isConnected) return;
 
     final subscription = _workspaceSubscriptions.remove(workspaceId);
@@ -591,12 +603,13 @@ class BaserowWebSocket {
         data: {'workspace_id': workspaceId},
       );
       _channel!.sink.add(json.encode(message.toJson()));
-      subscription.close();
+      await subscription.close();
+      await subscription.stream.drain();
     }
   }
 
   /// Unsubscribes from updates for a specific application
-  void unsubscribeFromApplication(int applicationId) {
+  Future<void> unsubscribeFromApplication(int applicationId) async {
     if (!_isConnected) return;
 
     final subscription = _applicationSubscriptions.remove(applicationId);
@@ -607,50 +620,38 @@ class BaserowWebSocket {
         data: {'application_id': applicationId},
       );
       _channel!.sink.add(json.encode(message.toJson()));
-      subscription.close();
+      await subscription.close();
+      await subscription.stream.drain();
     }
   }
 
   /// Handles WebSocket disconnection
-  void _handleDisconnect() {
+  Future<void> _handleDisconnect() async {
     _isConnected = false;
     _channelSubscription?.cancel();
     _channelSubscription = null;
     _channel?.sink.close();
     _channel = null;
 
-    // Close all subscription controllers
-    for (final controller in _tableSubscriptions.values) {
-      controller.close();
-    }
-    for (final controller in _workspaceSubscriptions.values) {
-      controller.close();
-    }
-    for (final controller in _applicationSubscriptions.values) {
-      controller.close();
-    }
+    // Close all subscription controllers directly
+    await Future.wait([
+      ..._tableSubscriptions.values.map((controller) => controller.close()),
+      ..._workspaceSubscriptions.values.map((controller) => controller.close()),
+      ..._applicationSubscriptions.values
+          .map((controller) => controller.close()),
+    ]);
+
+    // Clear all subscriptions
     _tableSubscriptions.clear();
     _workspaceSubscriptions.clear();
     _applicationSubscriptions.clear();
   }
 
   /// Closes the WebSocket connection
-  void close() {
+  Future<void> close() async {
     _reconnectTimer?.cancel();
     if (!_isConnected) return;
-
-    // Unsubscribe from all subscriptions
-    for (final tableId in _tableSubscriptions.keys.toList()) {
-      unsubscribeFromTable(tableId);
-    }
-    for (final workspaceId in _workspaceSubscriptions.keys.toList()) {
-      unsubscribeFromWorkspace(workspaceId);
-    }
-    for (final applicationId in _applicationSubscriptions.keys.toList()) {
-      unsubscribeFromApplication(applicationId);
-    }
-
-    _handleDisconnect();
+    await _handleDisconnect();
   }
 
   /// Checks if the WebSocket is connected

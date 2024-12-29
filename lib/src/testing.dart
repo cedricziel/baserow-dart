@@ -54,9 +54,9 @@ class MockBaserowWebSocket extends BaserowWebSocket {
   }
 
   @override
-  void close() {
+  Future<void> close() async {
     _isConnected = false;
-    _controller.close();
+    await _controller.close();
   }
 
   /// Emits a table event to all subscribers.
