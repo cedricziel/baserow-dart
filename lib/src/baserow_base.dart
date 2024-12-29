@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 
+part 'baserow_base.g.dart';
+
 /// Authentication type for Baserow
 enum BaserowAuthType {
   /// Traditional token-based authentication

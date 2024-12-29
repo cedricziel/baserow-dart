@@ -2,3 +2,4 @@
 library baserow;
 
 export 'src/baserow_base.dart';
+export 'src/baserow_websocket.dart';

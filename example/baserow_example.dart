@@ -35,14 +35,34 @@ void main() async {
       ),
     );
 
-    // Verify the token is valid
-    final isValid = await authenticatedClient.verifyToken(authResponse.token);
-    print('Token is valid: $isValid');
+    // Example 3: WebSocket real-time updates
+    final ws = BaserowWebSocket(
+      baseUrl: 'https://api.baserow.io',
+      token: authResponse.token,
+    );
 
-    // If token expires, you can refresh it
-    final newToken =
-        await authenticatedClient.refreshToken(authResponse.refreshToken);
-    print('Received new token: $newToken');
+    // Connect to the WebSocket server
+    await ws.connect();
+    print('WebSocket connected: ${ws.isConnected}');
+
+    // Subscribe to table updates
+    final tableId = 123; // Replace with your actual table ID
+    final subscription = ws.subscribeToTable(tableId);
+
+    // Listen for real-time updates
+    subscription.listen((event) {
+      switch (event.type) {
+        case 'row_created':
+          print('Row ${event.rowId} was created: ${event.values}');
+          break;
+        case 'row_updated':
+          print('Row ${event.rowId} was updated: ${event.values}');
+          break;
+        case 'row_deleted':
+          print('Row ${event.rowId} was deleted');
+          break;
+      }
+    });
 
     // Example of using the authenticated client
     // List all databases
@@ -123,6 +143,9 @@ void main() async {
         print('Deleted the test rows');
       }
     }
+
+    // Clean up WebSocket connection
+    ws.close();
   } catch (e) {
     print('Error: $e');
   } finally {
