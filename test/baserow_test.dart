@@ -456,7 +456,10 @@ void main() {
       expect(json['name'], equals('Test Table'));
       expect(json['order'], equals(1));
       expect(json['fields'], hasLength(1));
-      expect(json['fields'].first['name'], equals('Name'));
+      final fieldJson =
+          (json['fields'] as List<dynamic>).first as Map<String, dynamic>;
+      final expectedFieldJson = table.fields.first.toJson();
+      expect(fieldJson, equals(expectedFieldJson));
     });
   });
 

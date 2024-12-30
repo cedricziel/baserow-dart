@@ -512,7 +512,12 @@ class Table {
 
   factory Table.fromJson(Map<String, dynamic> json) => _$TableFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TableToJson(this);
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'order': order,
+        'fields': fields.map((f) => f.toJson()).toList(),
+      };
 }
 
 /// Represents a field within a Baserow table
