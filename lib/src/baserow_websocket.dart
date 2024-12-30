@@ -86,24 +86,29 @@ abstract class BaserowEvent {
       case 'page_delete':
         return BaserowPageEvent.fromJson(json);
       case 'workspace_created':
-      case 'workspace_updated':
+      case 'workspace_updated': // Support both formats
       case 'workspace_deleted':
+      case 'workspace_update': // Support legacy format
         return BaserowWorkspaceEvent.fromJson(json);
       case 'application_created':
-      case 'application_updated':
+      case 'application_updated': // Support both formats
       case 'application_deleted':
+      case 'application_update': // Support legacy format
         return BaserowApplicationEvent.fromJson(json);
       case 'database_created':
-      case 'database_updated':
+      case 'database_updated': // Support both formats
       case 'database_deleted':
+      case 'database_update': // Support legacy format
         return BaserowDatabaseEvent.fromJson(json);
       case 'table_created':
-      case 'table_updated':
+      case 'table_updated': // Support both formats
       case 'table_deleted':
+      case 'table_update': // Support legacy format
         return BaserowTableEvent.fromJson(json);
       case 'field_created':
-      case 'field_updated':
+      case 'field_updated': // Support both formats
       case 'field_deleted':
+      case 'field_update': // Support legacy format
         return BaserowFieldEvent.fromJson(json);
       case 'row_created':
       case 'row_updated':
