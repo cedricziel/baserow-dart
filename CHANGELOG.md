@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.1.0](https://github.com/cedricziel/baserow-dart/compare/v0.0.3...v0.1.0) (2024-12-30)
+
+
+### Features
+
+* add user_field_names support ([8129248](https://github.com/cedricziel/baserow-dart/commit/8129248a59b77b6d0645a36847ab2f79e3364a5c))
+* add websocket interface ([8d0c1ef](https://github.com/cedricziel/baserow-dart/commit/8d0c1ef5f615bc44e826d3d715edc1c0b9392aa2))
+* improve testability ([2b2a532](https://github.com/cedricziel/baserow-dart/commit/2b2a5325b826df7291da5a0b4625a7c5aa906fa2))
+
+
+### Bug Fixes
+
+* analyze issues ([b826bff](https://github.com/cedricziel/baserow-dart/commit/b826bffe7fbc0915a3a92a8e2ec23666cb81c5ad))
+* analyze issues ([1ae7a1d](https://github.com/cedricziel/baserow-dart/commit/1ae7a1dc7eea11b41510d311ebd1802c6f22ca08))
+* analyze issues ([01d4106](https://github.com/cedricziel/baserow-dart/commit/01d4106fdb9361ad7158b8aa85d22ca185670dc4))
+* better connection handling ([894a2ba](https://github.com/cedricziel/baserow-dart/commit/894a2ba57470d3c5f300f0688b9800be4c6b6751))
+* failing test ([5c963ee](https://github.com/cedricziel/baserow-dart/commit/5c963ee8d5698a8269167d6a5c617d9128a2eb9c))
+* rectify websocket handling ([67cefd6](https://github.com/cedricziel/baserow-dart/commit/67cefd65f033861320146aec11c51cfbac74136c))
+* revert to manual to and from json ([23c7852](https://github.com/cedricziel/baserow-dart/commit/23c78527d0805b8660ed0cf6630149add18b3d66))
+* tests ([062e3f5](https://github.com/cedricziel/baserow-dart/commit/062e3f57f0eafdb90b93659a7392d1b5a7b6561c))
+* websocket events ([8368cb7](https://github.com/cedricziel/baserow-dart/commit/8368cb749de8adaecf31604678b21709e27c15a1))
+
 ## [0.0.3](https://github.com/cedricziel/baserow-dart/compare/v0.0.2...v0.0.3) (2024-12-29)
 
 
