@@ -489,17 +489,10 @@ class Database {
     required this.type,
   });
 
-  factory Database.fromJson(Map<String, dynamic> json) => Database(
-        id: json['id'] as int,
-        name: json['name'] as String,
-        type: json['type'] as String,
-      );
+  factory Database.fromJson(Map<String, dynamic> json) =>
+      _$DatabaseFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'type': type,
-      };
+  Map<String, dynamic> toJson() => _$DatabaseToJson(this);
 }
 
 /// Represents a table within a Baserow database
@@ -517,21 +510,9 @@ class Table {
     required this.fields,
   });
 
-  factory Table.fromJson(Map<String, dynamic> json) => Table(
-        id: json['id'] as int,
-        name: json['name'] as String,
-        order: json['order'] as int,
-        fields: (json['fields'] as List<dynamic>)
-            .map((field) => Field.fromJson(field as Map<String, dynamic>))
-            .toList(),
-      );
+  factory Table.fromJson(Map<String, dynamic> json) => _$TableFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'order': order,
-        'fields': fields.map((field) => field.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() => _$TableToJson(this);
 }
 
 /// Represents a field within a Baserow table
@@ -551,21 +532,9 @@ class Field {
     required this.primary,
   });
 
-  factory Field.fromJson(Map<String, dynamic> json) => Field(
-        id: json['id'] as int,
-        name: json['name'] as String,
-        type: json['type'] as String,
-        order: json['order'] as int,
-        primary: json['primary'] as bool,
-      );
+  factory Field.fromJson(Map<String, dynamic> json) => _$FieldFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'type': type,
-        'order': order,
-        'primary': primary,
-      };
+  Map<String, dynamic> toJson() => _$FieldToJson(this);
 }
 
 /// Custom exception for Baserow API errors

@@ -57,7 +57,6 @@ class MockWebSocketChannel extends StreamChannelMixin<dynamic>
 
   Stream<dynamic> get sinkStream => _sinkController.stream;
 
-  @override
   Future get done => _controller.done;
 
   @override

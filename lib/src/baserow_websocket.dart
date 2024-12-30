@@ -145,16 +145,18 @@ class BaserowPageEvent extends BaserowEvent {
 
 /// Represents a workspace event
 class BaserowWorkspaceEvent extends BaserowEvent {
-  @override
-  final int workspaceId;
+  final int _workspaceId;
   final Map<String, dynamic> workspace;
+
+  @override
+  int? get workspaceId => _workspaceId;
 
   BaserowWorkspaceEvent({
     required super.type,
-    required this.workspaceId,
+    required int workspaceId,
     required this.workspace,
     super.page,
-  });
+  }) : _workspaceId = workspaceId;
 
   factory BaserowWorkspaceEvent.fromJson(Map<String, dynamic> json) =>
       BaserowWorkspaceEvent(
