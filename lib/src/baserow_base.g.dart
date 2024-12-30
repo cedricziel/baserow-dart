@@ -18,22 +18,6 @@ Map<String, dynamic> _$DatabaseToJson(Database instance) => <String, dynamic>{
       'type': instance.type,
     };
 
-Table _$TableFromJson(Map<String, dynamic> json) => Table(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      order: (json['order'] as num).toInt(),
-      fields: (json['fields'] as List<dynamic>)
-          .map((e) => Field.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$TableToJson(Table instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'order': instance.order,
-      'fields': instance.fields,
-    };
-
 Field _$FieldFromJson(Map<String, dynamic> json) => Field(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,

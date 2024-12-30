@@ -496,7 +496,6 @@ class Database {
 }
 
 /// Represents a table within a Baserow database
-@JsonSerializable()
 class Table {
   final int id;
   final String name;
@@ -510,7 +509,14 @@ class Table {
     required this.fields,
   });
 
-  factory Table.fromJson(Map<String, dynamic> json) => _$TableFromJson(json);
+  factory Table.fromJson(Map<String, dynamic> json) => Table(
+        id: (json['id'] as num).toInt(),
+        name: json['name'] as String,
+        order: (json['order'] as num).toInt(),
+        fields: (json['fields'] as List<dynamic>)
+            .map((e) => Field.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
