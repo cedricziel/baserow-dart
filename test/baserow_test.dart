@@ -326,6 +326,44 @@ void main() {
       client.close();
     });
 
+    test('calls correct endpoint when listing tables', () async {
+      when(
+        mockClient.get(
+          argThat(predicate((Uri uri) =>
+              uri.toString() ==
+              'https://api.baserow.io/api/database/tables/database/1/')),
+          headers: anyNamed('headers'),
+        ),
+      ).thenAnswer(
+        (_) => Future.value(
+          http.Response(
+            json.encode({
+              'tables': [
+                {
+                  'id': 1,
+                  'name': 'Test Table',
+                  'order': 1,
+                  'fields': [],
+                }
+              ],
+            }),
+            200,
+          ),
+        ),
+      );
+
+      await client.listTables(1);
+
+      verify(
+        mockClient.get(
+          argThat(predicate((Uri uri) =>
+              uri.toString() ==
+              'https://api.baserow.io/api/database/tables/database/1/')),
+          headers: anyNamed('headers'),
+        ),
+      ).called(1);
+    });
+
     test('includes user_field_names in createRow when enabled', () async {
       await client.createRow(1, {'name': 'Test'}, userFieldNames: true);
       expect(lastUri.queryParameters['user_field_names'], equals('true'));
