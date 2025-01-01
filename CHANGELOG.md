@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/cedricziel/baserow-dart/compare/v0.1.1...v0.1.2) (2025-01-01)
+
+
+### Bug Fixes
+
+* deliver correct result for listing tables ([#9](https://github.com/cedricziel/baserow-dart/issues/9)) ([17af060](https://github.com/cedricziel/baserow-dart/commit/17af060c979fe7235b881b76f2084411b00d7ab7))
+
 ## [0.1.1](https://github.com/cedricziel/baserow-dart/compare/v0.1.0...v0.1.1) (2025-01-01)
 
 
