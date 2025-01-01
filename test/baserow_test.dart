@@ -3,19 +3,37 @@ import 'package:test/test.dart';
 
 void main() {
   group('Row', () {
-    test('creates from JSON', () {
+    test('creates from JSON with field_* properties (user_field_names=false)',
+        () {
       final json = {
         'id': 1,
         'order': 1,
-        'field_1': 'John Doe',
-        'field_2': 'john@example.com',
+        'field_123': 'John Doe',
+        'field_456': 'john@example.com',
       };
 
       final row = Row.fromJson(json);
       expect(row.id, equals(1));
       expect(row.order, equals(1));
-      expect(row.fields['field_1'], equals('John Doe'));
-      expect(row.fields['field_2'], equals('john@example.com'));
+      expect(row.fields['field_123'], equals('John Doe'));
+      expect(row.fields['field_456'], equals('john@example.com'));
+    });
+
+    test('creates from JSON with user field names (user_field_names=true)', () {
+      final json = {
+        'id': 894,
+        'order': 1,
+        'title': 'Important Task',
+        'description': 'Must be done soon',
+        'status': 'pending'
+      };
+
+      final row = Row.fromJson(json);
+      expect(row.id, equals(894));
+      expect(row.order, equals(1));
+      expect(row.fields['title'], equals('Important Task'));
+      expect(row.fields['description'], equals('Must be done soon'));
+      expect(row.fields['status'], equals('pending'));
     });
 
     test('handles non-numeric order field', () {
@@ -95,22 +113,7 @@ void main() {
           equals('http://example.com'));
     });
 
-    test('handles field_* properties on root', () {
-      final json = {
-        'id': 1,
-        'order': 1,
-        'field_1': 'John Doe',
-        'field_2': 'john@example.com',
-      };
-
-      final row = Row.fromJson(json);
-      expect(row.id, equals(1));
-      expect(row.order, equals(1));
-      expect(row.fields['field_1'], equals('John Doe'));
-      expect(row.fields['field_2'], equals('john@example.com'));
-    });
-
-    test('converts to JSON', () {
+    test('converts to JSON with user field names', () {
       final row = Row(
         id: 1,
         order: 1,
@@ -123,8 +126,25 @@ void main() {
       final json = row.toJson();
       expect(json['id'], equals(1));
       expect(json['order'], equals(1));
-      expect(json['fields']['Name'], equals('John Doe'));
-      expect(json['fields']['Email'], equals('john@example.com'));
+      expect(json['Name'], equals('John Doe'));
+      expect(json['Email'], equals('john@example.com'));
+    });
+
+    test('converts to JSON with field_* properties', () {
+      final row = Row(
+        id: 1,
+        order: 1,
+        fields: {
+          'field_123': 'John Doe',
+          'field_456': 'john@example.com',
+        },
+      );
+
+      final json = row.toJson();
+      expect(json['id'], equals(1));
+      expect(json['order'], equals(1));
+      expect(json['field_123'], equals('John Doe'));
+      expect(json['field_456'], equals('john@example.com'));
     });
   });
 
