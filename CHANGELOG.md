@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/cedricziel/baserow-dart/compare/v0.1.3...v0.1.4) (2025-01-01)
+
+
+### Bug Fixes
+
+* listing records should correctly transform rows and fields ([#13](https://github.com/cedricziel/baserow-dart/issues/13)) ([09e741b](https://github.com/cedricziel/baserow-dart/commit/09e741b84690314c21baf82dcd59390b71010415))
+
 ## [0.1.3](https://github.com/cedricziel/baserow-dart/compare/v0.1.2...v0.1.3) (2025-01-01)
 
 
