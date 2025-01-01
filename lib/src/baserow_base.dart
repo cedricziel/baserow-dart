@@ -500,21 +500,21 @@ class Table {
   final int id;
   final String name;
   final int order;
-  final List<Field> fields;
+  final List<Field>? fields;
 
   Table({
     required this.id,
     required this.name,
     required this.order,
-    required this.fields,
+    this.fields,
   });
 
   factory Table.fromJson(Map<String, dynamic> json) => Table(
         id: (json['id'] as num).toInt(),
         name: json['name'] as String,
         order: (json['order'] as num).toInt(),
-        fields: (json['fields'] as List<dynamic>)
-            .map((e) => Field.fromJson(e as Map<String, dynamic>))
+        fields: (json['fields'] as List<dynamic>?)
+            ?.map((e) => Field.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
 
@@ -522,7 +522,7 @@ class Table {
         'id': id,
         'name': name,
         'order': order,
-        'fields': fields.map((f) => f.toJson()).toList(),
+        if (fields != null) 'fields': fields!.map((f) => f.toJson()).toList(),
       };
 }
 
