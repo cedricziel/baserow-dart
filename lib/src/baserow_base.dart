@@ -188,11 +188,31 @@ class Row {
     required this.fields,
   });
 
-  factory Row.fromJson(Map<String, dynamic> json) => Row(
-        id: json['id'] as int,
-        order: json['order'] as int,
-        fields: json['fields'] as Map<String, dynamic>,
-      );
+  factory Row.fromJson(Map<String, dynamic> json) {
+    // Handle the order field which can be numeric or non-numeric
+    var order = json['order'];
+    int orderValue;
+    if (order is num) {
+      orderValue = order.toInt();
+    } else if (order is String) {
+      // Try to parse as integer, default to 0 if not possible
+      try {
+        orderValue = int.parse(order);
+      } catch (e) {
+        orderValue = 0;
+      }
+    } else {
+      orderValue = 0;
+    }
+
+    return Row(
+      id: (json['id'] is String)
+          ? int.parse(json['id'] as String)
+          : (json['id'] as num).toInt(),
+      order: orderValue,
+      fields: json['fields'] as Map<String, dynamic>,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,
