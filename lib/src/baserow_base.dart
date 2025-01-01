@@ -43,11 +43,28 @@ class AuthResponse {
     required this.user,
   });
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) => AuthResponse(
-        token: json['token'] as String,
-        refreshToken: json['refresh_token'] as String,
-        user: json['user'] as Map<String, dynamic>,
-      );
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    final token = json['token'];
+    if (token == null || token is! String) {
+      throw FormatException('Missing or invalid field: token');
+    }
+
+    final refreshToken = json['refresh_token'];
+    if (refreshToken == null || refreshToken is! String) {
+      throw FormatException('Missing or invalid field: refresh_token');
+    }
+
+    final user = json['user'];
+    if (user == null || user is! Map<String, dynamic>) {
+      throw FormatException('Missing or invalid field: user');
+    }
+
+    return AuthResponse(
+      token: token,
+      refreshToken: refreshToken,
+      user: user,
+    );
+  }
 }
 
 /// Filter operator for querying rows
@@ -137,18 +154,20 @@ class ListRowsOptions {
     this.userFieldNames = false,
   });
 
-  Map<String, dynamic> toQueryParameters() {
-    return {
-      if (page != null) 'page': page.toString(),
-      if (size != null) 'size': size.toString(),
-      if (orderBy != null)
-        'order_by': descending == true ? '-$orderBy' : orderBy,
-      if (filters != null && filters!.isNotEmpty)
-        'filters': jsonEncode(filters!.map((f) => f.toJson()).toList()),
-      if (includeFieldMetadata) 'include': 'field_metadata',
-      if (viewId != null) 'view_id': viewId.toString(),
-      if (userFieldNames) 'user_field_names': 'true',
-    };
+  Map<String, String> toQueryParameters() {
+    final params = <String, String>{};
+    if (page != null) params['page'] = page.toString();
+    if (size != null) params['size'] = size.toString();
+    if (orderBy != null) {
+      params['order_by'] = descending == true ? '-$orderBy' : orderBy as String;
+    }
+    if (filters != null && filters!.isNotEmpty) {
+      params['filters'] = jsonEncode(filters!.map((f) => f.toJson()).toList());
+    }
+    if (includeFieldMetadata) params['include'] = 'field_metadata';
+    if (viewId != null) params['view_id'] = viewId.toString();
+    if (userFieldNames) params['user_field_names'] = 'true';
+    return params;
   }
 }
 
@@ -166,14 +185,35 @@ class RowsResponse {
     required this.results,
   });
 
-  factory RowsResponse.fromJson(Map<String, dynamic> json) => RowsResponse(
-        count: json['count'] as int,
-        next: json['next'] as String?,
-        previous: json['previous'] as String?,
-        results: (json['results'] as List<dynamic>)
-            .map((row) => Row.fromJson(row as Map<String, dynamic>))
-            .toList(),
-      );
+  factory RowsResponse.fromJson(Map<String, dynamic> json) {
+    final count = json['count'];
+    if (count == null) {
+      throw FormatException('Missing required field: count');
+    }
+
+    final countValue =
+        count is String ? int.parse(count) : (count as num).toInt();
+    final next = json['next'] as String?;
+    final previous = json['previous'] as String?;
+    final resultsList = json['results'];
+    if (resultsList == null || resultsList is! List) {
+      throw FormatException('Missing or invalid field: results');
+    }
+
+    final results = resultsList.map((row) {
+      if (row is! Map<String, dynamic>) {
+        throw FormatException('Invalid row format in results');
+      }
+      return Row.fromJson(row);
+    }).toList();
+
+    return RowsResponse(
+      count: countValue,
+      next: next,
+      previous: previous,
+      results: results,
+    );
+  }
 }
 
 /// Represents a row in a Baserow table
@@ -205,20 +245,39 @@ class Row {
       orderValue = 0;
     }
 
+    // Extract all fields except id and order
+    final fields = Map<String, dynamic>.fromEntries(
+      json.entries.where((entry) => entry.key != 'id' && entry.key != 'order'),
+    );
+
+    final id = json['id'];
+    if (id == null) {
+      throw FormatException('Missing required field: id');
+    }
+
+    final idValue = id is String ? int.parse(id) : (id as num).toInt();
+
     return Row(
-      id: (json['id'] is String)
-          ? int.parse(json['id'] as String)
-          : (json['id'] as num).toInt(),
+      id: idValue,
       order: orderValue,
-      fields: json['fields'] as Map<String, dynamic>,
+      fields: fields,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'order': order,
-        'fields': fields,
-      };
+  Map<String, dynamic> toJson() {
+    // Create a new map with id and order
+    final result = <String, dynamic>{
+      'id': id,
+      'order': order,
+    };
+
+    // Add all fields at root level, ensuring values are properly typed
+    fields.forEach((key, value) {
+      result[key] = value;
+    });
+
+    return result;
+  }
 }
 
 /// The main Baserow client class for interacting with the Baserow API.
@@ -237,9 +296,10 @@ class BaserowClient {
       'Content-Type': 'application/json',
     };
 
-    if (config.token != null) {
+    final token = config.token;
+    if (token != null) {
       final prefix = config.authType == BaserowAuthType.jwt ? 'JWT' : 'Token';
-      headers['Authorization'] = '$prefix ${config.token}';
+      headers['Authorization'] = '$prefix $token';
     }
 
     return headers;
@@ -261,7 +321,11 @@ class BaserowClient {
       'refresh_token': refreshToken,
     });
 
-    return response['token'] as String;
+    final token = response['token'];
+    if (token == null || token is! String) {
+      throw FormatException('Missing or invalid field: token');
+    }
+    return token;
   }
 
   /// Verify JWT token
@@ -277,7 +341,7 @@ class BaserowClient {
   }
 
   /// Performs a GET request to the Baserow API
-  Future<dynamic> get(String path, [Map<String, dynamic>? queryParams]) async {
+  Future<dynamic> get(String path, [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
     if (queryParams != null) {
       url = url.replace(queryParameters: queryParams);
@@ -300,7 +364,7 @@ class BaserowClient {
 
   /// Performs a POST request to the Baserow API
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> data,
-      [Map<String, dynamic>? queryParams]) async {
+      [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
     if (queryParams != null) {
       url = url.replace(queryParameters: queryParams);
@@ -323,7 +387,7 @@ class BaserowClient {
 
   /// Performs a PATCH request to the Baserow API
   Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> data,
-      [Map<String, dynamic>? queryParams]) async {
+      [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
     if (queryParams != null) {
       url = url.replace(queryParameters: queryParams);

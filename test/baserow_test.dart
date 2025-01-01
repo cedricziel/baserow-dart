@@ -3,90 +3,102 @@ import 'package:test/test.dart';
 
 void main() {
   group('Row', () {
-    test('creates from JSON', () {
+    test('creates from JSON with field_* properties (user_field_names=false)',
+        () {
       final json = {
         'id': 1,
         'order': 1,
-        'fields': {
-          'Name': 'John Doe',
-          'Email': 'john@example.com',
-        },
+        'field_123': 'John Doe',
+        'field_456': 'john@example.com',
       };
 
       final row = Row.fromJson(json);
       expect(row.id, equals(1));
       expect(row.order, equals(1));
-      expect(row.fields['Name'], equals('John Doe'));
-      expect(row.fields['Email'], equals('john@example.com'));
+      expect(row.fields['field_123'], equals('John Doe'));
+      expect(row.fields['field_456'], equals('john@example.com'));
+    });
+
+    test('creates from JSON with user field names (user_field_names=true)', () {
+      final json = {
+        'id': 894,
+        'order': 1,
+        'title': 'Important Task',
+        'description': 'Must be done soon',
+        'status': 'pending'
+      };
+
+      final row = Row.fromJson(json);
+      expect(row.id, equals(894));
+      expect(row.order, equals(1));
+      expect(row.fields['title'], equals('Important Task'));
+      expect(row.fields['description'], equals('Must be done soon'));
+      expect(row.fields['status'], equals('pending'));
     });
 
     test('handles non-numeric order field', () {
       final json = {
         'id': '1',
         'order': 'non-numeric',
-        'fields': {
-          'Name': 'John Doe',
-        },
+        'field_1': 'John Doe',
       };
 
       final row = Row.fromJson(json);
       expect(row.id, equals(1));
       expect(row.order, equals(0));
-      expect(row.fields['Name'], equals('John Doe'));
+      expect(row.fields['field_1'], equals('John Doe'));
     });
 
     test('handles complex field types from API', () {
       final json = {
         'id': 0,
         'order': 'non-numeric',
-        'fields': {
-          'field_1': 'string',
-          'field_2': 'string',
-          'field_3': 'string',
-          'field_4': 'string',
-          'field_5': 'pattern',
-          'field_6': 0,
-          'field_7': false,
-          'field_8': '2019-08-24',
-          'field_9': '2019-08-24T14:15:22Z',
-          'field_10': {'id': 0, 'name': 'string'},
-          'field_11': '2019-08-24T14:15:22Z',
-          'field_12': {'id': 0, 'name': 'string'},
-          'field_13': 0.1,
-          'field_14': [
-            {'id': 0, 'value': 'string', 'order': 'non-numeric'}
-          ],
-          'field_15': [
-            {
-              'url': 'http://example.com',
-              'thumbnails': {'property1': null, 'property2': null},
-              'visible_name': 'string',
-              'name': 'string',
-              'size': 0,
-              'mime_type': 'string',
-              'is_image': true,
-              'image_width': 0,
-              'image_height': 0,
-              'uploaded_at': '2019-08-24T14:15:22Z'
-            }
-          ],
-          'field_16': {'id': 0, 'value': 'string', 'color': 'string'},
-          'field_17': [
-            {'id': 0, 'value': 'string', 'color': 'string'}
-          ],
-          'field_18': 'string',
-          'field_19': 'string',
-          'field_20': 'string',
-          'field_21': 'string',
-          'field_22': 'string',
-          'field_23': [
-            {'id': 0, 'name': 'string'}
-          ],
-          'field_24': 'ac3711cb-e1e2-480d-8b6c-2c05cdca1836',
-          'field_25': 0,
-          'field_26': true,
-          'field_27': 'string'
-        }
+        'field_1': 'string',
+        'field_2': 'string',
+        'field_3': 'string',
+        'field_4': 'string',
+        'field_5': 'pattern',
+        'field_6': 0,
+        'field_7': false,
+        'field_8': '2019-08-24',
+        'field_9': '2019-08-24T14:15:22Z',
+        'field_10': {'id': 0, 'name': 'string'},
+        'field_11': '2019-08-24T14:15:22Z',
+        'field_12': {'id': 0, 'name': 'string'},
+        'field_13': 0.1,
+        'field_14': [
+          {'id': 0, 'value': 'string', 'order': 'non-numeric'}
+        ],
+        'field_15': [
+          {
+            'url': 'http://example.com',
+            'thumbnails': {'property1': null, 'property2': null},
+            'visible_name': 'string',
+            'name': 'string',
+            'size': 0,
+            'mime_type': 'string',
+            'is_image': true,
+            'image_width': 0,
+            'image_height': 0,
+            'uploaded_at': '2019-08-24T14:15:22Z'
+          }
+        ],
+        'field_16': {'id': 0, 'value': 'string', 'color': 'string'},
+        'field_17': [
+          {'id': 0, 'value': 'string', 'color': 'string'}
+        ],
+        'field_18': 'string',
+        'field_19': 'string',
+        'field_20': 'string',
+        'field_21': 'string',
+        'field_22': 'string',
+        'field_23': [
+          {'id': 0, 'name': 'string'}
+        ],
+        'field_24': 'ac3711cb-e1e2-480d-8b6c-2c05cdca1836',
+        'field_25': 0,
+        'field_26': true,
+        'field_27': 'string'
       };
 
       final row = Row.fromJson(json);
@@ -101,7 +113,7 @@ void main() {
           equals('http://example.com'));
     });
 
-    test('converts to JSON', () {
+    test('converts to JSON with user field names', () {
       final row = Row(
         id: 1,
         order: 1,
@@ -114,8 +126,25 @@ void main() {
       final json = row.toJson();
       expect(json['id'], equals(1));
       expect(json['order'], equals(1));
-      expect(json['fields']['Name'], equals('John Doe'));
-      expect(json['fields']['Email'], equals('john@example.com'));
+      expect(json['Name'], equals('John Doe'));
+      expect(json['Email'], equals('john@example.com'));
+    });
+
+    test('converts to JSON with field_* properties', () {
+      final row = Row(
+        id: 1,
+        order: 1,
+        fields: {
+          'field_123': 'John Doe',
+          'field_456': 'john@example.com',
+        },
+      );
+
+      final json = row.toJson();
+      expect(json['id'], equals(1));
+      expect(json['order'], equals(1));
+      expect(json['field_123'], equals('John Doe'));
+      expect(json['field_456'], equals('john@example.com'));
     });
   });
 
@@ -129,12 +158,12 @@ void main() {
           {
             'id': 1,
             'order': 1,
-            'fields': {'Name': 'John Doe'},
+            'field_1': 'John Doe',
           },
           {
             'id': 2,
             'order': 2,
-            'fields': {'Name': 'Jane Smith'},
+            'field_1': 'Jane Smith',
           },
         ],
       };
@@ -144,8 +173,8 @@ void main() {
       expect(response.next, isNotNull);
       expect(response.previous, isNull);
       expect(response.results, hasLength(2));
-      expect(response.results[0].fields['Name'], equals('John Doe'));
-      expect(response.results[1].fields['Name'], equals('Jane Smith'));
+      expect(response.results[0].fields['field_1'], equals('John Doe'));
+      expect(response.results[1].fields['field_1'], equals('Jane Smith'));
     });
 
     test('handles complex API response', () {
@@ -157,12 +186,10 @@ void main() {
           {
             'id': 0,
             'order': 'non-numeric',
-            'fields': {
-              'field_1': 'string',
-              'field_7': false,
-              'field_13': 0.1,
-              'field_26': true
-            }
+            'field_1': 'string',
+            'field_7': false,
+            'field_13': 0.1,
+            'field_26': true
           }
         ]
       };
