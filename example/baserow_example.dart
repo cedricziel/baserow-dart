@@ -101,12 +101,19 @@ void main() async {
       for (final table in tables) {
         print('  - ${table.name} (ID: ${table.id})');
 
-        // List fields in each table
-        if (table.fields != null) {
-          print('    Fields:');
-          for (final field in table.fields!) {
-            print('    - ${field.name} (Type: ${field.type})');
-          }
+        // List fields in the table
+        final fields = await authenticatedClient.listFields(table.id);
+        print('    Fields:');
+        for (final field in fields) {
+          print('    - ${field.name} (Type: ${field.type})');
+        }
+
+        // Alternative: Get table with fields in one call
+        final tableWithFields =
+            await authenticatedClient.getTableWithFields(table.id);
+        print('    Fields (alternative method):');
+        for (final field in tableWithFields.fields!) {
+          print('    - ${field.name} (Type: ${field.type})');
         }
 
         // Example: List rows with filtering, pagination, and view scoping
