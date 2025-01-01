@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/cedricziel/baserow-dart/compare/v0.1.4...v0.1.5) (2025-01-01)
+
+
+### Bug Fixes
+
+* fields are on root ([#15](https://github.com/cedricziel/baserow-dart/issues/15)) ([d5b3e37](https://github.com/cedricziel/baserow-dart/commit/d5b3e37fc38bb77ddeed598271c74c526aba3ff5))
+
 ## [0.1.4](https://github.com/cedricziel/baserow-dart/compare/v0.1.3...v0.1.4) (2025-01-01)
 
 
