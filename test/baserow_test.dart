@@ -1,12 +1,5 @@
-import 'dart:convert';
 import 'package:baserow/baserow.dart';
-import 'package:http/http.dart' as http;
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-
-@GenerateNiceMocks([MockSpec<http.Client>()])
-import 'baserow_test.mocks.dart';
 
 void main() {
   group('Row', () {
