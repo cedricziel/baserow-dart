@@ -354,7 +354,7 @@ class BaserowClient {
 
   /// Lists all tables in a database
   Future<List<Table>> listTables(int databaseId) async {
-    final response = await get('database/$databaseId/tables/');
+    final response = await get('database/tables/database/$databaseId/');
     final List<dynamic> data = response['tables'] as List<dynamic>;
 
     return data
