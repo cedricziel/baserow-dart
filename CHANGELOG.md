@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/cedricziel/baserow-dart/compare/v0.1.0...v0.1.1) (2025-01-01)
+
+
+### Bug Fixes
+
+* use correct endpoint to list tables ([#7](https://github.com/cedricziel/baserow-dart/issues/7)) ([14acd6b](https://github.com/cedricziel/baserow-dart/commit/14acd6b98afb99d1f4d8e8bdf3db186903d2e794))
+
 ## [0.1.0](https://github.com/cedricziel/baserow-dart/compare/v0.0.3...v0.1.0) (2024-12-30)
 
 
