@@ -364,6 +364,90 @@ void main() {
       ).called(1);
     });
 
+    test('correctly parses multiple tables from response', () async {
+      final expectedTables = [
+        {
+          'id': 586,
+          'name': 'credentials',
+          'order': 1,
+          'database_id': 165,
+          'data_sync': null
+        },
+        {
+          'id': 587,
+          'name': 'profiles',
+          'order': 2,
+          'database_id': 165,
+          'data_sync': null
+        },
+        {
+          'id': 588,
+          'name': 'products',
+          'order': 3,
+          'database_id': 165,
+          'data_sync': null
+        },
+        {
+          'id': 785,
+          'name': 'ideas',
+          'order': 4,
+          'database_id': 165,
+          'data_sync': null
+        },
+        {
+          'id': 786,
+          'name': 'motifs',
+          'order': 5,
+          'database_id': 165,
+          'data_sync': null
+        },
+        {
+          'id': 787,
+          'name': 'niches',
+          'order': 6,
+          'database_id': 165,
+          'data_sync': null
+        }
+      ];
+
+      when(
+        mockClient.get(
+          argThat(predicate((Uri uri) =>
+              uri.toString() ==
+              'https://api.baserow.io/api/database/tables/database/165/')),
+          headers: anyNamed('headers'),
+        ),
+      ).thenAnswer(
+        (_) => Future.value(
+          http.Response(
+            json.encode({
+              'tables': expectedTables,
+            }),
+            200,
+          ),
+        ),
+      );
+
+      final tables = await client.listTables(165);
+
+      expect(tables, hasLength(6));
+
+      // Verify each table's properties
+      for (var i = 0; i < tables.length; i++) {
+        expect(tables[i].id, equals(expectedTables[i]['id']));
+        expect(tables[i].name, equals(expectedTables[i]['name']));
+        expect(tables[i].order, equals(expectedTables[i]['order']));
+      }
+
+      // Verify specific tables
+      expect(tables[0].name, equals('credentials'));
+      expect(tables[2].name, equals('products'));
+      expect(tables[5].name, equals('niches'));
+
+      // Verify order is maintained
+      expect(tables.map((t) => t.order).toList(), equals([1, 2, 3, 4, 5, 6]));
+    });
+
     test('includes user_field_names in createRow when enabled', () async {
       await client.createRow(1, {'name': 'Test'}, userFieldNames: true);
       expect(lastUri.queryParameters['user_field_names'], equals('true'));
@@ -469,8 +553,9 @@ void main() {
       expect(table.id, equals(1));
       expect(table.name, equals('Test Table'));
       expect(table.order, equals(1));
-      expect(table.fields, hasLength(1));
-      expect(table.fields.first.name, equals('Name'));
+      expect(table.fields, isNotNull);
+      expect(table.fields!, hasLength(1));
+      expect(table.fields!.first.name, equals('Name'));
     });
 
     test('converts to JSON', () {
@@ -494,9 +579,10 @@ void main() {
       expect(json['name'], equals('Test Table'));
       expect(json['order'], equals(1));
       expect(json['fields'], hasLength(1));
+      expect(table.fields, isNotNull);
       final fieldJson =
           (json['fields'] as List<dynamic>).first as Map<String, dynamic>;
-      final expectedFieldJson = table.fields.first.toJson();
+      final expectedFieldJson = table.fields!.first.toJson();
       expect(fieldJson, equals(expectedFieldJson));
     });
   });

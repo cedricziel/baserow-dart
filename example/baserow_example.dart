@@ -102,9 +102,11 @@ void main() async {
         print('  - ${table.name} (ID: ${table.id})');
 
         // List fields in each table
-        print('    Fields:');
-        for (final field in table.fields) {
-          print('    - ${field.name} (Type: ${field.type})');
+        if (table.fields != null) {
+          print('    Fields:');
+          for (final field in table.fields!) {
+            print('    - ${field.name} (Type: ${field.type})');
+          }
         }
 
         // Example: List rows with filtering, pagination, and view scoping
