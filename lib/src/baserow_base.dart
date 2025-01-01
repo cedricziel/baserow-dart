@@ -205,12 +205,27 @@ class Row {
       orderValue = 0;
     }
 
+    // Handle both field formats:
+    // 1. Nested 'fields' object
+    // 2. Direct field_* properties on root
+    Map<String, dynamic> fields;
+    if (json.containsKey('fields')) {
+      fields = json['fields'] as Map<String, dynamic>;
+    } else {
+      fields = {};
+      for (var entry in json.entries) {
+        if (entry.key.startsWith('field_')) {
+          fields[entry.key] = entry.value;
+        }
+      }
+    }
+
     return Row(
       id: (json['id'] is String)
           ? int.parse(json['id'] as String)
           : (json['id'] as num).toInt(),
       order: orderValue,
-      fields: json['fields'] as Map<String, dynamic>,
+      fields: fields,
     );
   }
 
