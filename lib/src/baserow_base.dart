@@ -166,7 +166,7 @@ class ListRowsOptions {
     }
     if (includeFieldMetadata) params['include'] = 'field_metadata';
     if (viewId != null) params['view_id'] = viewId.toString();
-    if (userFieldNames) params['user_field_names'] = 'true';
+    if (userFieldNames) params['user_field_names'] = userFieldNames.toString();
     return params;
   }
 }
