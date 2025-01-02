@@ -4,7 +4,9 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
 
 ## Features
 
-- 🔐 Authentication support with API tokens
+- 🔐 Authentication support
+  - API token authentication
+  - JWT authentication with refresh capabilities
 - 📚 Database management
   - List all accessible databases
   - View database details
@@ -16,8 +18,15 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
   - Create new rows
   - Update existing rows
   - Delete rows
+  - Batch operations for creating/updating/deleting multiple rows
+- 🔄 Real-time updates via WebSocket
+  - Subscribe to table changes
+  - Subscribe to workspace events
+  - Subscribe to application events
+  - Automatic reconnection handling
 - 🛠️ Type-safe data models for Baserow entities
 - ⚡ Efficient HTTP connection management
+- 🧪 Comprehensive testing utilities
 
 ## Installation
 
@@ -25,7 +34,7 @@ Add this package to your project's `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  baserow: ^0.0.3
+  baserow: ^0.1.0
 ```
 
 Then run:
@@ -263,7 +272,7 @@ Add the SDK to your dev_dependencies in `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
-  baserow: ^0.0.3
+  baserow: ^0.1.0
   test: ^1.24.0
 ```
 

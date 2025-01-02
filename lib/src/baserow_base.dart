@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
@@ -21,14 +22,41 @@ class BaserowConfig {
   /// Optional API token for authentication
   final String? token;
 
+  /// Optional refresh token for JWT authentication
+  final String? refreshToken;
+
   /// The type of authentication to use
   final BaserowAuthType authType;
+
+  /// Duration between JWT token refreshes (defaults to 10 minutes)
+  final Duration refreshInterval;
+
+  /// Callback when token is refreshed
+  final void Function(String token, String refreshToken)? onTokenRefresh;
 
   const BaserowConfig({
     required this.baseUrl,
     this.token,
+    this.refreshToken,
     this.authType = BaserowAuthType.token,
+    this.refreshInterval = const Duration(minutes: 10),
+    this.onTokenRefresh,
   });
+
+  /// Creates a new config with updated tokens
+  BaserowConfig copyWith({
+    String? token,
+    String? refreshToken,
+  }) {
+    return BaserowConfig(
+      baseUrl: baseUrl,
+      token: token ?? this.token,
+      refreshToken: refreshToken ?? this.refreshToken,
+      authType: authType,
+      refreshInterval: refreshInterval,
+      onTokenRefresh: onTokenRefresh,
+    );
+  }
 }
 
 /// Response from login attempt
@@ -282,13 +310,33 @@ class Row {
 
 /// The main Baserow client class for interacting with the Baserow API.
 class BaserowClient {
-  final BaserowConfig config;
+  BaserowConfig config;
   final http.Client _httpClient;
+  Timer? _refreshTimer;
 
   BaserowClient({
     required this.config,
     http.Client? httpClient,
-  }) : _httpClient = httpClient ?? http.Client();
+  }) : _httpClient = httpClient ?? http.Client() {
+    _setupTokenRefresh();
+  }
+
+  void _setupTokenRefresh() {
+    if (config.authType == BaserowAuthType.jwt &&
+        config.token != null &&
+        config.refreshToken != null) {
+      _refreshTimer?.cancel();
+      _refreshTimer = Timer.periodic(config.refreshInterval, (_) async {
+        try {
+          final newToken = await refreshToken(config.refreshToken!);
+          config = config.copyWith(token: newToken);
+          config.onTokenRefresh?.call(newToken, config.refreshToken!);
+        } catch (e) {
+          // Token refresh failed - could add error callback here if needed
+        }
+      });
+    }
+  }
 
   /// Creates headers for API requests including authentication if available
   Map<String, String> createHeaders() {
@@ -312,7 +360,16 @@ class BaserowClient {
       'password': password,
     });
 
-    return AuthResponse.fromJson(response);
+    final authResponse = AuthResponse.fromJson(response);
+    if (config.authType == BaserowAuthType.jwt) {
+      config = config.copyWith(
+        token: authResponse.token,
+        refreshToken: authResponse.refreshToken,
+      );
+      _setupTokenRefresh();
+    }
+
+    return authResponse;
   }
 
   /// Refresh JWT token
@@ -650,6 +707,7 @@ class BaserowClient {
 
   /// Closes the HTTP client
   void close() {
+    _refreshTimer?.cancel();
     _httpClient.close();
   }
 }
