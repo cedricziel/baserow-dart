@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/cedricziel/baserow-dart/compare/v0.2.0...v0.2.1) (2025-01-02)
+
+
+### Bug Fixes
+
+* use user_field_names ([#19](https://github.com/cedricziel/baserow-dart/issues/19)) ([c7c00f3](https://github.com/cedricziel/baserow-dart/commit/c7c00f3a508edfd4988525f35587862d60529d7a))
+
 ## [0.2.0](https://github.com/cedricziel/baserow-dart/compare/v0.1.5...v0.2.0) (2025-01-02)
 
 
