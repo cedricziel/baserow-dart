@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'package:fake_async/fake_async.dart';
 
 import 'baserow_test.mocks.dart';
 
@@ -203,6 +204,131 @@ void main() {
         expect(params['include'], equals('field_metadata'));
         expect(params['view_id'], equals('123'));
         expect(params['user_field_names'], equals('true'));
+      });
+    });
+
+    group('JWT Authentication', () {
+      test('automatically refreshes token on interval', () {
+        return fakeAsync((async) {
+          final mockClient = MockClient();
+          var tokenRefreshCount = 0;
+          var currentToken = 'initial-token';
+          final refreshToken = 'refresh-token';
+
+          final refreshUri =
+              Uri.parse('http://localhost/api/user/token-refresh/');
+
+          when(mockClient.post(
+            refreshUri,
+            headers: anyNamed('headers'),
+            body: anyNamed('body'),
+          )).thenAnswer((_) async {
+            tokenRefreshCount++;
+            currentToken = 'new-token-$tokenRefreshCount';
+            return http.Response(
+              jsonEncode({'token': currentToken}),
+              200,
+            );
+          });
+
+          final client = BaserowClient(
+            config: BaserowConfig(
+              baseUrl: 'http://localhost',
+              token: 'initial-token',
+              refreshToken: refreshToken,
+              authType: BaserowAuthType.jwt,
+              refreshInterval: const Duration(minutes: 1),
+              onTokenRefresh: (token, _) {
+                expect(token, equals(currentToken));
+              },
+            ),
+            httpClient: mockClient,
+          );
+
+          async.elapse(const Duration(minutes: 3));
+
+          verify(mockClient.post(
+            refreshUri,
+            headers: anyNamed('headers'),
+            body: anyNamed('body'),
+          )).called(3);
+          expect(client.config.token, equals('new-token-3'));
+
+          client.close();
+        });
+      });
+
+      test('sets up refresh timer after successful login', () async {
+        final mockClient = MockClient();
+        final loginResponse = {
+          'token': 'new-token',
+          'refresh_token': 'new-refresh-token',
+          'user': {'id': 1, 'username': 'test'},
+        };
+
+        final loginUri = Uri.parse('http://localhost/api/user/token-auth/');
+
+        when(mockClient.post(
+          loginUri,
+          headers: anyNamed('headers'),
+          body: anyNamed('body'),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode(loginResponse),
+              200,
+            ));
+
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: mockClient,
+        );
+
+        final response = await client.login('test@example.com', 'password');
+
+        expect(response.token, equals('new-token'));
+        expect(response.refreshToken, equals('new-refresh-token'));
+        expect(client.config.token, equals('new-token'));
+        expect(client.config.refreshToken, equals('new-refresh-token'));
+
+        client.close();
+      });
+
+      test('handles refresh token failure gracefully', () {
+        return fakeAsync((async) {
+          final mockClient = MockClient();
+          var refreshAttempts = 0;
+
+          final refreshUri =
+              Uri.parse('http://localhost/api/user/token-refresh/');
+
+          when(mockClient.post(
+            refreshUri,
+            headers: anyNamed('headers'),
+            body: anyNamed('body'),
+          )).thenAnswer((_) async {
+            refreshAttempts++;
+            return http.Response('Unauthorized', 401);
+          });
+
+          final client = BaserowClient(
+            config: BaserowConfig(
+              baseUrl: 'http://localhost',
+              token: 'initial-token',
+              refreshToken: 'refresh-token',
+              authType: BaserowAuthType.jwt,
+              refreshInterval: const Duration(minutes: 1),
+            ),
+            httpClient: mockClient,
+          );
+
+          async.elapse(const Duration(minutes: 1));
+          expect(refreshAttempts, equals(1));
+          expect(client.config.token, equals('initial-token'));
+
+          client.close();
+        });
       });
     });
 
