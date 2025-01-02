@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/cedricziel/baserow-dart/compare/v0.2.1...v0.3.0) (2025-01-02)
+
+
+### Features
+
+* add token refresh for JWT ([#21](https://github.com/cedricziel/baserow-dart/issues/21)) ([6d55d5b](https://github.com/cedricziel/baserow-dart/commit/6d55d5b987fa15cd0337b8b183d2b3cf02f33896))
+
 ## [0.2.1](https://github.com/cedricziel/baserow-dart/compare/v0.2.0...v0.2.1) (2025-01-02)
 
 
