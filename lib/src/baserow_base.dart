@@ -484,6 +484,75 @@ class BaserowClient {
     return RowsResponse.fromJson(response);
   }
 
+  /// Lists all rows in a table, automatically handling pagination
+  Future<List<Row>> listAllRows(
+    int tableId, {
+    ListRowsOptions options = const ListRowsOptions(),
+  }) async {
+    final allRows = <Row>[];
+    var currentPage = 1;
+
+    while (true) {
+      final response = await listRows(
+        tableId,
+        options: ListRowsOptions(
+          page: currentPage,
+          size: options.size ?? 100,
+          orderBy: options.orderBy,
+          descending: options.descending,
+          filters: options.filters,
+          includeFieldMetadata: options.includeFieldMetadata,
+          viewId: options.viewId,
+          userFieldNames: options.userFieldNames,
+        ),
+      );
+
+      allRows.addAll(response.results);
+
+      if (response.next == null) {
+        break;
+      }
+
+      currentPage++;
+    }
+
+    return allRows;
+  }
+
+  /// Returns a stream of rows from a table, yielding rows as they are fetched
+  Stream<Row> streamRows(
+    int tableId, {
+    ListRowsOptions options = const ListRowsOptions(),
+  }) async* {
+    var currentPage = 1;
+
+    while (true) {
+      final response = await listRows(
+        tableId,
+        options: ListRowsOptions(
+          page: currentPage,
+          size: options.size ?? 100,
+          orderBy: options.orderBy,
+          descending: options.descending,
+          filters: options.filters,
+          includeFieldMetadata: options.includeFieldMetadata,
+          viewId: options.viewId,
+          userFieldNames: options.userFieldNames,
+        ),
+      );
+
+      for (final row in response.results) {
+        yield row;
+      }
+
+      if (response.next == null) {
+        break;
+      }
+
+      currentPage++;
+    }
+  }
+
   /// Creates a new row in a table
   Future<Row> createRow(
     int tableId,
