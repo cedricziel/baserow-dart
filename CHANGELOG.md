@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/cedricziel/baserow-dart/compare/v0.1.5...v0.2.0) (2025-01-02)
+
+
+### Features
+
+* add methods to return all rows ([#17](https://github.com/cedricziel/baserow-dart/issues/17)) ([82d6db4](https://github.com/cedricziel/baserow-dart/commit/82d6db49e1006ad5a1446d5d2fc872f7bf324b86))
+
 ## [0.1.5](https://github.com/cedricziel/baserow-dart/compare/v0.1.4...v0.1.5) (2025-01-01)
 
 
