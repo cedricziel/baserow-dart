@@ -175,6 +175,37 @@ void main() {
       });
     });
 
+    group('ListRowsOptions', () {
+      test('toQueryParameters includes all parameters correctly', () {
+        final options = ListRowsOptions(
+          page: 2,
+          size: 25,
+          orderBy: 'name',
+          descending: true,
+          filters: [
+            RowFilter(
+              field: 'age',
+              operator: FilterOperator.greaterThan,
+              value: 18,
+            ),
+          ],
+          includeFieldMetadata: true,
+          viewId: 123,
+          userFieldNames: true,
+        );
+
+        final params = options.toQueryParameters();
+
+        expect(params['page'], equals('2'));
+        expect(params['size'], equals('25'));
+        expect(params['order_by'], equals('-name'));
+        expect(params['filters'], isNotEmpty);
+        expect(params['include'], equals('field_metadata'));
+        expect(params['view_id'], equals('123'));
+        expect(params['user_field_names'], equals('true'));
+      });
+    });
+
     group('streamRows', () {
       test('streams all rows with single page', () async {
         final uri = Uri.parse('http://localhost/api/database/rows/table/1/')
