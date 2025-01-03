@@ -1,18 +1,141 @@
 import 'dart:convert';
 
-/// Filter operator for querying rows
+/// Filter operators for querying rows in Baserow tables.
+///
+/// Each operator type corresponds to a specific filtering operation that can be applied
+/// to table fields. The operators are grouped by their primary use cases:
+///
+/// Basic comparison:
+/// - [equal], [notEqual]: Basic equality checks
+///
+/// Date filters:
+/// - [dateIs], [dateIsNot]: Compare with specific dates
+/// - [dateIsBefore], [dateIsOnOrBefore]: Compare with dates before
+/// - [dateIsAfter], [dateIsOnOrAfter]: Compare with dates after
+/// - [dateIsWithin]: Check if date falls within a range
+/// - [dateEqualsDayOfMonth]: Match specific day of month
+///
+/// Value comparison:
+/// - [hasEmptyValue], [hasNotEmptyValue]: Check for empty/non-empty values
+/// - [hasValueEqual], [hasNotValueEqual]: Check for specific values
+/// - [hasValueContains], [hasNotValueContains]: Check if value contains substring
+/// - [hasValueContainsWord], [hasNotValueContainsWord]: Check if value contains word
+/// - [hasValueLengthIsLowerThan]: Compare value length
+/// - [hasAllValuesEqual]: Check if all values match
+///
+/// Text filters:
+/// - [contains], [containsNot]: Check for substring presence
+/// - [containsWord], [doesntContainWord]: Check for word presence
+///
+/// File filters:
+/// - [filenameContains]: Search in filenames
+/// - [hasFileType]: Filter by file type (image/document)
+/// - [filesLowerThan]: Compare number of files
+///
+/// Numeric filters:
+/// - [higherThan], [higherThanOrEqual]: Greater than comparisons
+/// - [lowerThan], [lowerThanOrEqual]: Less than comparisons
+/// - [lengthIsLowerThan]: Compare string lengths
+/// - [isEvenAndWhole]: Check for even whole numbers
+///
+/// Select filters:
+/// - [singleSelectEqual], [singleSelectNotEqual]: Single option matching
+/// - [singleSelectIsAnyOf], [singleSelectIsNoneOf]: Multiple option matching
+///
+/// Boolean filter:
+/// - [boolean]: True/false checks
+///
+/// Link row filters:
+/// - [linkRowHas], [linkRowHasNot]: Check linked row presence
+/// - [linkRowContains], [linkRowNotContains]: Search in linked rows
+///
+/// Multi-select filters:
+/// - [multipleSelectHas], [multipleSelectHasNot]: Check selected options
+///
+/// Collaborator filters:
+/// - [multipleCollaboratorsHas], [multipleCollaboratorsHasNot]: Filter by collaborators
+///
+/// Empty/Not empty:
+/// - [empty], [notEmpty]: Check for null/empty states
+///
+/// User filters:
+/// - [userIs], [userIsNot]: Filter by user
 enum FilterOperator {
+  // Basic comparison
   equal,
   notEqual,
-  greaterThan,
-  greaterThanOrEqual,
-  lessThan,
-  lessThanOrEqual,
+
+  // Date filters
+  dateIs,
+  dateIsNot,
+  dateIsBefore,
+  dateIsOnOrBefore,
+  dateIsAfter,
+  dateIsOnOrAfter,
+  dateIsWithin,
+  dateEqualsDayOfMonth,
+
+  // Value comparison
+  hasEmptyValue,
+  hasNotEmptyValue,
+  hasValueEqual,
+  hasNotValueEqual,
+  hasValueContains,
+  hasNotValueContains,
+  hasValueContainsWord,
+  hasNotValueContainsWord,
+  hasValueLengthIsLowerThan,
+  hasAllValuesEqual,
+
+  // Text filters
   contains,
   containsNot,
+  containsWord,
+  doesntContainWord,
+
+  // File filters
+  filenameContains,
   hasFileType,
-  isEmpty,
-  isNotEmpty,
+  filesLowerThan,
+
+  // Numeric filters
+  higherThan,
+  higherThanOrEqual,
+  lowerThan,
+  lowerThanOrEqual,
+  lengthIsLowerThan,
+  isEvenAndWhole,
+
+  // Select filters
+  singleSelectEqual,
+  singleSelectNotEqual,
+  singleSelectIsAnyOf,
+  singleSelectIsNoneOf,
+
+  // Boolean
+  boolean,
+
+  // Link row filters
+  linkRowHas,
+  linkRowHasNot,
+  linkRowContains,
+  linkRowNotContains,
+
+  // Multi-select filters
+  multipleSelectHas,
+  multipleSelectHasNot,
+
+  // Collaborator filters
+  multipleCollaboratorsHas,
+  multipleCollaboratorsHasNot,
+
+  // Empty/Not empty
+  empty,
+  notEmpty,
+
+  // User filters
+  userIs,
+  userIsNot,
 }
 
 /// Represents a filter condition for querying rows
@@ -29,17 +152,83 @@ class RowFilter {
 
   Map<String, dynamic> toJson() {
     final operatorStr = switch (operator) {
+      // Basic comparison
       FilterOperator.equal => 'equal',
       FilterOperator.notEqual => 'not_equal',
-      FilterOperator.greaterThan => 'greater_than',
-      FilterOperator.greaterThanOrEqual => 'greater_than_or_equal',
-      FilterOperator.lessThan => 'less_than',
-      FilterOperator.lessThanOrEqual => 'less_than_or_equal',
+
+      // Date filters
+      FilterOperator.dateIs => 'date_is',
+      FilterOperator.dateIsNot => 'date_is_not',
+      FilterOperator.dateIsBefore => 'date_is_before',
+      FilterOperator.dateIsOnOrBefore => 'date_is_on_or_before',
+      FilterOperator.dateIsAfter => 'date_is_after',
+      FilterOperator.dateIsOnOrAfter => 'date_is_on_or_after',
+      FilterOperator.dateIsWithin => 'date_is_within',
+      FilterOperator.dateEqualsDayOfMonth => 'date_equals_day_of_month',
+
+      // Value comparison
+      FilterOperator.hasEmptyValue => 'has_empty_value',
+      FilterOperator.hasNotEmptyValue => 'has_not_empty_value',
+      FilterOperator.hasValueEqual => 'has_value_equal',
+      FilterOperator.hasNotValueEqual => 'has_not_value_equal',
+      FilterOperator.hasValueContains => 'has_value_contains',
+      FilterOperator.hasNotValueContains => 'has_not_value_contains',
+      FilterOperator.hasValueContainsWord => 'has_value_contains_word',
+      FilterOperator.hasNotValueContainsWord => 'has_not_value_contains_word',
+      FilterOperator.hasValueLengthIsLowerThan =>
+        'has_value_length_is_lower_than',
+      FilterOperator.hasAllValuesEqual => 'has_all_values_equal',
+
+      // Text filters
       FilterOperator.contains => 'contains',
       FilterOperator.containsNot => 'contains_not',
+      FilterOperator.containsWord => 'contains_word',
+      FilterOperator.doesntContainWord => 'doesnt_contain_word',
+
+      // File filters
+      FilterOperator.filenameContains => 'filename_contains',
       FilterOperator.hasFileType => 'has_file_type',
-      FilterOperator.isEmpty => 'empty',
-      FilterOperator.isNotEmpty => 'not_empty',
+      FilterOperator.filesLowerThan => 'files_lower_than',
+
+      // Numeric filters
+      FilterOperator.higherThan => 'higher_than',
+      FilterOperator.higherThanOrEqual => 'higher_than_or_equal',
+      FilterOperator.lowerThan => 'lower_than',
+      FilterOperator.lowerThanOrEqual => 'lower_than_or_equal',
+      FilterOperator.lengthIsLowerThan => 'length_is_lower_than',
+      FilterOperator.isEvenAndWhole => 'is_even_and_whole',
+
+      // Select filters
+      FilterOperator.singleSelectEqual => 'single_select_equal',
+      FilterOperator.singleSelectNotEqual => 'single_select_not_equal',
+      FilterOperator.singleSelectIsAnyOf => 'single_select_is_any_of',
+      FilterOperator.singleSelectIsNoneOf => 'single_select_is_none_of',
+
+      // Boolean
+      FilterOperator.boolean => 'boolean',
+
+      // Link row filters
+      FilterOperator.linkRowHas => 'link_row_has',
+      FilterOperator.linkRowHasNot => 'link_row_has_not',
+      FilterOperator.linkRowContains => 'link_row_contains',
+      FilterOperator.linkRowNotContains => 'link_row_not_contains',
+
+      // Multi-select filters
+      FilterOperator.multipleSelectHas => 'multiple_select_has',
+      FilterOperator.multipleSelectHasNot => 'multiple_select_has_not',
+
+      // Collaborator filters
+      FilterOperator.multipleCollaboratorsHas => 'multiple_collaborators_has',
+      FilterOperator.multipleCollaboratorsHasNot =>
+        'multiple_collaborators_has_not',
+
+      // Empty/Not empty
+      FilterOperator.empty => 'empty',
+      FilterOperator.notEmpty => 'not_empty',
+
+      // User filters
+      FilterOperator.userIs => 'user_is',
+      FilterOperator.userIsNot => 'user_is_not',
     };
 
     return {

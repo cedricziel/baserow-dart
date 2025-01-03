@@ -186,7 +186,7 @@ void main() {
           filters: [
             RowFilter(
               field: 'age',
-              operator: FilterOperator.greaterThan,
+              operator: FilterOperator.higherThan,
               value: 18,
             ),
           ],
