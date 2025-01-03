@@ -1042,6 +1042,125 @@ void main() {
       });
     });
 
+    group('deleteRow', () {
+      test('deletes a row successfully with default webhook behavior',
+          () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/');
+
+        when(mockClient.delete(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response('', 204));
+
+        await client.deleteRow(1, 1);
+
+        verify(mockClient.delete(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).called(1);
+      });
+
+      test('deletes a row with webhooks disabled', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/')
+            .replace(queryParameters: {'send_webhook_events': 'false'});
+
+        when(mockClient.delete(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response('', 204));
+
+        await client.deleteRow(1, 1, sendWebhookEvents: false);
+
+        verify(mockClient.delete(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).called(1);
+      });
+
+      test('handles error response', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/');
+
+        when(mockClient.delete(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response('Row not found', 404));
+
+        expect(
+          () => client.deleteRow(1, 1),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            404,
+          )),
+        );
+      });
+    });
+
+    group('deleteRows', () {
+      test('deletes multiple rows successfully with default webhook behavior',
+          () async {
+        final uri = Uri.parse(
+            'http://localhost/api/database/rows/table/1/batch-delete/');
+        final rowIds = [1, 2];
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': rowIds}),
+        )).thenAnswer((_) async => http.Response('', 204));
+
+        await client.deleteRows(1, rowIds);
+
+        verify(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': rowIds}),
+        )).called(1);
+      });
+
+      test('deletes multiple rows with webhooks disabled', () async {
+        final uri = Uri.parse(
+                'http://localhost/api/database/rows/table/1/batch-delete/')
+            .replace(queryParameters: {'send_webhook_events': 'false'});
+        final rowIds = [1, 2];
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': rowIds}),
+        )).thenAnswer((_) async => http.Response('', 204));
+
+        await client.deleteRows(1, rowIds, sendWebhookEvents: false);
+
+        verify(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': rowIds}),
+        )).called(1);
+      });
+
+      test('handles error response', () async {
+        final uri = Uri.parse(
+            'http://localhost/api/database/rows/table/1/batch-delete/');
+        final rowIds = [1, 2];
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': rowIds}),
+        )).thenAnswer((_) async => http.Response('Invalid row IDs', 400));
+
+        expect(
+          () => client.deleteRows(1, rowIds),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
     group('streamRows', () {
       test('streams all rows with single page', () async {
         final uri = Uri.parse('http://localhost/api/database/rows/table/1/')

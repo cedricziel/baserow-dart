@@ -159,7 +159,7 @@ class BaserowClient {
   }
 
   /// Performs a POST request to the Baserow API
-  Future<Map<String, dynamic>> post(String path, Map<String, dynamic> data,
+  Future<dynamic> post(String path, Map<String, dynamic> data,
       [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
     if (queryParams != null) {
@@ -171,6 +171,10 @@ class BaserowClient {
       body: json.encode(data),
     );
 
+    if (response.statusCode == 204) {
+      return null;
+    }
+
     if (response.statusCode != 201 && response.statusCode != 200) {
       throw BaserowException(
         'Failed to perform POST request: ${response.statusCode}',
@@ -178,7 +182,7 @@ class BaserowClient {
       );
     }
 
-    return json.decode(response.body) as Map<String, dynamic>;
+    return json.decode(response.body);
   }
 
   /// Performs a PATCH request to the Baserow API
@@ -248,8 +252,12 @@ class BaserowClient {
   }
 
   /// Performs a DELETE request to the Baserow API
-  Future<void> delete(String path) async {
-    final url = Uri.parse('${config.baseUrl}/api/$path');
+  Future<void> delete(String path, [Map<String, String>? queryParams]) async {
+    var url = Uri.parse('${config.baseUrl}/api/$path');
+    if (queryParams != null) {
+      url = url.replace(queryParameters: queryParams);
+    }
+
     final response = await _httpClient.delete(
       url,
       headers: createHeaders(),
@@ -483,8 +491,20 @@ class BaserowClient {
   }
 
   /// Deletes a row from a table
-  Future<void> deleteRow(int tableId, int rowId) async {
-    await delete('database/rows/table/$tableId/$rowId/');
+  ///
+  /// If [sendWebhookEvents] is provided, it controls whether webhooks are triggered
+  /// after the operation. Defaults to true.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Delete row without triggering webhooks
+  /// await client.deleteRow(586, 123, sendWebhookEvents: false);
+  /// ```
+  Future<void> deleteRow(int tableId, int rowId,
+      {bool sendWebhookEvents = true}) async {
+    final queryParams =
+        !sendWebhookEvents ? {'send_webhook_events': 'false'} : null;
+    await delete('database/rows/table/$tableId/$rowId/', queryParams);
   }
 
   /// Uploads a file to Baserow
@@ -507,13 +527,27 @@ class BaserowClient {
     return FileUploadResponse.fromJson(response);
   }
 
-  /// Deletes multiple rows from a table
-  Future<void> deleteRows(int tableId, List<int> rowIds) async {
+  /// Deletes multiple rows from a table in batch mode
+  ///
+  /// If [sendWebhookEvents] is provided, it controls whether webhooks are triggered
+  /// after the operation. Defaults to true.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Delete multiple rows without triggering webhooks
+  /// await client.deleteRows(586, [123, 456], sendWebhookEvents: false);
+  /// ```
+  Future<void> deleteRows(
+    int tableId,
+    List<int> rowIds, {
+    bool sendWebhookEvents = true,
+  }) async {
+    final queryParams =
+        !sendWebhookEvents ? {'send_webhook_events': 'false'} : null;
     await post(
       'database/rows/table/$tableId/batch-delete/',
-      {
-        'items': rowIds.map((id) => {'id': id}).toList()
-      },
+      {'items': rowIds},
+      queryParams,
     );
   }
 

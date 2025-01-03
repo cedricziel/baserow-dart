@@ -215,8 +215,13 @@ await client.updateRow(
   userFieldNames: true,
 );
 
-// Delete a row
-await client.deleteRow(tableId, rowId);
+// Delete a single row
+await client.deleteRow(tableId, rowId);  // with webhooks
+await client.deleteRow(tableId, rowId, sendWebhookEvents: false);  // without webhooks
+
+// Delete multiple rows in batch
+await client.deleteRows(tableId, [123, 456]);  // with webhooks
+await client.deleteRows(tableId, [123, 456], sendWebhookEvents: false);  // without webhooks
 
 // Move a row to a new position
 final movedRow = await client.moveRow(
@@ -406,8 +411,14 @@ options: ListRowsOptions(
 - `Future<Map<String, dynamic>> updateRow(int tableId, int rowId, Map<String, dynamic> fields)`
   - Updates an existing row in a table
 
-- `Future<void> deleteRow(int tableId, int rowId)`
+- `Future<void> deleteRow(int tableId, int rowId, {bool sendWebhookEvents = true})`
   - Deletes a row from a table
+  - Optional `sendWebhookEvents` parameter controls webhook triggering (defaults to true)
+
+- `Future<void> deleteRows(int tableId, List<int> rowIds, {bool sendWebhookEvents = true})`
+  - Deletes multiple rows from a table in batch mode
+  - Takes a list of row IDs to delete
+  - Optional `sendWebhookEvents` parameter controls webhook triggering (defaults to true)
 
 ### Models
 
