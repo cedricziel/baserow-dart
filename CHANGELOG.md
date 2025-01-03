@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/cedricziel/baserow-dart/compare/v0.3.0...v0.4.0) (2025-01-03)
+
+
+### Features
+
+* add file upload ([#23](https://github.com/cedricziel/baserow-dart/issues/23)) ([f5ad68f](https://github.com/cedricziel/baserow-dart/commit/f5ad68f054d652aae5ec473f14e64e2bcd27dd73))
+
 ## [0.3.0](https://github.com/cedricziel/baserow-dart/compare/v0.2.1...v0.3.0) (2025-01-02)
 
 
