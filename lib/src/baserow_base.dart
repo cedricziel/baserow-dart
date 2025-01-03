@@ -397,6 +397,40 @@ class BaserowClient {
     }
   }
 
+  /// Logs out the user by blacklisting their refresh token
+  Future<void> logout() async {
+    if (config.authType != BaserowAuthType.jwt || config.refreshToken == null) {
+      throw BaserowException(
+          'Logout requires JWT authentication with a refresh token', 400);
+    }
+
+    try {
+      final url = Uri.parse('${config.baseUrl}/api/user/token-blacklist/');
+      final response = await _httpClient.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'refresh': config.refreshToken}),
+      );
+
+      if (response.statusCode != 204) {
+        throw BaserowException(
+          'Failed to blacklist token: ${response.statusCode}',
+          response.statusCode,
+        );
+      }
+
+      // Clean up tokens and stop refresh timer
+      _refreshTimer?.cancel();
+      _refreshTimer = null;
+      config = config.copyWith(token: null, refreshToken: null);
+    } catch (e) {
+      if (e is BaserowException) {
+        rethrow;
+      }
+      throw BaserowException('Failed to logout: $e', 500);
+    }
+  }
+
   /// Performs a GET request to the Baserow API
   Future<dynamic> get(String path, [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');

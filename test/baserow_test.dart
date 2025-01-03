@@ -841,6 +841,118 @@ void main() {
       });
     });
 
+    group('logout', () {
+      test('successfully logs out with JWT auth', () async {
+        final mockClient = MockClient();
+        final refreshToken = 'refresh-token';
+        var tokenRefreshCount = 0;
+
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'test-token',
+            refreshToken: refreshToken,
+            authType: BaserowAuthType.jwt,
+            refreshInterval: const Duration(minutes: 1),
+          ),
+          httpClient: mockClient,
+        );
+
+        final blacklistUri = Uri.parse('http://localhost/api/user/token-blacklist/');
+        when(mockClient.post(
+          blacklistUri,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'refresh': refreshToken}),
+        )).thenAnswer((_) async => http.Response('', 204));
+
+        await client.logout();
+
+        verify(mockClient.post(
+          blacklistUri,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'refresh': refreshToken}),
+        )).called(1);
+
+        expect(client.config.token, isNull);
+        expect(client.config.refreshToken, isNull);
+      });
+
+      test('throws error when not using JWT auth', () async {
+        final client = BaserowClient(
+          config: const BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'test-token',
+            authType: BaserowAuthType.token,
+          ),
+          httpClient: MockClient(),
+        );
+
+        expect(
+          () => client.logout(),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+
+      test('throws error when refresh token is missing', () async {
+        final client = BaserowClient(
+          config: const BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'test-token',
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: MockClient(),
+        );
+
+        expect(
+          () => client.logout(),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+
+      test('handles blacklist request failure', () async {
+        final mockClient = MockClient();
+        final refreshToken = 'refresh-token';
+
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'test-token',
+            refreshToken: refreshToken,
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: mockClient,
+        );
+
+        final blacklistUri = Uri.parse('http://localhost/api/user/token-blacklist/');
+        when(mockClient.post(
+          blacklistUri,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'refresh': refreshToken}),
+        )).thenAnswer((_) async => http.Response('Invalid token', 401));
+
+        expect(
+          () => client.logout(),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            401,
+          )),
+        );
+
+        // Tokens should not be cleared on failed logout
+        expect(client.config.token, isNotNull);
+        expect(client.config.refreshToken, isNotNull);
+      });
+    });
+
     group('streamRows', () {
       test('streams all rows with single page', () async {
         final uri = Uri.parse('http://localhost/api/database/rows/table/1/')
