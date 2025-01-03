@@ -357,8 +357,6 @@ void main() {
           'uploaded_at': '2024-01-01T12:00:00.000Z'
         };
 
-        final uri = Uri.parse('http://localhost/api/user-files/upload-file/');
-
         when(mockClient.send(any)).thenAnswer((_) async {
           final response = http.StreamedResponse(
             Stream.value(utf8.encode(json.encode(uploadResponse))),
@@ -383,8 +381,6 @@ void main() {
       test('handles upload error', () async {
         final fileBytes = utf8.encode('test file content');
         final filename = 'test.txt';
-
-        final uri = Uri.parse('http://localhost/api/user-files/upload-file/');
 
         when(mockClient.send(any)).thenAnswer((_) async {
           final response = http.StreamedResponse(
@@ -459,10 +455,8 @@ void main() {
           'uploaded_at': '2024-01-01T12:00:00.000Z'
         };
 
-        final uri =
-            Uri.parse('http://localhost/api/user-files/upload-via-url/');
         when(mockClient.post(
-          uri,
+          Uri.parse('http://localhost/api/user-files/upload-via-url/'),
           headers: anyNamed('headers'),
           body: jsonEncode({'url': 'https://example.com/image.png'}),
         )).thenAnswer((_) async => http.Response(
@@ -487,10 +481,8 @@ void main() {
       });
 
       test('handles upload error', () async {
-        final uri =
-            Uri.parse('http://localhost/api/user-files/upload-via-url/');
         when(mockClient.post(
-          uri,
+          Uri.parse('http://localhost/api/user-files/upload-via-url/'),
           headers: anyNamed('headers'),
           body: jsonEncode({'url': 'https://example.com/invalid.png'}),
         )).thenAnswer((_) async => http.Response(

@@ -62,17 +62,3 @@ Map<String, dynamic> _$FileUploadResponseToJson(FileUploadResponse instance) =>
       'image_height': instance.imageHeight,
       'uploaded_at': instance.uploadedAt,
     };
-
-ThumbnailInfo _$ThumbnailInfoFromJson(Map<String, dynamic> json) =>
-    ThumbnailInfo(
-      url: json['url'] as String,
-      width: (json['width'] as num?)?.toInt(),
-      height: (json['height'] as num?)?.toInt(),
-    );
-
-Map<String, dynamic> _$ThumbnailInfoToJson(ThumbnailInfo instance) =>
-    <String, dynamic>{
-      'url': instance.url,
-      'width': instance.width,
-      'height': instance.height,
-    };

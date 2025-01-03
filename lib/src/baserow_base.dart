@@ -883,7 +883,6 @@ class FileUploadResponse {
 }
 
 /// Information about a thumbnail
-@JsonSerializable()
 class ThumbnailInfo {
   final String url;
   final int? width;
