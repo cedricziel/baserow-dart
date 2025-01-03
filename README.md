@@ -4,6 +4,10 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
 
 ## Features
 
+- 📤 File uploads
+  - Upload files to Baserow
+  - Support for images with thumbnails
+  - Detailed file metadata
 - 🔐 Authentication support
   - API token authentication
   - JWT authentication with refresh capabilities
@@ -125,6 +129,48 @@ for (final db in databases) {
   }
 }
 ```
+
+### File Uploads
+
+```dart
+// Upload a local file
+final fileBytes = await File('image.png').readAsBytes();
+final response = await client.uploadFile(fileBytes, 'image.png');
+
+// Upload a file from a URL
+final urlResponse = await client.uploadFileViaUrl('https://example.com/image.png');
+
+// Access file information
+print('File URL: ${response.url}');
+print('File name: ${response.name}');
+print('File size: ${response.size}');
+print('MIME type: ${response.mimeType}');
+
+// For images, you can access thumbnails and dimensions
+if (response.isImage) {
+  print('Image width: ${response.imageWidth}');
+  print('Image height: ${response.imageHeight}');
+
+  // Access thumbnails
+  for (final entry in response.thumbnails.entries) {
+    print('Thumbnail ${entry.key}:');
+    print('  URL: ${entry.value.url}');
+    print('  Width: ${entry.value.width}');
+    print('  Height: ${entry.value.height}');
+  }
+}
+```
+
+Both upload methods return a FileUploadResponse that includes:
+
+- `url`: Direct URL to the uploaded file
+- `name`: The file name on the server
+- `size`: File size in bytes
+- `mimeType`: The file's MIME type
+- `isImage`: Whether the file is an image
+- `imageWidth` and `imageHeight`: Dimensions for image files
+- `thumbnails`: Map of available thumbnails with their URLs and dimensions
+- `uploadedAt`: Timestamp of when the file was uploaded
 
 ### Working with Rows
 

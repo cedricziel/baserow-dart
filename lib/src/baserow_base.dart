@@ -465,6 +465,49 @@ class BaserowClient {
     return json.decode(response.body) as Map<String, dynamic>;
   }
 
+  /// Performs a multipart file upload request to the Baserow API
+  Future<Map<String, dynamic>> uploadMultipart(
+    String path,
+    List<int> fileBytes,
+    String filename, [
+    Map<String, String>? queryParams,
+  ]) async {
+    var url = Uri.parse('${config.baseUrl}/api/$path');
+    if (queryParams != null) {
+      url = url.replace(queryParameters: queryParams);
+    }
+
+    final request = http.MultipartRequest('POST', url);
+
+    // Add authorization header
+    final token = config.token;
+    if (token != null) {
+      final prefix = config.authType == BaserowAuthType.jwt ? 'JWT' : 'Token';
+      request.headers['Authorization'] = '$prefix $token';
+    }
+
+    // Add the file
+    request.files.add(
+      http.MultipartFile.fromBytes(
+        'file',
+        fileBytes,
+        filename: filename,
+      ),
+    );
+
+    final streamedResponse = await _httpClient.send(request);
+    final response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode != 201 && response.statusCode != 200) {
+      throw BaserowException(
+        'Failed to perform file upload: ${response.statusCode}',
+        response.statusCode,
+      );
+    }
+
+    return json.decode(response.body) as Map<String, dynamic>;
+  }
+
   /// Performs a DELETE request to the Baserow API
   Future<void> delete(String path) async {
     final url = Uri.parse('${config.baseUrl}/api/$path');
@@ -695,6 +738,26 @@ class BaserowClient {
     await delete('database/rows/table/$tableId/$rowId/');
   }
 
+  /// Uploads a file to Baserow
+  Future<FileUploadResponse> uploadFile(
+      List<int> fileBytes, String filename) async {
+    final response = await uploadMultipart(
+      'user-files/upload-file/',
+      fileBytes,
+      filename,
+    );
+    return FileUploadResponse.fromJson(response);
+  }
+
+  /// Uploads a file to Baserow by downloading it from a URL
+  Future<FileUploadResponse> uploadFileViaUrl(String url) async {
+    final response = await post(
+      'user-files/upload-via-url/',
+      {'url': url},
+    );
+    return FileUploadResponse.fromJson(response);
+  }
+
   /// Deletes multiple rows from a table
   Future<void> deleteRows(int tableId, List<int> rowIds) async {
     await post(
@@ -783,6 +846,78 @@ class Field {
 }
 
 /// Custom exception for Baserow API errors
+/// Response from a file upload
+@JsonSerializable()
+class FileUploadResponse {
+  final String url;
+  final Map<String, ThumbnailInfo> thumbnails;
+  final String name;
+  final int size;
+  @JsonKey(name: 'mime_type')
+  final String mimeType;
+  @JsonKey(name: 'is_image')
+  final bool isImage;
+  @JsonKey(name: 'image_width')
+  final int? imageWidth;
+  @JsonKey(name: 'image_height')
+  final int? imageHeight;
+  @JsonKey(name: 'uploaded_at')
+  final String uploadedAt;
+
+  FileUploadResponse({
+    required this.url,
+    required this.thumbnails,
+    required this.name,
+    required this.size,
+    required this.mimeType,
+    required this.isImage,
+    this.imageWidth,
+    this.imageHeight,
+    required this.uploadedAt,
+  });
+
+  factory FileUploadResponse.fromJson(Map<String, dynamic> json) =>
+      _$FileUploadResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FileUploadResponseToJson(this);
+}
+
+/// Information about a thumbnail
+@JsonSerializable()
+class ThumbnailInfo {
+  final String url;
+  final int? width;
+  final int? height;
+
+  ThumbnailInfo({
+    required this.url,
+    this.width,
+    this.height,
+  });
+
+  factory ThumbnailInfo.fromJson(Map<String, dynamic> json) {
+    final url = json['url'];
+    if (url == null || url is! String) {
+      throw FormatException('Missing or invalid field: url');
+    }
+
+    final width = json['width'];
+    final height = json['height'];
+
+    return ThumbnailInfo(
+      url: url,
+      width: width == null ? null : (width as num).toInt(),
+      height: height == null ? null : (height as num).toInt(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'url': url,
+        if (width != null) 'width': width,
+        if (height != null) 'height': height,
+      };
+}
+
 class BaserowException implements Exception {
   final String message;
   final int statusCode;

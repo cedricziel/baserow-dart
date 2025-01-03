@@ -332,6 +332,183 @@ void main() {
       });
     });
 
+    group('uploadFile', () {
+      test('successfully uploads file', () async {
+        final fileBytes = utf8.encode('test file content');
+        final filename = 'test.txt';
+        final uploadResponse = {
+          'url': 'https://files.baserow.io/user_files/test.txt',
+          'thumbnails': {
+            'tiny': {
+              'url': 'https://files.baserow.io/thumbnails/tiny/test.txt',
+              'width': 21,
+              'height': 21
+            },
+            'small': {
+              'url': 'https://files.baserow.io/thumbnails/small/test.txt',
+              'width': 48,
+              'height': 48
+            }
+          },
+          'name': 'test.txt',
+          'size': 16,
+          'mime_type': 'text/plain',
+          'is_image': false,
+          'uploaded_at': '2024-01-01T12:00:00.000Z'
+        };
+
+        final uri = Uri.parse('http://localhost/api/user-files/upload-file/');
+
+        when(mockClient.send(any)).thenAnswer((_) async {
+          final response = http.StreamedResponse(
+            Stream.value(utf8.encode(json.encode(uploadResponse))),
+            200,
+          );
+          return response;
+        });
+
+        final response = await client.uploadFile(fileBytes, filename);
+
+        expect(response.url, equals(uploadResponse['url']));
+        expect(response.name, equals(uploadResponse['name']));
+        expect(response.size, equals(uploadResponse['size']));
+        expect(response.mimeType, equals(uploadResponse['mime_type']));
+        expect(response.isImage, equals(uploadResponse['is_image']));
+        expect(response.uploadedAt, equals(uploadResponse['uploaded_at']));
+        expect(response.thumbnails.length, equals(2));
+        expect(response.thumbnails['tiny']?.width, equals(21));
+        expect(response.thumbnails['small']?.height, equals(48));
+      });
+
+      test('handles upload error', () async {
+        final fileBytes = utf8.encode('test file content');
+        final filename = 'test.txt';
+
+        final uri = Uri.parse('http://localhost/api/user-files/upload-file/');
+
+        when(mockClient.send(any)).thenAnswer((_) async {
+          final response = http.StreamedResponse(
+            Stream.value(utf8.encode('{"error": "File too large"}')),
+            413,
+          );
+          return response;
+        });
+
+        expect(
+          () => client.uploadFile(fileBytes, filename),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            413,
+          )),
+        );
+      });
+
+      test('parses response with missing optional fields', () async {
+        final fileBytes = utf8.encode('test file content');
+        final filename = 'test.txt';
+        final uploadResponse = {
+          'url': 'https://files.baserow.io/user_files/test.txt',
+          'thumbnails': {},
+          'name': 'test.txt',
+          'size': 16,
+          'mime_type': 'text/plain',
+          'is_image': false,
+          'uploaded_at': '2024-01-01T12:00:00.000Z'
+        };
+
+        when(mockClient.send(any)).thenAnswer((_) async {
+          final response = http.StreamedResponse(
+            Stream.value(utf8.encode(json.encode(uploadResponse))),
+            200,
+          );
+          return response;
+        });
+
+        final response = await client.uploadFile(fileBytes, filename);
+
+        expect(response.url, equals(uploadResponse['url']));
+        expect(response.thumbnails, isEmpty);
+        expect(response.imageWidth, isNull);
+        expect(response.imageHeight, isNull);
+      });
+    });
+
+    group('uploadFileViaUrl', () {
+      test('successfully uploads file via URL', () async {
+        final uploadResponse = {
+          'url': 'https://files.baserow.io/user_files/test.png',
+          'thumbnails': {
+            'tiny': {
+              'url': 'https://files.baserow.io/thumbnails/tiny/test.png',
+              'width': 21,
+              'height': 21
+            },
+            'small': {
+              'url': 'https://files.baserow.io/thumbnails/small/test.png',
+              'width': 48,
+              'height': 48
+            }
+          },
+          'name': 'test.png',
+          'size': 229940,
+          'mime_type': 'image/png',
+          'is_image': true,
+          'image_width': 1280,
+          'image_height': 585,
+          'uploaded_at': '2024-01-01T12:00:00.000Z'
+        };
+
+        final uri =
+            Uri.parse('http://localhost/api/user-files/upload-via-url/');
+        when(mockClient.post(
+          uri,
+          headers: anyNamed('headers'),
+          body: jsonEncode({'url': 'https://example.com/image.png'}),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode(uploadResponse),
+              200,
+            ));
+
+        final response =
+            await client.uploadFileViaUrl('https://example.com/image.png');
+
+        expect(response.url, equals(uploadResponse['url']));
+        expect(response.name, equals(uploadResponse['name']));
+        expect(response.size, equals(uploadResponse['size']));
+        expect(response.mimeType, equals(uploadResponse['mime_type']));
+        expect(response.isImage, equals(uploadResponse['is_image']));
+        expect(response.imageWidth, equals(uploadResponse['image_width']));
+        expect(response.imageHeight, equals(uploadResponse['image_height']));
+        expect(response.uploadedAt, equals(uploadResponse['uploaded_at']));
+        expect(response.thumbnails.length, equals(2));
+        expect(response.thumbnails['tiny']?.width, equals(21));
+        expect(response.thumbnails['small']?.height, equals(48));
+      });
+
+      test('handles upload error', () async {
+        final uri =
+            Uri.parse('http://localhost/api/user-files/upload-via-url/');
+        when(mockClient.post(
+          uri,
+          headers: anyNamed('headers'),
+          body: jsonEncode({'url': 'https://example.com/invalid.png'}),
+        )).thenAnswer((_) async => http.Response(
+              '{"error": "Failed to download file"}',
+              400,
+            ));
+
+        expect(
+          () => client.uploadFileViaUrl('https://example.com/invalid.png'),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
     group('streamRows', () {
       test('streams all rows with single page', () async {
         final uri = Uri.parse('http://localhost/api/database/rows/table/1/')
