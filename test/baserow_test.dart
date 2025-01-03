@@ -501,6 +501,346 @@ void main() {
       });
     });
 
+    group('createRow', () {
+      test('creates a single row successfully', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/');
+        final fields = {'field_1': 'New Value'};
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode(fields),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'id': 1,
+              'order': 1,
+              'field_1': 'New Value',
+            }),
+            200));
+
+        final row = await client.createRow(1, fields);
+        expect(row.id, equals(1));
+        expect(row.fields['field_1'], equals('New Value'));
+      });
+
+      test('respects userFieldNames parameter', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/')
+            .replace(queryParameters: {'user_field_names': 'true'});
+        final fields = {'Name': 'New Value'};
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode(fields),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'id': 1,
+              'order': 1,
+              'Name': 'New Value',
+            }),
+            200));
+
+        final row = await client.createRow(1, fields, userFieldNames: true);
+        expect(row.id, equals(1));
+        expect(row.fields['Name'], equals('New Value'));
+      });
+
+      test('handles error response', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/');
+        final fields = {'field_1': 'New Value'};
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode(fields),
+        )).thenAnswer((_) async => http.Response('Invalid field value', 400));
+
+        expect(
+          () => client.createRow(1, fields),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
+    group('createRows', () {
+      test('creates multiple rows successfully', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/batch/');
+        final fieldsList = [
+          {'field_1': 'Value 1'},
+          {'field_1': 'Value 2'},
+        ];
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': fieldsList}),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'items': [
+                {
+                  'id': 1,
+                  'order': 1,
+                  'field_1': 'Value 1',
+                },
+                {
+                  'id': 2,
+                  'order': 2,
+                  'field_1': 'Value 2',
+                },
+              ],
+            }),
+            200));
+
+        final rows = await client.createRows(1, fieldsList);
+        expect(rows, hasLength(2));
+        expect(rows[0].fields['field_1'], equals('Value 1'));
+        expect(rows[1].fields['field_1'], equals('Value 2'));
+      });
+
+      test('respects userFieldNames parameter', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/batch/')
+                .replace(queryParameters: {'user_field_names': 'true'});
+        final fieldsList = [
+          {'Name': 'Value 1'},
+          {'Name': 'Value 2'},
+        ];
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': fieldsList}),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'items': [
+                {
+                  'id': 1,
+                  'order': 1,
+                  'Name': 'Value 1',
+                },
+                {
+                  'id': 2,
+                  'order': 2,
+                  'Name': 'Value 2',
+                },
+              ],
+            }),
+            200));
+
+        final rows =
+            await client.createRows(1, fieldsList, userFieldNames: true);
+        expect(rows, hasLength(2));
+        expect(rows[0].fields['Name'], equals('Value 1'));
+        expect(rows[1].fields['Name'], equals('Value 2'));
+      });
+
+      test('handles error response', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/batch/');
+        final fieldsList = [
+          {'field_1': 'Value 1'},
+          {'field_1': 'Value 2'},
+        ];
+
+        when(mockClient.post(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({'items': fieldsList}),
+        )).thenAnswer((_) async => http.Response('Invalid field values', 400));
+
+        expect(
+          () => client.createRows(1, fieldsList),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
+    group('updateRow', () {
+      test('updates a single row successfully', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/');
+        final fields = {'field_1': 'Updated Value'};
+
+        when(mockClient.patch(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode(fields),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'id': 1,
+              'order': 1,
+              'field_1': 'Updated Value',
+            }),
+            200));
+
+        final row = await client.updateRow(1, 1, fields);
+        expect(row.id, equals(1));
+        expect(row.fields['field_1'], equals('Updated Value'));
+      });
+
+      test('respects userFieldNames parameter', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/')
+            .replace(queryParameters: {'user_field_names': 'true'});
+        final fields = {'Name': 'Updated Value'};
+
+        when(mockClient.patch(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode(fields),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'id': 1,
+              'order': 1,
+              'Name': 'Updated Value',
+            }),
+            200));
+
+        final row = await client.updateRow(1, 1, fields, userFieldNames: true);
+        expect(row.id, equals(1));
+        expect(row.fields['Name'], equals('Updated Value'));
+      });
+
+      test('handles error response', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/');
+        final fields = {'field_1': 'Updated Value'};
+
+        when(mockClient.patch(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode(fields),
+        )).thenAnswer((_) async => http.Response('Invalid field value', 400));
+
+        expect(
+          () => client.updateRow(1, 1, fields),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
+    group('updateRows', () {
+      test('updates multiple rows successfully', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/batch/');
+        final updates = {
+          1: {'field_1': 'Updated Value 1'},
+          2: {'field_1': 'Updated Value 2'},
+        };
+
+        when(mockClient.patch(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({
+            'items': [
+              {'id': 1, ...updates[1]!},
+              {'id': 2, ...updates[2]!},
+            ]
+          }),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'items': [
+                {
+                  'id': 1,
+                  'order': 1,
+                  'field_1': 'Updated Value 1',
+                },
+                {
+                  'id': 2,
+                  'order': 2,
+                  'field_1': 'Updated Value 2',
+                },
+              ],
+            }),
+            200));
+
+        final rows = await client.updateRows(1, updates);
+        expect(rows, hasLength(2));
+        expect(rows[0].fields['field_1'], equals('Updated Value 1'));
+        expect(rows[1].fields['field_1'], equals('Updated Value 2'));
+      });
+
+      test('respects userFieldNames parameter', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/batch/')
+                .replace(queryParameters: {'user_field_names': 'true'});
+        final updates = {
+          1: {'Name': 'Updated Value 1'},
+          2: {'Name': 'Updated Value 2'},
+        };
+
+        when(mockClient.patch(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({
+            'items': [
+              {'id': 1, ...updates[1]!},
+              {'id': 2, ...updates[2]!},
+            ]
+          }),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'items': [
+                {
+                  'id': 1,
+                  'order': 1,
+                  'Name': 'Updated Value 1',
+                },
+                {
+                  'id': 2,
+                  'order': 2,
+                  'Name': 'Updated Value 2',
+                },
+              ],
+            }),
+            200));
+
+        final rows = await client.updateRows(1, updates, userFieldNames: true);
+        expect(rows, hasLength(2));
+        expect(rows[0].fields['Name'], equals('Updated Value 1'));
+        expect(rows[1].fields['Name'], equals('Updated Value 2'));
+      });
+
+      test('handles error response', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/batch/');
+        final updates = {
+          1: {'field_1': 'Updated Value 1'},
+          2: {'field_1': 'Updated Value 2'},
+        };
+
+        when(mockClient.patch(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+          body: jsonEncode({
+            'items': [
+              {'id': 1, ...updates[1]!},
+              {'id': 2, ...updates[2]!},
+            ]
+          }),
+        )).thenAnswer((_) async => http.Response('Invalid field values', 400));
+
+        expect(
+          () => client.updateRows(1, updates),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
     group('streamRows', () {
       test('streams all rows with single page', () async {
         final uri = Uri.parse('http://localhost/api/database/rows/table/1/')

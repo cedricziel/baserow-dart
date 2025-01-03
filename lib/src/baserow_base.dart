@@ -662,7 +662,7 @@ class BaserowClient {
     final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
     final response = await post(
       'database/rows/table/$tableId/',
-      {'fields': fields},
+      fields,
       queryParams,
     );
 
@@ -679,7 +679,7 @@ class BaserowClient {
     final response = await post(
       'database/rows/table/$tableId/batch/',
       {
-        'items': fieldsList.map((fields) => {'fields': fields}).toList()
+        'items': fieldsList,
       },
       queryParams,
     );
@@ -700,7 +700,7 @@ class BaserowClient {
     final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
     final response = await patch(
       'database/rows/table/$tableId/$rowId/',
-      {'fields': fields},
+      fields,
       queryParams,
     );
 
@@ -716,7 +716,7 @@ class BaserowClient {
     final items = updates.entries
         .map((entry) => {
               'id': entry.key,
-              'fields': entry.value,
+              ...entry.value,
             })
         .toList();
 
