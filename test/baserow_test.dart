@@ -845,8 +845,6 @@ void main() {
       test('successfully logs out with JWT auth', () async {
         final mockClient = MockClient();
         final refreshToken = 'refresh-token';
-        var tokenRefreshCount = 0;
-
         final client = BaserowClient(
           config: BaserowConfig(
             baseUrl: 'http://localhost',
@@ -858,7 +856,8 @@ void main() {
           httpClient: mockClient,
         );
 
-        final blacklistUri = Uri.parse('http://localhost/api/user/token-blacklist/');
+        final blacklistUri =
+            Uri.parse('http://localhost/api/user/token-blacklist/');
         when(mockClient.post(
           blacklistUri,
           headers: {'Content-Type': 'application/json'},
@@ -931,7 +930,8 @@ void main() {
           httpClient: mockClient,
         );
 
-        final blacklistUri = Uri.parse('http://localhost/api/user/token-blacklist/');
+        final blacklistUri =
+            Uri.parse('http://localhost/api/user/token-blacklist/');
         when(mockClient.post(
           blacklistUri,
           headers: {'Content-Type': 'application/json'},

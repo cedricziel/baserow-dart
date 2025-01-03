@@ -28,7 +28,7 @@ class BaserowConfig {
   /// The type of authentication to use
   final BaserowAuthType authType;
 
-  /// Duration between JWT token refreshes (defaults to 10 minutes)
+  /// Duration between JWT token refreshes (defaults to 9 minutes)
   final Duration refreshInterval;
 
   /// Callback when token is refreshed
@@ -39,7 +39,7 @@ class BaserowConfig {
     this.token,
     this.refreshToken,
     this.authType = BaserowAuthType.token,
-    this.refreshInterval = const Duration(minutes: 10),
+    this.refreshInterval = const Duration(minutes: 9),
     this.onTokenRefresh,
   });
 
@@ -422,7 +422,12 @@ class BaserowClient {
       // Clean up tokens and stop refresh timer
       _refreshTimer?.cancel();
       _refreshTimer = null;
-      config = config.copyWith(token: null, refreshToken: null);
+      config = BaserowConfig(
+        baseUrl: config.baseUrl,
+        authType: config.authType,
+        refreshInterval: config.refreshInterval,
+        onTokenRefresh: config.onTokenRefresh,
+      );
     } catch (e) {
       if (e is BaserowException) {
         rethrow;

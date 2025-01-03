@@ -106,6 +106,10 @@ final refreshedClient = BaserowClient(
     authType: BaserowAuthType.jwt,
   ),
 );
+
+// When you're done, you can logout to invalidate the tokens
+await authenticatedClient.logout();
+// After logout, the client's tokens are cleared and the refresh timer is stopped
 ```
 
 The JWT authentication flow provides more security features compared to API tokens, including:
