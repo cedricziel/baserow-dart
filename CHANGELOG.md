@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.0.0](https://github.com/cedricziel/baserow-dart/compare/v0.4.1...v1.0.0) (2025-01-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* restructure library
+
+### Features
+
+* add all the filters that are available ([5a8b8ff](https://github.com/cedricziel/baserow-dart/commit/5a8b8fff6aa2babaedd2dba6c85efe66054e1703))
+* add batch-delete ([2e33d2c](https://github.com/cedricziel/baserow-dart/commit/2e33d2c6a250cbdc97dd2f18d9ff7713d26b6f1a))
+* add logout method ([7373e7f](https://github.com/cedricziel/baserow-dart/commit/7373e7f04c5b75a5ab4f358d3c63053a61a83f90))
+* add moveRow method ([21514d6](https://github.com/cedricziel/baserow-dart/commit/21514d62f1668488ebff67a685ce943e318c2e21))
+* implement all filter options in ListRowsOptions ([e0e2c2a](https://github.com/cedricziel/baserow-dart/commit/e0e2c2a8cc3917306a4add86c020e78e80239e67))
+
+
+### Bug Fixes
+
+* set timer to be below 10 minutes for successful refresh ([e00ba1a](https://github.com/cedricziel/baserow-dart/commit/e00ba1a92c1d5f0b2ef74623287c93a1b5388c52))
+
+
+### Miscellaneous Chores
+
+* restructure library ([9ff54f2](https://github.com/cedricziel/baserow-dart/commit/9ff54f2601dfb23e1135404c8265b3f3e659afbc))
+
 ## [0.4.1](https://github.com/cedricziel/baserow-dart/compare/v0.4.0...v0.4.1) (2025-01-03)
 
 

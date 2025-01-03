@@ -1,6 +1,6 @@
 name: baserow
 description: A Dart client library for managing Baserow databases and tables.
-version: 0.4.1
+version: 1.0.0
 repository: https://github.com/cedricziel/baserow-dart
 
 environment:
