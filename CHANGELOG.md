@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/cedricziel/baserow-dart/compare/v0.4.0...v0.4.1) (2025-01-03)
+
+
+### Bug Fixes
+
+* create and update rows correctly ([#25](https://github.com/cedricziel/baserow-dart/issues/25)) ([cfefdd5](https://github.com/cedricziel/baserow-dart/commit/cfefdd5cd02ee67569edaac3f496ab2dbb76ee07))
+
 ## [0.4.0](https://github.com/cedricziel/baserow-dart/compare/v0.3.0...v0.4.0) (2025-01-03)
 
 
