@@ -217,7 +217,42 @@ await client.updateRow(
 
 // Delete a row
 await client.deleteRow(tableId, rowId);
+
+// Move a row to a new position
+final movedRow = await client.moveRow(
+  tableId,
+  rowId,
+  options: MoveRowOptions(
+    beforeId: 456,  // Move before this row
+    userFieldNames: true,  // Use human-readable field names
+    sendWebhookEvents: true,  // Trigger webhooks after move
+  ),
+);
+
+// Move a row to the end of the table
+final movedToEnd = await client.moveRow(
+  tableId,
+  rowId,
+);
 ```
+
+#### MoveRowOptions
+
+Options for customizing row move operations:
+
+```dart
+MoveRowOptions({
+  bool userFieldNames = false,  // Use human-readable field names
+  int? beforeId,               // ID of row to move before (null = move to end)
+  bool sendWebhookEvents = true, // Whether to trigger webhooks after move
+})
+```
+
+The move operation allows you to:
+- Move a row before another specific row using `beforeId`
+- Move a row to the end of the table by omitting `beforeId`
+- Control webhook event triggering with `sendWebhookEvents`
+- Use human-readable field names in the response with `userFieldNames`
 
 ### Cleanup
 

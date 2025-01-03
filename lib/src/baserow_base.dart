@@ -517,6 +517,34 @@ class BaserowClient {
     );
   }
 
+  /// Moves a row to a new position in a table
+  ///
+  /// If [beforeId] is provided in the options, moves the row before that row.
+  /// If not provided, moves the row to the end of the table.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Move row 123 before row 456
+  /// final movedRow = await client.moveRow(
+  ///   tableId: 586,
+  ///   rowId: 123,
+  ///   options: MoveRowOptions(beforeId: 456),
+  /// );
+  /// ```
+  Future<Row> moveRow(
+    int tableId,
+    int rowId, {
+    MoveRowOptions options = const MoveRowOptions(),
+  }) async {
+    final response = await patch(
+      'database/rows/table/$tableId/$rowId/move/',
+      {}, // Empty body as all parameters are in query string
+      options.toQueryParameters(),
+    );
+
+    return Row.fromJson(response);
+  }
+
   /// Closes the HTTP client
   void close() {
     _refreshTimer?.cancel();

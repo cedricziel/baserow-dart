@@ -569,6 +569,60 @@ class RowsResponse {
 }
 
 /// Represents a row in a Baserow table
+/// Options for moving a row in a Baserow table.
+///
+/// This class provides options for customizing how a row is moved within a table:
+///
+/// - Use [beforeId] to specify which row to move before
+/// - Omit [beforeId] to move the row to the end of the table
+/// - Control webhook triggering with [sendWebhookEvents]
+/// - Use human-readable field names with [userFieldNames]
+///
+/// Example:
+/// ```dart
+/// // Move row 123 before row 456
+/// final movedRow = await client.moveRow(
+///   tableId,
+///   123,
+///   options: MoveRowOptions(
+///     beforeId: 456,
+///     userFieldNames: true,
+///   ),
+/// );
+///
+/// // Move row 123 to end of table
+/// final movedToEnd = await client.moveRow(
+///   tableId,
+///   123,
+/// );
+/// ```
+class MoveRowOptions {
+  /// Whether to use human-readable field names instead of field_123 format
+  final bool userFieldNames;
+
+  /// Optional ID of the row to move before. If not specified, moves to end.
+  final int? beforeId;
+
+  /// Whether to trigger webhooks after the operation
+  final bool sendWebhookEvents;
+
+  const MoveRowOptions({
+    this.userFieldNames = false,
+    this.beforeId,
+    this.sendWebhookEvents = true,
+  });
+
+  Map<String, String> toQueryParameters() {
+    final params = <String, String>{};
+
+    if (userFieldNames) params['user_field_names'] = 'true';
+    if (beforeId != null) params['before_id'] = beforeId.toString();
+    if (!sendWebhookEvents) params['send_webhook_events'] = 'false';
+
+    return params;
+  }
+}
+
 class Row {
   final int id;
   final int order;
