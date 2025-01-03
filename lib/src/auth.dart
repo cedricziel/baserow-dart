@@ -54,36 +54,58 @@ class BaserowConfig {
 
 /// Response from login attempt
 class AuthResponse {
-  final String token;
-  final String refreshToken;
+  /// The user object containing user information
   final Map<String, dynamic> user;
 
+  /// Deprecated. Use accessToken instead.
+  @Deprecated('Use accessToken instead')
+  final String token;
+
+  /// Token used for authorization, valid for 10 minutes
+  final String accessToken;
+
+  /// Token used to get new access tokens, valid for 168 hours
+  final String refreshToken;
+
   AuthResponse({
-    required this.token,
-    required this.refreshToken,
     required this.user,
+    required this.token,
+    required this.accessToken,
+    required this.refreshToken,
   });
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    final token = json['token'];
-    if (token == null || token is! String) {
-      throw FormatException('Missing or invalid field: token');
+    final user = json['user'];
+    if (user == null || user is! Map<String, dynamic>) {
+      throw FormatException('Missing or invalid field: user');
     }
+
+    // Check required user fields
+    if (!user.containsKey('first_name') ||
+        !user.containsKey('username') ||
+        !user.containsKey('language')) {
+      throw FormatException(
+          'Missing required user fields: first_name, username, or language');
+    }
+
+    final accessToken = json['access_token'];
+    if (accessToken == null || accessToken is! String) {
+      throw FormatException('Missing or invalid field: access_token');
+    }
+
+    final token = json['token'] ??
+        accessToken; // Fallback to access_token if token is not present
 
     final refreshToken = json['refresh_token'];
     if (refreshToken == null || refreshToken is! String) {
       throw FormatException('Missing or invalid field: refresh_token');
     }
 
-    final user = json['user'];
-    if (user == null || user is! Map<String, dynamic>) {
-      throw FormatException('Missing or invalid field: user');
-    }
-
     return AuthResponse(
-      token: token,
-      refreshToken: refreshToken,
       user: user,
+      token: token,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     );
   }
 }

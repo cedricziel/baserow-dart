@@ -53,17 +53,62 @@ class BaserowClient {
     return headers;
   }
 
-  /// Login with username and password to get JWT token
-  Future<AuthResponse> login(String email, String password) async {
-    final response = await post('user/token-auth/', {
-      'email': email,
-      'password': password,
-    });
+  /// Login with email and password to get authentication tokens
+  ///
+  /// [email] is the user's email address
+  /// [password] is the user's password
+  /// [username] is deprecated, use email instead
+  ///
+  /// Throws [BaserowException] with specific error codes:
+  /// - ERROR_INVALID_CREDENTIALS: Invalid email/password combination
+  /// - ERROR_DEACTIVATED_USER: User account is deactivated
+  /// - ERROR_AUTH_PROVIDER_DISABLED: Authentication provider is disabled
+  /// - ERROR_EMAIL_VERIFICATION_REQUIRED: Email verification is required
+  Future<AuthResponse> login(
+    String email,
+    String password, {
+    @Deprecated('Use email parameter instead') String? username,
+  }) async {
+    final url = Uri.parse('${config.baseUrl}/api/user/token-auth/');
+    final response = await _httpClient.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'email': email,
+        'username': username ?? email,
+        'password': password,
+      }),
+    );
 
-    final authResponse = AuthResponse.fromJson(response);
+    final responseData = json.decode(response.body);
+
+    if (response.statusCode != 200) {
+      if (responseData is Map<String, dynamic> &&
+          responseData.containsKey('error')) {
+        final error = responseData['error'] as String;
+        switch (error.toLowerCase()) {
+          case 'error_invalid_credentials':
+            throw BaserowException('ERROR_INVALID_CREDENTIALS', 401);
+          case 'error_deactivated_user':
+            throw BaserowException('ERROR_DEACTIVATED_USER', 401);
+          case 'error_auth_provider_disabled':
+            throw BaserowException('ERROR_AUTH_PROVIDER_DISABLED', 401);
+          case 'error_email_verification_required':
+            throw BaserowException('ERROR_EMAIL_VERIFICATION_REQUIRED', 401);
+          default:
+            throw BaserowException(error, response.statusCode);
+        }
+      }
+      throw BaserowException(
+        'Failed to perform login: ${response.statusCode}',
+        response.statusCode,
+      );
+    }
+
+    final authResponse = AuthResponse.fromJson(responseData);
     if (config.authType == BaserowAuthType.jwt) {
       config = config.copyWith(
-        token: authResponse.token,
+        token: authResponse.accessToken,
         refreshToken: authResponse.refreshToken,
       );
       _setupTokenRefresh();
@@ -78,23 +123,47 @@ class BaserowClient {
       'refresh_token': refreshToken,
     });
 
-    final token = response['token'];
-    if (token == null || token is! String) {
-      throw FormatException('Missing or invalid field: token');
+    final accessToken = response['access_token'];
+    if (accessToken == null || accessToken is! String) {
+      // Fallback to deprecated token field
+      final token = response['token'];
+      if (token == null || token is! String) {
+        throw FormatException(
+            'Missing or invalid fields: access_token and token');
+      }
+      return token;
     }
-    return token;
+    return accessToken;
   }
 
   /// Verify JWT token
+  ///
+  /// [token] can be either an access_token or a deprecated token
   Future<bool> verifyToken(String token) async {
-    try {
-      await post('user/token-verify/', {
-        'token': token,
-      });
+    final url = Uri.parse('${config.baseUrl}/api/user/token-verify/');
+    final headers = {'Content-Type': 'application/json'};
+
+    // Try with access_token first
+    final accessTokenResponse = await _httpClient.post(
+      url,
+      headers: headers,
+      body: json.encode({'access_token': token}),
+    );
+
+    if (accessTokenResponse.statusCode == 200 ||
+        accessTokenResponse.statusCode == 204) {
       return true;
-    } catch (e) {
-      return false;
     }
+
+    // If access_token fails, try with legacy token field
+    final legacyTokenResponse = await _httpClient.post(
+      url,
+      headers: headers,
+      body: json.encode({'token': token}),
+    );
+
+    return legacyTokenResponse.statusCode == 200 ||
+        legacyTokenResponse.statusCode == 204;
   }
 
   /// Logs out the user by blacklisting their refresh token
@@ -176,6 +245,18 @@ class BaserowClient {
     }
 
     if (response.statusCode != 201 && response.statusCode != 200) {
+      // Parse error response
+      try {
+        final errorData = json.decode(response.body);
+        if (errorData is Map<String, dynamic> &&
+            errorData.containsKey('error')) {
+          throw BaserowException(
+            errorData['error'] as String,
+            response.statusCode,
+          );
+        }
+      } catch (_) {}
+      // Fallback to generic error if parsing fails
       throw BaserowException(
         'Failed to perform POST request: ${response.statusCode}',
         response.statusCode,
