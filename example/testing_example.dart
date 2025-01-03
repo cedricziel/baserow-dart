@@ -1,143 +1,123 @@
 import 'package:baserow/baserow.dart';
-import '../test/testing.dart';
-import 'package:mockito/mockito.dart';
-import 'package:test/test.dart';
+
+/// Example mock response for testing
+final mockRowsResponse = {
+  'count': 2,
+  'next': null,
+  'previous': null,
+  'results': [
+    {
+      'id': 1,
+      'order': '1.00000000000000000000',
+      'field_123': 'test value 1',
+    },
+    {
+      'id': 2,
+      'order': '2.00000000000000000000',
+      'field_123': 'test value 2',
+    },
+  ],
+};
+
+/// Example of parsing a RowsResponse
+void parseRowsResponse() {
+  final response = RowsResponse.fromJson(mockRowsResponse);
+  print('Total rows: ${response.count}');
+  print('Next page: ${response.next}');
+  print('Previous page: ${response.previous}');
+  print('Results:');
+  for (final row in response.results) {
+    print('Row ${row.id}: ${row.fields}');
+  }
+}
+
+/// Example mock row for testing
+final mockRow = {
+  'id': 1,
+  'order': '1.00000000000000000000',
+  'field_123': 'test value',
+  'field_456': true,
+  'field_789': 42,
+};
+
+/// Example of parsing a Row
+void parseRow() {
+  final row = Row.fromJson(mockRow);
+  print('Row ID: ${row.id}');
+  print('Row order: ${row.order}');
+  print('Row fields: ${row.fields}');
+}
+
+/// Example of handling numeric and string IDs
+final mockRowsWithMixedTypes = [
+  {
+    'id': 1, // numeric ID
+    'order': 1,
+    'field_123': 'test value 1',
+  },
+  {
+    'id': '2', // string ID
+    'order': '2.00000000000000000000',
+    'field_123': 'test value 2',
+  },
+];
+
+/// Example of handling different ID types
+void handleMixedTypes() {
+  for (final mockRow in mockRowsWithMixedTypes) {
+    final row = Row.fromJson(mockRow);
+    print('Row ID: ${row.id} (${row.id.runtimeType})');
+    print('Row order: ${row.order} (${row.order.runtimeType})');
+    print('Row fields: ${row.fields}');
+  }
+}
+
+/// Example of handling missing or invalid fields
+final mockInvalidRows = [
+  {
+    // Missing ID (should throw)
+    'order': 1,
+    'field_123': 'test value',
+  },
+  {
+    'id': 1,
+    // Missing order (should default to 0)
+    'field_123': 'test value',
+  },
+  {
+    'id': 1,
+    'order': 'invalid', // Invalid order (should default to 0)
+    'field_123': 'test value',
+  },
+];
+
+/// Example of handling invalid data
+void handleInvalidData() {
+  for (final mockRow in mockInvalidRows) {
+    try {
+      final row = Row.fromJson(mockRow);
+      print('Successfully parsed row:');
+      print('ID: ${row.id}');
+      print('Order: ${row.order}');
+      print('Fields: ${row.fields}');
+    } catch (e) {
+      print('Failed to parse row: $e');
+    }
+    print('---');
+  }
+}
 
 void main() {
-  group('Baserow SDK Testing Examples', () {
-    test('Mocking API calls', () async {
-      // Create a mock client
-      final mockClient = BaserowTestUtils.createMockClient();
-
-      // Configure mock responses
-      when(mockClient.listRows(1)).thenAnswer((_) async => RowsResponse(
-            count: 1,
-            next: null,
-            previous: null,
-            results: [
-              Row(id: 1, order: 1, fields: {'name': 'Test Row'}),
-            ],
-          ));
-
-      // Use the mock client in your tests
-      final rows = await mockClient.listRows(1);
-      expect(rows.results.first.fields['name'], equals('Test Row'));
-
-      // Verify the mock was called
-      verify(mockClient.listRows(1)).called(1);
-    });
-
-    test('Testing real-time events', () async {
-      // Create a mock WebSocket
-      final mockWebSocket = BaserowTestUtils.createMockWebSocket();
-
-      // Connect and subscribe to events
-      await mockWebSocket.connect();
-      final subscription = mockWebSocket.subscribeToTable(1);
-
-      // Emit a test event
-      mockWebSocket.emitTableEvent(
-        1,
-        'row_created',
-        {
-          'row_id': 1,
-          'values': {'name': 'New Row'},
-        },
-      );
-
-      // Verify the event was received
-      await expectLater(
-        subscription,
-        emits(isA<BaserowTableEvent>()
-            .having((e) => e.type, 'type', 'row_created')
-            .having((e) => e.tableId, 'tableId', 1)),
-      );
-    });
-
-    test('Testing error handling', () async {
-      final mockWebSocket = BaserowTestUtils.createMockWebSocket();
-      await mockWebSocket.connect();
-
-      var errorReceived = false;
-      mockWebSocket.onError = (error) {
-        errorReceived = true;
-      };
-
-      // Simulate an error
-      mockWebSocket.emitError(Exception('Test error'));
-
-      // Wait for error handler
-      await Future.delayed(Duration.zero);
-      expect(errorReceived, isTrue);
-    });
-
-    test('Testing workspace events', () async {
-      final mockWebSocket = BaserowTestUtils.createMockWebSocket();
-      await mockWebSocket.connect();
-
-      final subscription = mockWebSocket.subscribeToWorkspace(1);
-
-      mockWebSocket.emitWorkspaceEvent(
-        1,
-        'workspace_updated',
-        {
-          'workspace': {'id': 1, 'name': 'Updated Workspace'},
-        },
-      );
-
-      await expectLater(
-        subscription,
-        emits(isA<BaserowWorkspaceEvent>()
-            .having((e) => e.type, 'type', 'workspace_updated')
-            .having((e) => e.workspaceId, 'workspaceId', 1)),
-      );
-    });
-
-    test('Testing application events', () async {
-      final mockWebSocket = BaserowTestUtils.createMockWebSocket();
-      await mockWebSocket.connect();
-
-      final subscription = mockWebSocket.subscribeToApplication(1);
-
-      mockWebSocket.emitApplicationEvent(
-        1,
-        'application_updated',
-        {
-          'application': {'id': 1, 'name': 'Updated Application'},
-        },
-      );
-
-      await expectLater(
-        subscription,
-        emits(isA<BaserowApplicationEvent>()
-            .having((e) => e.type, 'type', 'application_updated')
-            .having((e) => e.applicationId, 'applicationId', 1)),
-      );
-    });
-
-    test('Testing complex API scenarios', () async {
-      final mockClient = BaserowTestUtils.createMockClient();
-
-      // Mock a sequence of related operations
-      when(mockClient.createRow(1, {'name': 'Test'})).thenAnswer(
-          (_) async => Row(id: 1, order: 1, fields: {'name': 'Test'}));
-
-      when(mockClient.updateRow(1, 1, {'name': 'Updated Test'})).thenAnswer(
-          (_) async => Row(id: 1, order: 1, fields: {'name': 'Updated Test'}));
-
-      // Execute the operations
-      final createdRow = await mockClient.createRow(1, {'name': 'Test'});
-      expect(createdRow.fields['name'], equals('Test'));
-
-      final updatedRow =
-          await mockClient.updateRow(1, 1, {'name': 'Updated Test'});
-      expect(updatedRow.fields['name'], equals('Updated Test'));
-
-      // Verify the sequence
-      verifyInOrder([
-        mockClient.createRow(1, {'name': 'Test'}),
-        mockClient.updateRow(1, 1, {'name': 'Updated Test'}),
-      ]);
-    });
-  });
+  print('Testing RowsResponse parsing:');
+  print('---');
+  parseRowsResponse();
+  print('\nTesting Row parsing:');
+  print('---');
+  parseRow();
+  print('\nTesting mixed ID types:');
+  print('---');
+  handleMixedTypes();
+  print('\nTesting invalid data:');
+  print('---');
+  handleInvalidData();
 }

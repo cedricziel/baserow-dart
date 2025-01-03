@@ -1,17 +1,32 @@
 import 'package:baserow/baserow.dart';
 
 void main() async {
-  // Example 1: Traditional token-based authentication
-  final tokenClient = BaserowClient(
+  // Create a client with token authentication
+  final client = BaserowClient(
     config: BaserowConfig(
       baseUrl: 'https://api.baserow.io',
-      token: 'YOUR_API_TOKEN', // Replace with your actual token
+      token: 'YOUR_TOKEN',
       authType: BaserowAuthType.token,
     ),
   );
 
-  // Example 2: JWT authentication
+  // Or create a client with JWT authentication
   final jwtClient = BaserowClient(
+    config: BaserowConfig(
+      baseUrl: 'https://api.baserow.io',
+      token: 'YOUR_JWT_TOKEN',
+      refreshToken: 'YOUR_REFRESH_TOKEN',
+      authType: BaserowAuthType.jwt,
+      onTokenRefresh: (token, refreshToken) {
+        // Store new tokens
+        print('New token: $token');
+        print('New refresh token: $refreshToken');
+      },
+    ),
+  );
+
+  // Login to get tokens
+  final authClient = BaserowClient(
     config: BaserowConfig(
       baseUrl: 'https://api.baserow.io',
       authType: BaserowAuthType.jwt,
@@ -19,171 +34,85 @@ void main() async {
   );
 
   try {
-    // Login with email and password to get JWT token
-    final authResponse = await jwtClient.login(
+    final authResponse = await authClient.login(
       'your.email@example.com',
-      'your_password',
+      'your-password',
     );
-    print('Successfully logged in as: ${authResponse.user}');
+    print('Logged in successfully');
+    print('User: ${authResponse.user}');
+    print('Token: ${authResponse.token}');
+    print('Refresh token: ${authResponse.refreshToken}');
 
-    // Create a new client with the JWT token
-    final authenticatedClient = BaserowClient(
-      config: BaserowConfig(
-        baseUrl: 'https://api.baserow.io',
-        token: authResponse.token,
-        authType: BaserowAuthType.jwt,
-      ),
-    );
-
-    // Example 3: WebSocket real-time updates
-    final ws = BaserowWebSocket(
-      baseUrl: 'https://api.baserow.io',
-      token: authResponse.token,
-    );
-
-    // Connect to the WebSocket server
-    await ws.connect();
-    print('WebSocket connected: ${ws.isConnected}');
-
-    // Subscribe to table updates
-    final tableId = 123; // Replace with your actual table ID
-    final subscription = ws.subscribeToTable(tableId);
-
-    // Listen for real-time updates
-    subscription.listen((event) {
-      if (event is BaserowRowEvent) {
-        switch (event.type) {
-          case 'row_created':
-            print('Row ${event.rowId} was created: ${event.values}');
-            break;
-          case 'row_updated':
-            print('Row ${event.rowId} was updated: ${event.values}');
-            break;
-          case 'row_deleted':
-            print('Row ${event.rowId} was deleted');
-            break;
-        }
-      } else if (event is BaserowTableEvent) {
-        print('Table event: ${event.type} - ${event.table}');
-      } else if (event is BaserowFieldEvent) {
-        print('Field event: ${event.type} - ${event.field}');
-      }
-    });
-
-    // Example: Subscribe to workspace updates
-    final workspaceId = 789; // Replace with your actual workspace ID
-    final workspaceSubscription = ws.subscribeToWorkspace(workspaceId);
-    workspaceSubscription.listen((event) {
-      if (event is BaserowWorkspaceEvent) {
-        print('Workspace event: ${event.type} - ${event.workspace}');
-      }
-    });
-
-    // Example: Subscribe to application updates
-    final applicationId = 456; // Replace with your actual application ID
-    final applicationSubscription = ws.subscribeToApplication(applicationId);
-    applicationSubscription.listen((event) {
-      if (event is BaserowApplicationEvent) {
-        print('Application event: ${event.type} - ${event.application}');
-      }
-    });
-
-    // Example of using the authenticated client
-    // List all databases
-    final databases = await authenticatedClient.listDatabases();
-    print('Found ${databases.length} databases:');
+    // List databases
+    final databases = await client.listDatabases();
+    print('\nDatabases:');
     for (final db in databases) {
-      print('- ${db.name} (ID: ${db.id})');
+      print('${db.name} (${db.id})');
 
-      // List tables in each database
-      final tables = await authenticatedClient.listTables(db.id);
-      print('  Tables:');
+      // List tables in database
+      final tables = await client.listTables(db.id);
+      print('\nTables in ${db.name}:');
       for (final table in tables) {
-        print('  - ${table.name} (ID: ${table.id})');
+        print('${table.name} (${table.id})');
 
-        // List fields in the table
-        final fields = await authenticatedClient.listFields(table.id);
-        print('    Fields:');
-        for (final field in fields) {
-          print('    - ${field.name} (Type: ${field.type})');
-        }
-
-        // Alternative: Get table with fields in one call
-        final tableWithFields =
-            await authenticatedClient.getTableWithFields(table.id);
-        print('    Fields (alternative method):');
+        // Get table with fields
+        final tableWithFields = await client.getTableWithFields(table.id);
+        print('\nFields in ${table.name}:');
         for (final field in tableWithFields.fields!) {
-          print('    - ${field.name} (Type: ${field.type})');
+          print('${field.name} (${field.type})');
         }
 
-        // Example: List rows with filtering, pagination, and view scoping
-        final rowsResponse = await authenticatedClient.listRows(
+        // List rows with options
+        final rows = await client.listRows(
           table.id,
           options: ListRowsOptions(
             page: 1,
-            size: 5,
+            size: 10,
             orderBy: 'id',
             descending: true,
             filters: [
               RowFilter(
-                field: 'status',
+                field: 'field_123',
                 operator: FilterOperator.equal,
-                value: 'active',
+                value: 'test',
               ),
             ],
-            viewId: 456, // Optional: Scope request to a specific view
+            includeFieldMetadata: true,
+            userFieldNames: true,
           ),
         );
 
-        print('    Found ${rowsResponse.count} total rows');
-        print('    First page rows:');
-        for (final row in rowsResponse.results) {
-          print('    - Row ${row.id}: ${row.fields}');
+        print('\nRows in ${table.name}:');
+        for (final row in rows.results) {
+          print('Row ${row.id}: ${row.fields}');
         }
 
-        // Example: Create multiple rows
-        final newRows = await authenticatedClient.createRows(
+        // Create a row
+        final newRow = await client.createRow(
           table.id,
-          [
-            {
-              'Name': 'John Doe',
-              'Email': 'john@example.com',
-              'Status': 'active',
-            },
-            {
-              'Name': 'Jane Smith',
-              'Email': 'jane@example.com',
-              'Status': 'pending',
-            },
-          ],
+          {'field_123': 'test value'},
         );
-        print('Created ${newRows.length} new rows');
+        print('\nCreated row: ${newRow.id}');
 
-        // Example: Update multiple rows
-        final updates = {
-          newRows[0].id: {'Status': 'inactive'},
-          newRows[1].id: {'Status': 'active'},
-        };
-        final updatedRows =
-            await authenticatedClient.updateRows(table.id, updates);
-        print('Updated ${updatedRows.length} rows');
-
-        // Example: Delete multiple rows
-        await authenticatedClient.deleteRows(
+        // Update the row
+        final updatedRow = await client.updateRow(
           table.id,
-          [newRows[0].id, newRows[1].id],
+          newRow.id,
+          {'field_123': 'updated value'},
         );
-        print('Deleted the test rows');
+        print('Updated row: ${updatedRow.id}');
+
+        // Delete the row
+        await client.deleteRow(table.id, newRow.id);
+        print('Deleted row: ${newRow.id}');
       }
     }
-
-    // Clean up WebSocket connection
-    ws.close();
   } catch (e) {
     print('Error: $e');
   } finally {
-    // Always close the clients when done
+    // Close the clients
+    client.close();
     jwtClient.close();
-    tokenClient.close();
+    authClient.close();
   }
 }
