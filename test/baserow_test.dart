@@ -163,8 +163,7 @@ void main() {
           1,
           options: const ListRowsOptions(
             size: 50,
-            orderBy: 'field_1',
-            descending: true,
+            orderBy: ['-field_1'],
             userFieldNames: true,
           ),
         );
@@ -177,33 +176,123 @@ void main() {
     });
 
     group('ListRowsOptions', () {
-      test('toQueryParameters includes all parameters correctly', () {
-        final options = ListRowsOptions(
-          page: 2,
-          size: 25,
-          orderBy: 'name',
-          descending: true,
-          filters: [
-            RowFilter(
-              field: 'age',
-              operator: FilterOperator.higherThan,
-              value: 18,
-            ),
-          ],
-          includeFieldMetadata: true,
-          viewId: 123,
-          userFieldNames: true,
-        );
+      group('ListRowsOptions', () {
+        test('toQueryParameters includes basic parameters correctly', () {
+          final options = ListRowsOptions(
+            page: 2,
+            size: 25,
+            orderBy: ['-name'],
+            filters: [
+              RowFilter(
+                field: 'age',
+                operator: FilterOperator.higherThan,
+                value: 18,
+              ),
+            ],
+            includeFieldMetadata: true,
+            viewId: 123,
+            userFieldNames: true,
+          );
 
-        final params = options.toQueryParameters();
+          final params = options.toQueryParameters();
 
-        expect(params['page'], equals('2'));
-        expect(params['size'], equals('25'));
-        expect(params['order_by'], equals('-name'));
-        expect(params['filters'], isNotEmpty);
-        expect(params['include'], equals('field_metadata'));
-        expect(params['view_id'], equals('123'));
-        expect(params['user_field_names'], equals('true'));
+          expect(params['page'], equals('2'));
+          expect(params['size'], equals('25'));
+          expect(params['order_by'], equals('-name'));
+          expect(params['filters'], contains('"filter_type":"AND"'));
+          expect(params['include'], equals('field_metadata'));
+          expect(params['view_id'], equals('123'));
+          expect(params['user_field_names'], equals('true'));
+        });
+
+        test('handles complex ordering with multiple fields', () {
+          final options = ListRowsOptions(
+            orderBy: ['+first_name', '-last_name', 'age'],
+          );
+
+          final params = options.toQueryParameters();
+          expect(params['order_by'], equals('first_name,-last_name,age'));
+        });
+
+        test('escapes field names with special characters', () {
+          final options = ListRowsOptions(
+            orderBy: ['First, Name', 'Last "Name"'],
+          );
+
+          final params = options.toQueryParameters();
+          expect(
+            params['order_by'],
+            equals('"First, Name","Last \\"Name\\""'),
+          );
+        });
+
+        test('handles search parameter', () {
+          final options = ListRowsOptions(
+            search: 'test query',
+          );
+
+          final params = options.toQueryParameters();
+          expect(params['search'], equals('test query'));
+        });
+
+        test('handles include and exclude fields', () {
+          final options = ListRowsOptions(
+            include: ['name', 'email'],
+            exclude: ['sensitive_data'],
+          );
+
+          final params = options.toQueryParameters();
+          expect(params['include'], equals('name,email'));
+          expect(params['exclude'], equals('sensitive_data'));
+        });
+
+        test('handles field filters', () {
+          final options = ListRowsOptions(
+            fieldFilters: {
+              'name': {'contains': 'John'},
+              'age': {'greater_than': '18'},
+            },
+          );
+
+          final params = options.toQueryParameters();
+          expect(params['filter__name__contains'], equals('John'));
+          expect(params['filter__age__greater_than'], equals('18'));
+        });
+
+        test('handles link row joins', () {
+          final options = ListRowsOptions(
+            linkRowJoins: {
+              'company': ['name', 'address'],
+              'department': ['title'],
+            },
+          );
+
+          final params = options.toQueryParameters();
+          expect(params['company__join'], equals('name,address'));
+          expect(params['department__join'], equals('title'));
+        });
+
+        test('handles OR filter type', () {
+          final options = ListRowsOptions(
+            filterType: 'OR',
+            filters: [
+              RowFilter(
+                field: 'status',
+                operator: FilterOperator.equal,
+                value: 'active',
+              ),
+              RowFilter(
+                field: 'status',
+                operator: FilterOperator.equal,
+                value: 'pending',
+              ),
+            ],
+          );
+
+          final params = options.toQueryParameters();
+          expect(params['filter_type'], equals('OR'));
+          expect(params['filters'], contains('"filter_type":"OR"'));
+        });
       });
     });
 
@@ -1090,8 +1179,7 @@ void main() {
               1,
               options: const ListRowsOptions(
                 size: 50,
-                orderBy: 'field_1',
-                descending: true,
+                orderBy: ['-field_1'],
                 userFieldNames: true,
               ),
             )

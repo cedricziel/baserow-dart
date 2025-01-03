@@ -1,5 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
 /// Authentication type for Baserow
 enum BaserowAuthType {
   /// Traditional token-based authentication

@@ -1,5 +1,5 @@
 /// A Dart client for the Baserow API
-library baserow;
+library;
 
 export 'src/auth.dart';
 export 'src/baserow_base.dart';

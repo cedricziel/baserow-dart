@@ -239,22 +239,179 @@ class RowFilter {
   }
 }
 
-/// Options for listing rows
+/// Options for listing rows in a Baserow table.
+///
+/// This class provides comprehensive options for querying, filtering, and customizing
+/// the rows returned from a table. Key features include:
+///
+/// - Pagination with [page] and [size]
+/// - Full-text search with [search]
+/// - Advanced ordering with [orderBy]
+/// - Flexible filtering with [filters] and [fieldFilters]
+/// - Field selection with [include] and [exclude]
+/// - Related data fetching with [linkRowJoins]
+///
+/// Example usage:
+/// ```dart
+/// final options = ListRowsOptions(
+///   page: 1,
+///   size: 50,
+///   search: 'search term',
+///   orderBy: ['-name', 'age'],  // Order by name desc, age asc
+///   filters: [
+///     RowFilter(
+///       field: 'age',
+///       operator: FilterOperator.higherThan,
+///       value: 18,
+///     ),
+///   ],
+///   fieldFilters: {
+///     'status': {'equal': 'active'},
+///   },
+///   include: ['name', 'email'],
+///   exclude: ['sensitive_data'],
+///   linkRowJoins: {
+///     'company': ['name', 'address'],
+///   },
+///   userFieldNames: true,
+/// );
+/// ```
 class ListRowsOptions {
-  /// The page number to fetch (1-based)
+  /// The page number to fetch (1-based).
+  ///
+  /// Use this parameter in combination with [size] to implement pagination.
+  /// For example, to get the first page of 50 rows:
+  /// ```dart
+  /// options: ListRowsOptions(page: 1, size: 50)
+  /// ```
   final int? page;
 
-  /// The number of rows per page
+  /// The number of rows per page.
+  ///
+  /// Controls how many rows are returned in each page. The default is 100.
+  /// Use a smaller number for faster response times or a larger number
+  /// to reduce the number of API calls needed.
   final int? size;
 
-  /// The field to order by
-  final String? orderBy;
+  /// Search term to filter rows.
+  ///
+  /// When provided, only rows containing this search term in their searchable
+  /// fields will be returned. The search is case-insensitive and matches
+  /// partial words.
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(search: 'john doe')
+  /// ```
+  final String? search;
 
-  /// Whether to order in descending order
-  final bool? descending;
+  /// Fields to order by, with optional direction prefix (+ or -).
+  ///
+  /// Each field can be prefixed with:
+  /// - '+' for ascending order (default if no prefix)
+  /// - '-' for descending order
+  ///
+  /// Fields containing special characters (commas, quotes) are automatically
+  /// escaped. Multiple fields create a multi-level sort.
+  ///
+  /// Examples:
+  /// ```dart
+  /// // Single field descending
+  /// orderBy: ['-name']
+  ///
+  /// // Multiple fields
+  /// orderBy: ['+first_name', '-last_name', 'age']
+  ///
+  /// // Fields with special characters
+  /// orderBy: ['First, Name', 'Last "Name"']
+  /// ```
+  final List<String>? orderBy;
 
-  /// Filters to apply
+  /// Filter type - AND requires all filters to match, OR requires any filter to match.
+  ///
+  /// Use 'AND' (default) to require all filters to match, or 'OR' to match any filter.
+  /// This applies to both [filters] and [fieldFilters].
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   filterType: 'OR',
+  ///   filters: [
+  ///     RowFilter(field: 'status', operator: FilterOperator.equal, value: 'active'),
+  ///     RowFilter(field: 'status', operator: FilterOperator.equal, value: 'pending'),
+  ///   ],
+  /// )
+  /// ```
+  final String filterType;
+
+  /// Filters to apply using the JSON format.
+  ///
+  /// Provides a structured way to define complex filters using the [RowFilter] class.
+  /// Multiple filters are combined according to [filterType].
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   filters: [
+  ///     RowFilter(
+  ///       field: 'age',
+  ///       operator: FilterOperator.higherThan,
+  ///       value: 18,
+  ///     ),
+  ///     RowFilter(
+  ///       field: 'status',
+  ///       operator: FilterOperator.equal,
+  ///       value: 'active',
+  ///     ),
+  ///   ],
+  /// )
+  /// ```
   final List<RowFilter>? filters;
+
+  /// Individual field filters in the format field__filter__type=value.
+  ///
+  /// An alternative to [filters] that uses a simpler map-based format.
+  /// The outer map key is the field name, and the inner map defines
+  /// the filter type and value.
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   fieldFilters: {
+  ///     'status': {'equal': 'active'},
+  ///     'age': {'greater_than': '18'},
+  ///   },
+  /// )
+  /// ```
+  final Map<String, Map<String, String>>? fieldFilters;
+
+  /// Fields to include in the response.
+  ///
+  /// When specified, only these fields will be included in the response.
+  /// Field names should match the format specified by [userFieldNames].
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   include: ['name', 'email', 'phone'],
+  ///   userFieldNames: true,
+  /// )
+  /// ```
+  final List<String>? include;
+
+  /// Fields to exclude from the response.
+  ///
+  /// When specified, these fields will be excluded from the response.
+  /// Field names should match the format specified by [userFieldNames].
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   exclude: ['sensitive_data', 'internal_notes'],
+  ///   userFieldNames: true,
+  /// )
+  /// ```
+  final List<String>? exclude;
 
   /// Whether to include field metadata
   final bool includeFieldMetadata;
@@ -265,30 +422,103 @@ class ListRowsOptions {
   /// Whether to use human-readable field names instead of field_123 format
   final bool userFieldNames;
 
+  /// Link row field joins to include related table data.
+  ///
+  /// Allows fetching data from related tables through link row fields.
+  /// The map key is the link row field name, and the value is a list
+  /// of field names from the related table to include.
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   linkRowJoins: {
+  ///     'company': ['name', 'address'],  // Get company name and address
+  ///     'department': ['title'],         // Get department title
+  ///   },
+  ///   userFieldNames: true,
+  /// )
+  /// ```
+  final Map<String, List<String>>? linkRowJoins;
+
   const ListRowsOptions({
     this.page,
     this.size,
+    this.search,
     this.orderBy,
-    this.descending,
+    this.filterType = 'AND',
     this.filters,
+    this.fieldFilters,
+    this.include,
+    this.exclude,
     this.includeFieldMetadata = false,
     this.viewId,
     this.userFieldNames = false,
+    this.linkRowJoins,
   });
+
+  /// Escapes field names containing special characters for order_by parameter
+  String _escapeFieldName(String field) {
+    if (field.contains(',') || field.contains('"')) {
+      return '"${field.replaceAll('"', '\\"')}"';
+    }
+    return field;
+  }
 
   Map<String, String> toQueryParameters() {
     final params = <String, String>{};
+
     if (page != null) params['page'] = page.toString();
     if (size != null) params['size'] = size.toString();
-    if (orderBy != null) {
-      params['order_by'] = descending == true ? '-$orderBy' : orderBy as String;
+    if (search != null) params['search'] = search!;
+
+    if (orderBy != null && orderBy!.isNotEmpty) {
+      params['order_by'] = orderBy!.map((field) {
+        final isDesc = field.startsWith('-');
+        final cleanField = field.startsWith('+') || field.startsWith('-')
+            ? field.substring(1)
+            : field;
+        final escapedField = _escapeFieldName(cleanField);
+        return isDesc ? '-$escapedField' : escapedField;
+      }).join(',');
     }
+
     if (filters != null && filters!.isNotEmpty) {
-      params['filters'] = jsonEncode(filters!.map((f) => f.toJson()).toList());
+      final filterJson = {
+        'filter_type': filterType,
+        'filters': filters!.map((f) => f.toJson()).toList(),
+      };
+      params['filters'] = jsonEncode(filterJson);
     }
-    if (includeFieldMetadata) params['include'] = 'field_metadata';
+
+    // Add individual field filters
+    fieldFilters?.forEach((field, conditions) {
+      conditions.forEach((type, value) {
+        params['filter__${field}__$type'] = value;
+      });
+    });
+
+    if (filterType != 'AND') {
+      params['filter_type'] = filterType;
+    }
+
+    if (include != null && include!.isNotEmpty) {
+      params['include'] = include!.map(_escapeFieldName).join(',');
+    } else if (includeFieldMetadata) {
+      params['include'] = 'field_metadata';
+    }
+
+    if (exclude != null && exclude!.isNotEmpty) {
+      params['exclude'] = exclude!.map(_escapeFieldName).join(',');
+    }
+
     if (viewId != null) params['view_id'] = viewId.toString();
-    if (userFieldNames) params['user_field_names'] = userFieldNames.toString();
+    if (userFieldNames) params['user_field_names'] = 'true';
+
+    // Add link row joins
+    linkRowJoins?.forEach((field, joinFields) {
+      params['${field}__join'] = joinFields.join(',');
+    });
+
     return params;
   }
 }

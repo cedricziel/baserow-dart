@@ -252,13 +252,106 @@ Options for customizing row listing operations:
 ListRowsOptions({
   int? page,                    // The page number to fetch (1-based)
   int? size,                    // The number of rows per page
-  String? orderBy,              // The field to order by
-  bool? descending,             // Whether to order in descending order
-  List<RowFilter>? filters,     // Filters to apply
+  String? search,               // Search term to filter rows
+  List<String>? orderBy,        // Fields to order by, with optional direction prefix (+ or -)
+  String filterType = 'AND',    // Filter type - AND/OR for combining multiple filters
+  List<RowFilter>? filters,     // JSON format filters
+  Map<String, Map<String, String>>? fieldFilters,  // Individual field filters
+  List<String>? include,        // Fields to include in the response
+  List<String>? exclude,        // Fields to exclude from the response
   bool includeFieldMetadata,    // Whether to include field metadata
   int? viewId,                  // Optional view ID to scope the request
   bool userFieldNames = false,  // Use human-readable field names instead of field_123
+  Map<String, List<String>>? linkRowJoins,  // Link row field joins for related table data
 })
+```
+
+##### Ordering Rows
+
+You can order rows by multiple fields using the `orderBy` parameter:
+
+```dart
+// Order by single field descending
+options: ListRowsOptions(
+  orderBy: ['-name'],
+)
+
+// Order by multiple fields
+options: ListRowsOptions(
+  orderBy: ['+first_name', '-last_name', 'age'],
+)
+
+// With special characters in field names
+options: ListRowsOptions(
+  orderBy: ['First, Name', 'Last "Name"'],  // Will be properly escaped
+)
+```
+
+##### Filtering Rows
+
+There are two ways to filter rows:
+
+1. Using the JSON format with `filters`:
+```dart
+options: ListRowsOptions(
+  filterType: 'OR',  // Use OR to match any filter, AND to match all
+  filters: [
+    RowFilter(
+      field: 'age',
+      operator: FilterOperator.higherThan,
+      value: 18,
+    ),
+    RowFilter(
+      field: 'status',
+      operator: FilterOperator.equal,
+      value: 'active',
+    ),
+  ],
+)
+```
+
+2. Using individual field filters:
+```dart
+options: ListRowsOptions(
+  fieldFilters: {
+    'status': {'equal': 'active'},
+    'age': {'greater_than': '18'},
+  },
+)
+```
+
+##### Including/Excluding Fields
+
+Control which fields are returned in the response:
+
+```dart
+options: ListRowsOptions(
+  include: ['name', 'email'],  // Only include these fields
+  exclude: ['sensitive_data'], // Exclude these fields
+)
+```
+
+##### Link Row Joins
+
+Fetch related table data through link row fields:
+
+```dart
+options: ListRowsOptions(
+  linkRowJoins: {
+    'company': ['name', 'address'],  // Get company name and address
+    'department': ['title'],         // Get department title
+  },
+)
+```
+
+##### Search
+
+Filter rows using a search term:
+
+```dart
+options: ListRowsOptions(
+  search: 'search term',  // Will search across all searchable fields
+)
 ```
 
 #### Methods

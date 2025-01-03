@@ -68,8 +68,7 @@ void main() async {
           options: ListRowsOptions(
             page: 1,
             size: 10,
-            orderBy: 'id',
-            descending: true,
+            orderBy: ['-id'],
             filters: [
               RowFilter(
                 field: 'field_123',
@@ -79,6 +78,17 @@ void main() async {
             ],
             includeFieldMetadata: true,
             userFieldNames: true,
+            // Example of additional features:
+            search: 'search term',
+            include: ['field_123', 'field_456'],
+            exclude: ['sensitive_field'],
+            fieldFilters: {
+              'status': {'equal': 'active'},
+              'age': {'greater_than': '18'},
+            },
+            linkRowJoins: {
+              'company': ['name', 'address'],
+            },
           ),
         );
 
