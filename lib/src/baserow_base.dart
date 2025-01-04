@@ -660,6 +660,24 @@ class BaserowClient {
     return Row.fromJson(response);
   }
 
+  /// Lists all database tokens that belong to the authorized user
+  ///
+  /// A token can be used to create, read, update and delete rows in the tables of
+  /// the token's workspace. It only works on the tables if the token has the correct
+  /// permissions.
+  Future<List<DatabaseToken>> listDatabaseTokens() async {
+    final response = await get('database/tokens/');
+    if (response is! List) {
+      throw BaserowException(
+          'Response is not a list: ${response.runtimeType}', 0);
+    }
+
+    return response
+        .cast<Map<String, dynamic>>()
+        .map(DatabaseToken.fromJson)
+        .toList();
+  }
+
   /// Closes the HTTP client
   void close() {
     _refreshTimer?.cancel();

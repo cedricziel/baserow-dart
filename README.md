@@ -176,6 +176,50 @@ Both upload methods return a FileUploadResponse that includes:
 - `thumbnails`: Map of available thumbnails with their URLs and dimensions
 - `uploadedAt`: Timestamp of when the file was uploaded
 
+### Database Tokens
+
+Database tokens provide a way to access and manage table data with specific permissions. Each token is associated with a workspace and can have different permissions for creating, reading, updating, and deleting rows.
+
+```dart
+// List all database tokens
+final tokens = await client.listDatabaseTokens();
+for (final token in tokens) {
+  print('Token: ${token.name}');
+  print('Workspace: ${token.workspace}');
+  print('Key: ${token.key}');
+
+  // Check permissions
+  final perms = token.permissions;
+  print('Can create: ${perms.create}');
+  print('Can read: ${perms.read}');
+  print('Can update: ${perms.update}');
+  print('Can delete: ${perms.delete}');
+}
+```
+
+Permissions can be either:
+- Boolean values (true/false) for full access or no access
+- Lists of [["database", id], ["table", id]] for granular access to specific databases or tables
+
+For example:
+```dart
+// Full access token
+{
+  "create": true,  // Can create rows in all tables
+  "read": true,    // Can read rows from all tables
+  "update": true,  // Can update rows in all tables
+  "delete": true   // Can delete rows from all tables
+}
+
+// Limited access token
+{
+  "create": false,  // Cannot create rows
+  "read": [["database", 1], ["table", 10]],  // Can only read from database 1 and table 10
+  "update": false,  // Cannot update rows
+  "delete": []     // Cannot delete rows
+}
+```
+
 ### Working with Rows
 
 #### Field Name Formats
