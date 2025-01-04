@@ -22,6 +22,84 @@ void main() {
       );
     });
 
+    test('getDatabaseToken returns token', () async {
+      final mockResponse = {
+        'id': 1,
+        'name': 'Test Token',
+        'workspace': 1,
+        'key': 'test-key-123',
+        'permissions': {
+          'create': true,
+          'read': true,
+          'update': true,
+          'delete': true,
+        },
+      };
+
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tokens/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode(mockResponse),
+            200,
+          ));
+
+      final token = await client.getDatabaseToken(1);
+
+      expect(token.id, equals(1));
+      expect(token.name, equals('Test Token'));
+      expect(token.workspace, equals(1));
+      expect(token.key, equals('test-key-123'));
+      expect(token.permissions.create, isTrue);
+      expect(token.permissions.read, isTrue);
+      expect(token.permissions.update, isTrue);
+      expect(token.permissions.delete, isTrue);
+    });
+
+    test('getDatabaseToken throws when user not in workspace', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tokens/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_USER_NOT_IN_GROUP',
+              'detail': 'User not in workspace',
+            }),
+            400,
+          ));
+
+      expect(
+        () => client.getDatabaseToken(1),
+        throwsA(isA<BaserowException>().having(
+          (e) => e.message,
+          'message',
+          'ERROR_USER_NOT_IN_GROUP',
+        )),
+      );
+    });
+
+    test('getDatabaseToken throws when token does not exist', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tokens/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_TOKEN_DOES_NOT_EXIST',
+              'detail': 'Token does not exist',
+            }),
+            404,
+          ));
+
+      expect(
+        () => client.getDatabaseToken(1),
+        throwsA(isA<BaserowException>().having(
+          (e) => e.message,
+          'message',
+          'ERROR_TOKEN_DOES_NOT_EXIST',
+        )),
+      );
+    });
+
     test('listDatabaseTokens returns list of tokens', () async {
       final mockResponse = [
         {
@@ -81,10 +159,12 @@ void main() {
       expect(tokens[1].workspace, 1);
       expect(tokens[1].key, 'limited-key-456');
       expect(tokens[1].permissions.create, false);
-      expect(tokens[1].permissions.read, [
-        ['database', 1],
-        ['table', 10],
-      ]);
+      expect(
+          tokens[1].permissions.read,
+          equals([
+            ['database', 1],
+            ['table', 10],
+          ]));
       expect(tokens[1].permissions.update, false);
       expect(tokens[1].permissions.delete, []);
     });

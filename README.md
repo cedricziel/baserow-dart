@@ -195,6 +195,22 @@ for (final token in tokens) {
   print('Can update: ${perms.update}');
   print('Can delete: ${perms.delete}');
 }
+
+// Get a specific database token by ID
+try {
+  final token = await client.getDatabaseToken(123);
+  print('Token: ${token.name}');
+  print('Workspace: ${token.workspace}');
+  print('Key: ${token.key}');
+} on BaserowException catch (e) {
+  if (e.message == 'ERROR_TOKEN_DOES_NOT_EXIST') {
+    print('Token not found');
+  } else if (e.message == 'ERROR_USER_NOT_IN_GROUP') {
+    print('User not authorized to access this token');
+  } else {
+    print('Error: ${e.message}');
+  }
+}
 ```
 
 Permissions can be either:
