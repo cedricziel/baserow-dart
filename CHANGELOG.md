@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cedricziel/baserow-dart/compare/v1.1.0...v1.1.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* remove deprecated username parameter ([b6ac069](https://github.com/cedricziel/baserow-dart/commit/b6ac069e32e8efbfc5d90de5031e12e3a27cc750))
+
 ## [1.1.0](https://github.com/cedricziel/baserow-dart/compare/v1.0.0...v1.1.0) (2025-01-04)
 
 
