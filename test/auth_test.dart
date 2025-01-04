@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:baserow/baserow.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:fake_async/fake_async.dart';
@@ -242,7 +241,6 @@ void main() {
 
         final response = await client.login('test@example.com', 'password');
 
-        expect(response.token, equals('old-token'));
         expect(response.accessToken, equals('new-token'));
         expect(response.refreshToken, equals('new-refresh-token'));
         expect(response.user['first_name'], equals('Test'));

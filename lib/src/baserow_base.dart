@@ -245,22 +245,27 @@ class BaserowClient {
     }
 
     if (response.statusCode != 201 && response.statusCode != 200) {
-      // Parse error response
+      String errorMessage =
+          'Failed to perform POST request: ${response.statusCode}';
       try {
         final errorData = json.decode(response.body);
-        if (errorData is Map<String, dynamic> &&
-            errorData.containsKey('error')) {
-          throw BaserowException(
-            errorData['error'] as String,
-            response.statusCode,
-          );
+        if (errorData is Map<String, dynamic>) {
+          // Try to get error from 'error' or 'detail' field
+          final error = errorData['error'] ?? errorData['detail'];
+          if (error != null && error is String) {
+            errorMessage = error;
+          } else if (errorData.values.isNotEmpty) {
+            // If no error/detail field, try to get first value as error
+            final firstValue = errorData.values.first;
+            if (firstValue is String) {
+              errorMessage = firstValue;
+            }
+          }
         }
-      } catch (_) {}
-      // Fallback to generic error if parsing fails
-      throw BaserowException(
-        'Failed to perform POST request: ${response.statusCode}',
-        response.statusCode,
-      );
+      } catch (_) {
+        // Use default error message if parsing fails
+      }
+      throw BaserowException(errorMessage, response.statusCode);
     }
 
     return json.decode(response.body);
@@ -676,6 +681,35 @@ class BaserowClient {
         .cast<Map<String, dynamic>>()
         .map(DatabaseToken.fromJson)
         .toList();
+  }
+
+  /// Creates a new database token for a given workspace
+  ///
+  /// The token can be used to create, read, update and delete rows in the tables of
+  /// the workspace. It only works on the tables if the token has the correct
+  /// permissions.
+  ///
+  /// [name] is the human readable name of the database token for the user.
+  /// [workspace] is the ID of the workspace that the token will have access to.
+  ///
+  /// Throws [BaserowException] with specific error codes:
+  /// - ERROR_USER_NOT_IN_GROUP: User is not a member of the workspace
+  /// - ERROR_REQUEST_BODY_VALIDATION: Invalid request parameters
+  Future<DatabaseToken> createDatabaseToken({
+    required String name,
+    required int workspace,
+  }) async {
+    final request = CreateDatabaseTokenRequest(
+      name: name,
+      workspace: workspace,
+    );
+
+    final response = await post(
+      'database/tokens/',
+      request.toJson(),
+    );
+
+    return DatabaseToken.fromJson(response);
   }
 
   /// Closes the HTTP client

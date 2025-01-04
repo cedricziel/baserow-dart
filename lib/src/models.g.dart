@@ -6,6 +6,20 @@ part of 'models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+CreateDatabaseTokenRequest _$CreateDatabaseTokenRequestFromJson(
+        Map<String, dynamic> json) =>
+    CreateDatabaseTokenRequest(
+      name: json['name'] as String,
+      workspace: (json['workspace'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$CreateDatabaseTokenRequestToJson(
+        CreateDatabaseTokenRequest instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'workspace': instance.workspace,
+    };
+
 DatabaseTokenPermissions _$DatabaseTokenPermissionsFromJson(
         Map<String, dynamic> json) =>
     DatabaseTokenPermissions(

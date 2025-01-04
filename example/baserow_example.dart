@@ -40,7 +40,6 @@ void main() async {
     );
     print('Logged in successfully');
     print('User: ${authResponse.user}');
-    print('Token: ${authResponse.token}');
     print('Refresh token: ${authResponse.refreshToken}');
 
     // List databases

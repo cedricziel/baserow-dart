@@ -2,6 +2,23 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'models.g.dart';
 
+/// Request body for creating a database token
+@JsonSerializable()
+class CreateDatabaseTokenRequest {
+  final String name;
+  final int workspace;
+
+  CreateDatabaseTokenRequest({
+    required this.name,
+    required this.workspace,
+  });
+
+  factory CreateDatabaseTokenRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateDatabaseTokenRequestFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CreateDatabaseTokenRequestToJson(this);
+}
+
 /// Represents permissions for a database token
 @JsonSerializable()
 class DatabaseTokenPermissions {
