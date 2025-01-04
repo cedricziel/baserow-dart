@@ -79,7 +79,10 @@ final client = BaserowClient(
 );
 
 // Login to obtain JWT tokens
-final authResponse = await client.login('your.email@example.com', 'your_password');
+final authResponse = await client.login(
+  'your.email@example.com',
+  'your_password',
+);
 print('JWT Token: ${authResponse.token}');
 print('Refresh Token: ${authResponse.refreshToken}');
 

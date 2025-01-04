@@ -209,21 +209,6 @@ void main() {
           headers: anyNamed('headers'),
           body: jsonEncode({
             'email': 'test@example.com',
-            'username': 'test@example.com',
-            'password': 'password',
-          }),
-        )).thenAnswer((_) async => http.Response(
-              jsonEncode(loginResponse),
-              200,
-            ));
-
-        // Test with deprecated username
-        when(mockClient.post(
-          loginUri,
-          headers: anyNamed('headers'),
-          body: jsonEncode({
-            'email': 'test@example.com',
-            'username': 'oldusername',
             'password': 'password',
           }),
         )).thenAnswer((_) async => http.Response(
@@ -261,7 +246,6 @@ void main() {
           headers: anyNamed('headers'),
           body: jsonEncode({
             'email': 'test@example.com',
-            'username': 'test@example.com',
             'password': 'wrong-password',
           }),
         )).thenAnswer((_) async => http.Response(
@@ -302,7 +286,6 @@ void main() {
           headers: anyNamed('headers'),
           body: jsonEncode({
             'email': 'test@example.com',
-            'username': 'test@example.com',
             'password': 'password',
           }),
         )).thenAnswer((_) async => http.Response(
@@ -342,7 +325,6 @@ void main() {
           headers: anyNamed('headers'),
           body: jsonEncode({
             'email': 'test@example.com',
-            'username': 'test@example.com',
             'password': 'password',
           }),
         )).thenAnswer((_) async => http.Response(
@@ -383,7 +365,6 @@ void main() {
           headers: anyNamed('headers'),
           body: jsonEncode({
             'email': 'test@example.com',
-            'username': 'test@example.com',
             'password': 'password',
           }),
         )).thenAnswer((_) async => http.Response(

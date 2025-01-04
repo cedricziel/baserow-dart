@@ -66,16 +66,14 @@ class BaserowClient {
   /// - ERROR_EMAIL_VERIFICATION_REQUIRED: Email verification is required
   Future<AuthResponse> login(
     String email,
-    String password, {
-    @Deprecated('Use email parameter instead') String? username,
-  }) async {
+    String password,
+  ) async {
     final url = Uri.parse('${config.baseUrl}/api/user/token-auth/');
     final response = await _httpClient.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'email': email,
-        'username': username ?? email,
         'password': password,
       }),
     );
