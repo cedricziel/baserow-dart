@@ -284,5 +284,59 @@ void main() {
         )),
       );
     });
+
+    test('deleteDatabaseToken deletes token successfully', () async {
+      when(mockClient.delete(
+        Uri.parse('http://localhost/api/database/tokens/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response('', 204));
+
+      await client.deleteDatabaseToken(1);
+      // If no exception is thrown, the test passes
+    });
+
+    test('deleteDatabaseToken throws when token does not exist', () async {
+      when(mockClient.delete(
+        Uri.parse('http://localhost/api/database/tokens/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_TOKEN_DOES_NOT_EXIST',
+              'detail': 'Token does not exist',
+            }),
+            404,
+          ));
+
+      expect(
+        () => client.deleteDatabaseToken(1),
+        throwsA(isA<BaserowException>().having(
+          (e) => e.message,
+          'message',
+          'ERROR_TOKEN_DOES_NOT_EXIST',
+        )),
+      );
+    });
+
+    test('deleteDatabaseToken throws when user not in workspace', () async {
+      when(mockClient.delete(
+        Uri.parse('http://localhost/api/database/tokens/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_USER_NOT_IN_GROUP',
+              'detail': 'User not in workspace',
+            }),
+            400,
+          ));
+
+      expect(
+        () => client.deleteDatabaseToken(1),
+        throwsA(isA<BaserowException>().having(
+          (e) => e.message,
+          'message',
+          'ERROR_USER_NOT_IN_GROUP',
+        )),
+      );
+    });
   });
 }

@@ -759,6 +759,54 @@ class BaserowClient {
     return DatabaseToken.fromJson(response);
   }
 
+  /// Deletes a database token if it is owned by the authorized user and if
+  /// the user has access to the related workspace.
+  ///
+  /// [tokenId] is the ID of the database token to delete.
+  ///
+  /// Throws [BaserowException] with specific error codes:
+  /// - ERROR_USER_NOT_IN_GROUP: User is not a member of the workspace
+  /// - ERROR_TOKEN_DOES_NOT_EXIST: Token does not exist
+  Future<void> deleteDatabaseToken(int tokenId) async {
+    var url = Uri.parse('${config.baseUrl}/api/database/tokens/$tokenId/');
+    final response = await _httpClient.delete(
+      url,
+      headers: createHeaders(),
+    );
+
+    if (response.statusCode == 204) {
+      return;
+    }
+
+    final responseData = json.decode(response.body);
+
+    switch (response.statusCode) {
+      case 400:
+        if (responseData is Map<String, dynamic> &&
+            responseData['error'] == 'ERROR_USER_NOT_IN_GROUP') {
+          throw BaserowException('ERROR_USER_NOT_IN_GROUP', 400);
+        }
+        throw BaserowException(
+          'Failed to delete database token: ${response.statusCode}',
+          response.statusCode,
+        );
+      case 404:
+        if (responseData is Map<String, dynamic> &&
+            responseData['error'] == 'ERROR_TOKEN_DOES_NOT_EXIST') {
+          throw BaserowException('ERROR_TOKEN_DOES_NOT_EXIST', 404);
+        }
+        throw BaserowException(
+          'Failed to delete database token: ${response.statusCode}',
+          response.statusCode,
+        );
+      default:
+        throw BaserowException(
+          'Failed to delete database token: ${response.statusCode}',
+          response.statusCode,
+        );
+    }
+  }
+
   /// Closes the HTTP client
   void close() {
     _refreshTimer?.cancel();

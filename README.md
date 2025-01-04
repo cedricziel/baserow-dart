@@ -211,6 +211,20 @@ try {
     print('Error: ${e.message}');
   }
 }
+
+// Delete a database token
+try {
+  await client.deleteDatabaseToken(123);
+  print('Token deleted successfully');
+} on BaserowException catch (e) {
+  if (e.message == 'ERROR_TOKEN_DOES_NOT_EXIST') {
+    print('Token not found');
+  } else if (e.message == 'ERROR_USER_NOT_IN_GROUP') {
+    print('User not authorized to delete this token');
+  } else {
+    print('Error: ${e.message}');
+  }
+}
 ```
 
 Permissions can be either:
