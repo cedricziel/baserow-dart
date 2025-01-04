@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.0](https://github.com/cedricziel/baserow-dart/compare/v1.0.0...v1.1.0) (2025-01-04)
+
+
+### Features
+
+* add ability to get database token ([ee8cd9e](https://github.com/cedricziel/baserow-dart/commit/ee8cd9e9863bd3a502964dec3efe0e82a2ebff83))
+* add ability to list database tokens ([9aa6067](https://github.com/cedricziel/baserow-dart/commit/9aa60672204dfc21fff1b12ac791ca1825de73dc))
+* add method to add a database token ([88afb25](https://github.com/cedricziel/baserow-dart/commit/88afb258c5259f4b1937f0e4f23010e58763ddbc))
+* add the ability to check a token ([769011a](https://github.com/cedricziel/baserow-dart/commit/769011af1b40828540686a2f3a9f84f0d308d638))
+* add the ability to delete a database token ([6640bef](https://github.com/cedricziel/baserow-dart/commit/6640befcc73250d5e1531d7324df997ea023ee90))
+
 ## [1.0.0](https://github.com/cedricziel/baserow-dart/compare/v0.4.1...v1.0.0) (2025-01-03)
 
 
