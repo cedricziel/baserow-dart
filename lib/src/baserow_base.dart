@@ -613,6 +613,35 @@ class BaserowClient {
     return FileUploadResponse.fromJson(response);
   }
 
+  /// Checks if a database token is valid
+  ///
+  /// Returns void if the token is valid (200 response)
+  /// Throws [BaserowException] with error code ERROR_TOKEN_DOES_NOT_EXIST if invalid (403 response)
+  Future<void> checkDatabaseToken() async {
+    var url = Uri.parse('${config.baseUrl}/api/database/tokens/check/');
+    final response = await _httpClient.get(
+      url,
+      headers: createHeaders(),
+    );
+
+    if (response.statusCode == 200) {
+      return;
+    }
+
+    if (response.statusCode == 403) {
+      final responseData = json.decode(response.body);
+      if (responseData is Map<String, dynamic> &&
+          responseData['error'] == 'ERROR_TOKEN_DOES_NOT_EXIST') {
+        throw BaserowException('ERROR_TOKEN_DOES_NOT_EXIST', 403);
+      }
+    }
+
+    throw BaserowException(
+      'Failed to check database token: ${response.statusCode}',
+      response.statusCode,
+    );
+  }
+
   /// Deletes multiple rows from a table in batch mode
   ///
   /// If [sendWebhookEvents] is provided, it controls whether webhooks are triggered

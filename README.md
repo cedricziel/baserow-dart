@@ -225,6 +225,18 @@ try {
     print('Error: ${e.message}');
   }
 }
+
+// Check if a database token is valid
+try {
+  await client.checkDatabaseToken();
+  print('Token is valid');
+} on BaserowException catch (e) {
+  if (e.message == 'ERROR_TOKEN_DOES_NOT_EXIST') {
+    print('Token is invalid');
+  } else {
+    print('Error: ${e.message}');
+  }
+}
 ```
 
 Permissions can be either:

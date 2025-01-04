@@ -338,5 +338,37 @@ void main() {
         )),
       );
     });
+
+    test('checkDatabaseToken succeeds with valid token', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tokens/check/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response('', 200));
+
+      await client.checkDatabaseToken();
+      // If no exception is thrown, the test passes
+    });
+
+    test('checkDatabaseToken throws with invalid token', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tokens/check/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_TOKEN_DOES_NOT_EXIST',
+              'detail': 'Token does not exist',
+            }),
+            403,
+          ));
+
+      expect(
+        () => client.checkDatabaseToken(),
+        throwsA(isA<BaserowException>().having(
+          (e) => e.message,
+          'message',
+          'ERROR_TOKEN_DOES_NOT_EXIST',
+        )),
+      );
+    });
   });
 }
