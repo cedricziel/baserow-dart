@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/cedricziel/baserow-dart/compare/v1.2.1...v1.2.2) (2025-01-05)
+
+
+### Bug Fixes
+
+* Revert "fx: ensure list workspaces result is accurate" ([7bf9e62](https://github.com/cedricziel/baserow-dart/commit/7bf9e62a8b180445f79cda7fb5c338bfe0f0b991))
+
 ## [1.2.1](https://github.com/cedricziel/baserow-dart/compare/v1.2.0...v1.2.1) (2025-01-05)
 
 
