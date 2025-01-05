@@ -9,15 +9,25 @@ part of 'models.dart';
 WorkspaceUser _$WorkspaceUserFromJson(Map<String, dynamic> json) =>
     WorkspaceUser(
       id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
       email: json['email'] as String,
-      permissions: json['permissions'] as String,
+      workspace: (json['workspace'] as num).toInt(),
+      permissions: json['permissions'] as String?,
+      createdOn: DateTime.parse(json['created_on'] as String),
+      userId: (json['user_id'] as num).toInt(),
+      toBeDeleted: json['to_be_deleted'] as bool,
     );
 
 Map<String, dynamic> _$WorkspaceUserToJson(WorkspaceUser instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'name': instance.name,
       'email': instance.email,
+      'workspace': instance.workspace,
       'permissions': instance.permissions,
+      'created_on': instance.createdOn.toIso8601String(),
+      'user_id': instance.userId,
+      'to_be_deleted': instance.toBeDeleted,
     };
 
 Workspace _$WorkspaceFromJson(Map<String, dynamic> json) => Workspace(
@@ -26,24 +36,21 @@ Workspace _$WorkspaceFromJson(Map<String, dynamic> json) => Workspace(
       users: (json['users'] as List<dynamic>)
           .map((e) => WorkspaceUser.fromJson(e as Map<String, dynamic>))
           .toList(),
-      applicationCount: (json['application_count'] as num).toInt(),
-      rowCount: (json['row_count'] as num).toInt(),
-      storageUsage: (json['storage_usage'] as num?)?.toInt(),
-      seatsTaken: (json['seats_taken'] as num?)?.toInt(),
-      freeUsers: (json['free_users'] as num?)?.toInt(),
-      createdOn: DateTime.parse(json['created_on'] as String),
+      order: (json['order'] as num).toInt(),
+      permissions: json['permissions'] as String,
+      unreadNotificationsCount:
+          (json['unread_notifications_count'] as num).toInt(),
+      generativeAiModelsEnabled: json['generative_ai_models_enabled'] as String,
     );
 
 Map<String, dynamic> _$WorkspaceToJson(Workspace instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'users': instance.users,
-      'application_count': instance.applicationCount,
-      'row_count': instance.rowCount,
-      'storage_usage': instance.storageUsage,
-      'seats_taken': instance.seatsTaken,
-      'free_users': instance.freeUsers,
-      'created_on': instance.createdOn.toIso8601String(),
+      'order': instance.order,
+      'permissions': instance.permissions,
+      'unread_notifications_count': instance.unreadNotificationsCount,
+      'generative_ai_models_enabled': instance.generativeAiModelsEnabled,
     };
 
 CreateDatabaseTokenRequest _$CreateDatabaseTokenRequestFromJson(

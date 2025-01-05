@@ -5,13 +5,26 @@ part 'models.g.dart';
 @JsonSerializable()
 class WorkspaceUser {
   final int id;
+  final String name;
   final String email;
-  final String permissions;
+  final int workspace;
+  final String? permissions;
+  @JsonKey(name: 'created_on')
+  final DateTime createdOn;
+  @JsonKey(name: 'user_id')
+  final int userId;
+  @JsonKey(name: 'to_be_deleted')
+  final bool toBeDeleted;
 
   WorkspaceUser({
     required this.id,
+    required this.name,
     required this.email,
-    required this.permissions,
+    required this.workspace,
+    this.permissions,
+    required this.createdOn,
+    required this.userId,
+    required this.toBeDeleted,
   });
 
   factory WorkspaceUser.fromJson(Map<String, dynamic> json) =>
@@ -25,29 +38,21 @@ class Workspace {
   final int id;
   final String name;
   final List<WorkspaceUser> users;
-  @JsonKey(name: 'application_count')
-  final int applicationCount;
-  @JsonKey(name: 'row_count')
-  final int rowCount;
-  @JsonKey(name: 'storage_usage')
-  final int? storageUsage;
-  @JsonKey(name: 'seats_taken')
-  final int? seatsTaken;
-  @JsonKey(name: 'free_users')
-  final int? freeUsers;
-  @JsonKey(name: 'created_on')
-  final DateTime createdOn;
+  final int order;
+  final String permissions;
+  @JsonKey(name: 'unread_notifications_count')
+  final int unreadNotificationsCount;
+  @JsonKey(name: 'generative_ai_models_enabled')
+  final String generativeAiModelsEnabled;
 
   Workspace({
     required this.id,
     required this.name,
     required this.users,
-    required this.applicationCount,
-    required this.rowCount,
-    this.storageUsage,
-    this.seatsTaken,
-    this.freeUsers,
-    required this.createdOn,
+    required this.order,
+    required this.permissions,
+    required this.unreadNotificationsCount,
+    required this.generativeAiModelsEnabled,
   });
 
   factory Workspace.fromJson(Map<String, dynamic> json) =>
