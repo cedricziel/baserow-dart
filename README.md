@@ -243,6 +243,7 @@ try {
 ```
 
 Permissions can be either:
+
 - Boolean values (true/false) for full access or no access
 - Lists of [["database", id], ["table", id]] for granular access to specific databases or tables
 
@@ -264,6 +265,39 @@ For example:
   "delete": []     // Cannot delete rows
 }
 ```
+
+### Workspaces
+
+Workspaces are containers that can hold multiple applications like databases. Multiple users can have access to a workspace, and each user can have different permissions within the workspace.
+
+```dart
+// List all workspaces
+final workspaces = await client.listWorkspaces();
+for (final workspace in workspaces) {
+  print('Workspace: ${workspace.name}');
+
+  // Access workspace details
+  print('ID: ${workspace.id}');
+  print('Permissions: ${workspace.permissions}');
+  print('Unread Notifications: ${workspace.unreadNotificationsCount}');
+  print('AI Models Enabled: ${workspace.generativeAiModelsEnabled}');
+
+  // List workspace users
+  for (final user in workspace.users) {
+    print('User: ${user.name} (${user.email})');
+    print('Role: ${user.permissions}');
+    print('Created on: ${user.createdOn}');
+  }
+}
+```
+
+The workspace listing provides:
+
+- Basic workspace information (ID, name, permissions)
+- List of workspace users with their details
+- User-specific information like unread notification count
+- Workspace settings like enabled AI models
+- Custom ordering of workspaces per user (configurable via the order_workspaces endpoint)
 
 ### Working with Rows
 
@@ -343,6 +377,7 @@ MoveRowOptions({
 ```
 
 The move operation allows you to:
+
 - Move a row before another specific row using `beforeId`
 - Move a row to the end of the table by omitting `beforeId`
 - Control webhook event triggering with `sendWebhookEvents`
@@ -421,6 +456,7 @@ options: ListRowsOptions(
 There are two ways to filter rows:
 
 1. Using the JSON format with `filters`:
+
 ```dart
 options: ListRowsOptions(
   filterType: 'OR',  // Use OR to match any filter, AND to match all
@@ -440,6 +476,7 @@ options: ListRowsOptions(
 ```
 
 2. Using individual field filters:
+
 ```dart
 options: ListRowsOptions(
   fieldFilters: {

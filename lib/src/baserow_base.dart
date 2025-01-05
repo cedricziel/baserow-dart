@@ -834,6 +834,27 @@ class BaserowClient {
     }
   }
 
+  /// Lists all workspaces of the authorized user
+  ///
+  /// A workspace can contain multiple applications like a database.
+  /// Multiple users can have access to a workspace.
+  /// The order of the workspaces is custom for each user and can be configured
+  /// via the order_workspaces endpoint.
+  ///
+  /// Returns a list of [Workspace] objects containing workspace details and users.
+  Future<List<Workspace>> listWorkspaces() async {
+    final response = await get('workspaces/');
+    if (response is! List) {
+      throw BaserowException(
+          'Response is not a list: ${response.runtimeType}', 0);
+    }
+
+    return response
+        .cast<Map<String, dynamic>>()
+        .map(Workspace.fromJson)
+        .toList();
+  }
+
   /// Closes the HTTP client
   void close() {
     _refreshTimer?.cancel();
