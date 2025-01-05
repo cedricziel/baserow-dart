@@ -45,7 +45,7 @@ void main() {
           "order": 1,
           "permissions": "ADMIN",
           "unread_notifications_count": 0,
-          "generative_ai_models_enabled": "none"
+          "generative_ai_models_enabled": {}
         }
       ];
 
@@ -67,7 +67,8 @@ void main() {
       expect(workspaces[0].users[0].name, equals("John Doe"));
       expect(workspaces[0].permissions, equals("ADMIN"));
       expect(workspaces[0].unreadNotificationsCount, equals(0));
-      expect(workspaces[0].generativeAiModelsEnabled, equals("none"));
+      expect(
+          workspaces[0].generativeAiModelsEnabled, isA<Map<String, dynamic>>());
     });
 
     test('listWorkspaces handles error response', () async {

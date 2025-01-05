@@ -43,7 +43,7 @@ class Workspace {
   @JsonKey(name: 'unread_notifications_count')
   final int unreadNotificationsCount;
   @JsonKey(name: 'generative_ai_models_enabled')
-  final String generativeAiModelsEnabled;
+  final Map<String, dynamic> generativeAiModelsEnabled;
 
   Workspace({
     required this.id,

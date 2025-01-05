@@ -40,7 +40,8 @@ Workspace _$WorkspaceFromJson(Map<String, dynamic> json) => Workspace(
       permissions: json['permissions'] as String,
       unreadNotificationsCount:
           (json['unread_notifications_count'] as num).toInt(),
-      generativeAiModelsEnabled: json['generative_ai_models_enabled'] as String,
+      generativeAiModelsEnabled:
+          json['generative_ai_models_enabled'] as Map<String, dynamic>,
     );
 
 Map<String, dynamic> _$WorkspaceToJson(Workspace instance) => <String, dynamic>{
