@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/cedricziel/baserow-dart/compare/v1.2.0...v1.2.1) (2025-01-05)
+
+
+### Bug Fixes
+
+* ensure list workspaces result is accurate ([b209b94](https://github.com/cedricziel/baserow-dart/commit/b209b948b685951fbdc38ad9d0636b3c8160ea62))
+
 ## [1.2.0](https://github.com/cedricziel/baserow-dart/compare/v1.1.1...v1.2.0) (2025-01-05)
 
 
