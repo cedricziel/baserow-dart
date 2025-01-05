@@ -838,18 +838,23 @@ class BaserowClient {
   ///
   /// A workspace can contain multiple applications like a database.
   /// Multiple users can have access to a workspace.
-  /// The order of the workspaces is custom for each user and can be configured
-  /// via the order_workspaces endpoint.
   ///
   /// Returns a list of [Workspace] objects containing workspace details and users.
+  /// The response is paginated with count, next, and previous fields.
   Future<List<Workspace>> listWorkspaces() async {
     final response = await get('workspaces/');
-    if (response is! List) {
+    if (response is! Map<String, dynamic>) {
       throw BaserowException(
-          'Response is not a list: ${response.runtimeType}', 0);
+          'Response is not a map: ${response.runtimeType}', 0);
     }
 
-    return response
+    final results = response['results'];
+    if (results is! List) {
+      throw BaserowException(
+          'Results is not a list: ${results.runtimeType}', 0);
+    }
+
+    return results
         .cast<Map<String, dynamic>>()
         .map(Workspace.fromJson)
         .toList();
