@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/cedricziel/baserow-dart/compare/v1.1.1...v1.2.0) (2025-01-05)
+
+
+### Features
+
+* add support for listing workspaces ([db1d65e](https://github.com/cedricziel/baserow-dart/commit/db1d65ec2290f8f9b9bd1d1fafa2c88d8346858c))
+
 ## [1.1.1](https://github.com/cedricziel/baserow-dart/compare/v1.1.0...v1.1.1) (2025-01-04)
 
 
