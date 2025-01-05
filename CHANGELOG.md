@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/cedricziel/baserow-dart/compare/v1.2.2...v1.2.3) (2025-01-05)
+
+
+### Bug Fixes
+
+* generativeAiModelsEnabled is Map&lt;String,dynamic&gt; ([a27e730](https://github.com/cedricziel/baserow-dart/commit/a27e7307f827af7dc981e76197b87789446909fe))
+
 ## [1.2.2](https://github.com/cedricziel/baserow-dart/compare/v1.2.1...v1.2.2) (2025-01-05)
 
 
