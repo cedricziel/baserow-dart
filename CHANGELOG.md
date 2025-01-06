@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/cedricziel/baserow-dart/compare/v1.2.3...v1.3.0) (2025-01-06)
+
+
+### Features
+
+* add method to retrieve a single row by id ([16f3d70](https://github.com/cedricziel/baserow-dart/commit/16f3d708f947f7b4f6481d0b8d986f8b7d46ba33))
+
 ## [1.2.3](https://github.com/cedricziel/baserow-dart/compare/v1.2.2...v1.2.3) (2025-01-05)
 
 
