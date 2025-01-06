@@ -356,6 +356,98 @@ void main() {
       });
     });
 
+    group('getRow', () {
+      test('gets a single row successfully', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/');
+
+        when(mockClient.get(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'id': 1,
+              'order': 1,
+              'field_1': 'Test Value',
+              'field_2': 42,
+            }),
+            200));
+
+        final row = await client.getRow(1, 1);
+        expect(row.id, equals(1));
+        expect(row.fields['field_1'], equals('Test Value'));
+        expect(row.fields['field_2'], equals(42));
+      });
+
+      test('respects userFieldNames parameter', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/')
+            .replace(queryParameters: {'user_field_names': 'true'});
+
+        when(mockClient.get(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'id': 1,
+              'order': 1,
+              'Name': 'Test Value',
+              'Age': 42,
+            }),
+            200));
+
+        final row = await client.getRow(1, 1, userFieldNames: true);
+        expect(row.id, equals(1));
+        expect(row.fields['Name'], equals('Test Value'));
+        expect(row.fields['Age'], equals(42));
+      });
+
+      test('handles non-existent row error', () async {
+        final uri =
+            Uri.parse('http://localhost/api/database/rows/table/1/999/');
+
+        when(mockClient.get(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_ROW_DOES_NOT_EXIST',
+              'detail': 'The requested row does not exist.',
+            }),
+            404));
+
+        expect(
+          () => client.getRow(1, 999),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            404,
+          )),
+        );
+      });
+
+      test('handles permission error', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/1/');
+
+        when(mockClient.get(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_USER_NOT_IN_GROUP',
+              'detail': 'The user is not in the related workspace.',
+            }),
+            400));
+
+        expect(
+          () => client.getRow(1, 1),
+          throwsA(isA<BaserowException>().having(
+            (e) => e.statusCode,
+            'statusCode',
+            400,
+          )),
+        );
+      });
+    });
+
     group('streamRows', () {
       test('streams all rows with single page', () async {
         final uri = Uri.parse('http://localhost/api/database/rows/table/1/')

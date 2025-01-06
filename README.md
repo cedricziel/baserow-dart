@@ -301,6 +301,30 @@ The workspace listing provides:
 
 ### Working with Rows
 
+#### Getting a Single Row
+
+```dart
+// Get a single row by ID
+final row = await client.getRow(tableId, rowId);
+print('Row ID: ${row.id}');
+print('Field value: ${row.fields['field_1']}');
+
+// Get a row using human-readable field names
+final row = await client.getRow(
+  tableId,
+  rowId,
+  userFieldNames: true,
+);
+print('Name: ${row.fields['Name']}');
+print('Email: ${row.fields['Email']}');
+```
+
+The getRow method allows you to:
+- Fetch a specific row by its ID
+- Use human-readable field names with `userFieldNames: true`
+- Access all field values through the `fields` property
+- Handle common errors like non-existent rows or permission issues
+
 #### Field Name Formats
 
 Baserow supports two formats for field names:

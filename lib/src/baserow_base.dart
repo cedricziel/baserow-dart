@@ -640,6 +640,30 @@ class BaserowClient {
     );
   }
 
+  /// Gets a single row from a table by its ID
+  ///
+  /// [tableId] is the ID of the table containing the row
+  /// [rowId] is the ID of the row to retrieve
+  /// [userFieldNames] if true, uses human-readable field names instead of field_123 format
+  ///
+  /// Throws [BaserowException] with specific error codes:
+  /// - ERROR_USER_NOT_IN_GROUP: User is not a member of the workspace
+  /// - ERROR_TABLE_DOES_NOT_EXIST: Table does not exist
+  /// - ERROR_ROW_DOES_NOT_EXIST: Row does not exist
+  Future<Row> getRow(
+    int tableId,
+    int rowId, {
+    bool userFieldNames = false,
+  }) async {
+    final queryParams = userFieldNames ? {'user_field_names': 'true'} : null;
+    final response = await get(
+      'database/rows/table/$tableId/$rowId/',
+      queryParams,
+    );
+
+    return Row.fromJson(response);
+  }
+
   /// Deletes multiple rows from a table in batch mode
   ///
   /// If [sendWebhookEvents] is provided, it controls whether webhooks are triggered
