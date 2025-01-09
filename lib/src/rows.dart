@@ -482,6 +482,7 @@ class ListRowsOptions {
       }).join(',');
     }
 
+    // Handle JSON filters
     if (filters != null && filters!.isNotEmpty) {
       final filterJson = {
         'filter_type': filterType,
@@ -490,14 +491,18 @@ class ListRowsOptions {
       params['filters'] = jsonEncode(filterJson);
     }
 
-    // Add individual field filters
-    fieldFilters?.forEach((field, conditions) {
-      conditions.forEach((type, value) {
-        params['filter__${field}__$type'] = value;
+    // Handle field filters
+    if (fieldFilters != null && fieldFilters!.isNotEmpty) {
+      fieldFilters?.forEach((field, conditions) {
+        conditions.forEach((type, value) {
+          params['filter__${field}__$type'] = value;
+        });
       });
-    });
+    }
 
-    if (filterType != 'AND') {
+    // Add filter_type if either type of filter is present
+    if ((filters != null && filters!.isNotEmpty) ||
+        (fieldFilters != null && fieldFilters!.isNotEmpty)) {
       params['filter_type'] = filterType;
     }
 
