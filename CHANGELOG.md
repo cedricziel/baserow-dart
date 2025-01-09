@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/cedricziel/baserow-dart/compare/v1.3.2...v1.3.3) (2025-01-09)
+
+
+### Bug Fixes
+
+* allow int values for filters as well ([e9884b8](https://github.com/cedricziel/baserow-dart/commit/e9884b8c6ef3de0ef33cb8a0e6b159d60073f37f))
+
 ## [1.3.2](https://github.com/cedricziel/baserow-dart/compare/v1.3.1...v1.3.2) (2025-01-09)
 
 
