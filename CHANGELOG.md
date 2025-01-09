@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/cedricziel/baserow-dart/compare/v1.3.0...v1.3.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* dont use both filters at the same time ([7e68968](https://github.com/cedricziel/baserow-dart/commit/7e68968b280b345ec440538c4ae41aa0c11d3d1f))
+
 ## [1.3.0](https://github.com/cedricziel/baserow-dart/compare/v1.2.3...v1.3.0) (2025-01-06)
 
 
