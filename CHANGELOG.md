@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/cedricziel/baserow-dart/compare/v1.3.1...v1.3.2) (2025-01-09)
+
+
+### Bug Fixes
+
+* filter_type should only be sent when there are multiple filters ([80933c2](https://github.com/cedricziel/baserow-dart/commit/80933c2fdd90ff371fa7a311685e7abbba7782e6))
+
 ## [1.3.1](https://github.com/cedricziel/baserow-dart/compare/v1.3.0...v1.3.1) (2025-01-09)
 
 
