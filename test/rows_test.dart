@@ -129,28 +129,26 @@ void main() {
         expect(rows[3].fields['field_1'], equals('Row 4'));
       });
 
-      test('correctly converts filter parameters', () async {
-        // Test with JSON filters
-        final uriWithJsonFilters =
+      test('correctly handles single and multiple filters', () async {
+        // Test with single JSON filter (should not include filter_type)
+        final uriWithSingleJsonFilter =
             Uri.parse('http://localhost/api/database/rows/table/1/')
                 .replace(queryParameters: {
           'page': '1',
           'size': '100',
           'filters': jsonEncode({
-            'filter_type': 'OR',
             'filters': [
               {
                 'field': 'status',
                 'type': 'equal',
                 'value': 'active',
               }
-            ],
+            ]
           }),
-          'filter_type': 'OR',
         });
 
         when(mockClient.get(
-          uriWithJsonFilters,
+          uriWithSingleJsonFilter,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).thenAnswer((_) async => http.Response(
             jsonEncode({
@@ -164,7 +162,6 @@ void main() {
         await client.listAllRows(
           1,
           options: ListRowsOptions(
-            filterType: 'OR',
             filters: [
               RowFilter(
                 field: 'status',
@@ -176,22 +173,21 @@ void main() {
         );
 
         verify(mockClient.get(
-          uriWithJsonFilters,
+          uriWithSingleJsonFilter,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).called(1);
 
-        // Test with field filters
-        final uriWithFieldFilters =
+        // Test with single field filter (should not include filter_type)
+        final uriWithSingleFieldFilter =
             Uri.parse('http://localhost/api/database/rows/table/1/')
                 .replace(queryParameters: {
           'page': '1',
           'size': '100',
           'filter__status__equal': 'active',
-          'filter_type': 'AND',
         });
 
         when(mockClient.get(
-          uriWithFieldFilters,
+          uriWithSingleFieldFilter,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).thenAnswer((_) async => http.Response(
             jsonEncode({
@@ -212,12 +208,12 @@ void main() {
         );
 
         verify(mockClient.get(
-          uriWithFieldFilters,
+          uriWithSingleFieldFilter,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).called(1);
 
-        // Test with both filter types
-        final uriWithBothFilters =
+        // Test with multiple filters (should include filter_type)
+        final uriWithMultipleFilters =
             Uri.parse('http://localhost/api/database/rows/table/1/')
                 .replace(queryParameters: {
           'page': '1',
@@ -229,15 +225,19 @@ void main() {
                 'field': 'status',
                 'type': 'equal',
                 'value': 'active',
+              },
+              {
+                'field': 'priority',
+                'type': 'equal',
+                'value': 'high',
               }
             ],
           }),
-          'filter__priority__equal': 'high',
           'filter_type': 'OR',
         });
 
         when(mockClient.get(
-          uriWithBothFilters,
+          uriWithMultipleFilters,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).thenAnswer((_) async => http.Response(
             jsonEncode({
@@ -258,15 +258,140 @@ void main() {
                 operator: FilterOperator.equal,
                 value: 'active',
               ),
+              RowFilter(
+                field: 'priority',
+                operator: FilterOperator.equal,
+                value: 'high',
+              ),
             ],
-            fieldFilters: {
-              'priority': {'equal': 'high'},
-            },
           ),
         );
 
         verify(mockClient.get(
-          uriWithBothFilters,
+          uriWithMultipleFilters,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).called(1);
+      });
+
+      test('correctly handles multiple filters with AND/OR operations',
+          () async {
+        // Test AND operation with multiple filters
+        final uriWithAndFilters =
+            Uri.parse('http://localhost/api/database/rows/table/1/')
+                .replace(queryParameters: {
+          'page': '1',
+          'size': '100',
+          'filters': jsonEncode({
+            'filter_type': 'AND',
+            'filters': [
+              {
+                'field': 'status',
+                'type': 'equal',
+                'value': 'active',
+              },
+              {
+                'field': 'priority',
+                'type': 'equal',
+                'value': 'high',
+              }
+            ],
+          }),
+          'filter_type': 'AND',
+        });
+
+        when(mockClient.get(
+          uriWithAndFilters,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'count': 0,
+              'next': null,
+              'previous': null,
+              'results': [],
+            }),
+            200));
+
+        await client.listAllRows(
+          1,
+          options: ListRowsOptions(
+            filterType: 'AND',
+            filters: [
+              RowFilter(
+                field: 'status',
+                operator: FilterOperator.equal,
+                value: 'active',
+              ),
+              RowFilter(
+                field: 'priority',
+                operator: FilterOperator.equal,
+                value: 'high',
+              ),
+            ],
+          ),
+        );
+
+        verify(mockClient.get(
+          uriWithAndFilters,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).called(1);
+
+        // Test OR operation with multiple filters
+        final uriWithOrFilters =
+            Uri.parse('http://localhost/api/database/rows/table/1/')
+                .replace(queryParameters: {
+          'page': '1',
+          'size': '100',
+          'filters': jsonEncode({
+            'filter_type': 'OR',
+            'filters': [
+              {
+                'field': 'status',
+                'type': 'equal',
+                'value': 'active',
+              },
+              {
+                'field': 'status',
+                'type': 'equal',
+                'value': 'pending',
+              }
+            ],
+          }),
+          'filter_type': 'OR',
+        });
+
+        when(mockClient.get(
+          uriWithOrFilters,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'count': 0,
+              'next': null,
+              'previous': null,
+              'results': [],
+            }),
+            200));
+
+        await client.listAllRows(
+          1,
+          options: ListRowsOptions(
+            filterType: 'OR',
+            filters: [
+              RowFilter(
+                field: 'status',
+                operator: FilterOperator.equal,
+                value: 'active',
+              ),
+              RowFilter(
+                field: 'status',
+                operator: FilterOperator.equal,
+                value: 'pending',
+              ),
+            ],
+          ),
+        );
+
+        verify(mockClient.get(
+          uriWithOrFilters,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).called(1);
       });

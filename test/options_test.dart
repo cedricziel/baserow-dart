@@ -25,7 +25,13 @@ void main() {
       expect(params['page'], equals('2'));
       expect(params['size'], equals('25'));
       expect(params['order_by'], equals('-name'));
-      expect(params['filters'], contains('"filter_type":"AND"'));
+      expect(params['filters'], contains('"field":"age"'));
+      expect(params['filters'], contains('"type":"higher_than"'));
+      expect(params['filters'], contains('"value":18'));
+      expect(
+          params['filters'],
+          isNot(contains(
+              '"filter_type"'))); // Should not include filter_type for single filter
       expect(params['include'], equals('field_metadata'));
       expect(params['view_id'], equals('123'));
       expect(params['user_field_names'], equals('true'));

@@ -484,10 +484,14 @@ class ListRowsOptions {
 
     // Handle JSON filters
     if (filters != null && filters!.isNotEmpty) {
-      final filterJson = {
-        'filter_type': filterType,
-        'filters': filters!.map((f) => f.toJson()).toList(),
-      };
+      final filterJson = filters!.length > 1
+          ? {
+              'filter_type': filterType,
+              'filters': filters!.map((f) => f.toJson()).toList(),
+            }
+          : {
+              'filters': filters!.map((f) => f.toJson()).toList(),
+            };
       params['filters'] = jsonEncode(filterJson);
     }
 
@@ -500,9 +504,9 @@ class ListRowsOptions {
       });
     }
 
-    // Add filter_type if either type of filter is present
-    if ((filters != null && filters!.isNotEmpty) ||
-        (fieldFilters != null && fieldFilters!.isNotEmpty)) {
+    // Add filter_type only when there are multiple filters
+    final totalFilters = (filters?.length ?? 0) + (fieldFilters?.length ?? 0);
+    if (totalFilters > 1) {
       params['filter_type'] = filterType;
     }
 
