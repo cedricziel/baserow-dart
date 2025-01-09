@@ -248,6 +248,7 @@ Permissions can be either:
 - Lists of [["database", id], ["table", id]] for granular access to specific databases or tables
 
 For example:
+
 ```dart
 // Full access token
 {
@@ -320,6 +321,7 @@ print('Email: ${row.fields['Email']}');
 ```
 
 The getRow method allows you to:
+
 - Fetch a specific row by its ID
 - Use human-readable field names with `userFieldNames: true`
 - Access all field values through the `fields` property
@@ -444,7 +446,7 @@ ListRowsOptions({
   List<String>? orderBy,        // Fields to order by, with optional direction prefix (+ or -)
   String filterType = 'AND',    // Filter type - AND/OR for combining multiple filters
   List<RowFilter>? filters,     // JSON format filters
-  Map<String, Map<String, String>>? fieldFilters,  // Individual field filters
+  Map<String, Map<String, dynamic>>? fieldFilters,  // Individual field filters (supports strings and integers)
   List<String>? include,        // Fields to include in the response
   List<String>? exclude,        // Fields to exclude from the response
   bool includeFieldMetadata,    // Whether to include field metadata
@@ -505,7 +507,8 @@ options: ListRowsOptions(
 options: ListRowsOptions(
   fieldFilters: {
     'status': {'equal': 'active'},
-    'age': {'greater_than': '18'},
+    'age': {'greater_than': 18},      // Integer values are supported directly
+    'rating': {'equal': 5},           // No need to convert to strings
   },
 )
 ```

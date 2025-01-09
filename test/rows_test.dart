@@ -129,7 +129,8 @@ void main() {
         expect(rows[3].fields['field_1'], equals('Row 4'));
       });
 
-      test('correctly handles single and multiple filters', () async {
+      test('correctly handles single and multiple filters with string values',
+          () async {
         // Test with single JSON filter (should not include filter_type)
         final uriWithSingleJsonFilter =
             Uri.parse('http://localhost/api/database/rows/table/1/')
@@ -269,6 +270,44 @@ void main() {
 
         verify(mockClient.get(
           uriWithMultipleFilters,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).called(1);
+      });
+
+      test('correctly handles integer values in field filters', () async {
+        final uri = Uri.parse('http://localhost/api/database/rows/table/1/')
+            .replace(queryParameters: {
+          'page': '1',
+          'size': '100',
+          'filter__age__greater_than': '18',
+          'filter__rating__equal': '5',
+          'filter_type': 'AND',
+        });
+
+        when(mockClient.get(
+          uri,
+          headers: argThat(isA<Map<String, String>>(), named: 'headers'),
+        )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'count': 0,
+              'next': null,
+              'previous': null,
+              'results': [],
+            }),
+            200));
+
+        await client.listAllRows(
+          1,
+          options: ListRowsOptions(
+            fieldFilters: {
+              'age': {'greater_than': 18},
+              'rating': {'equal': 5},
+            },
+          ),
+        );
+
+        verify(mockClient.get(
+          uri,
           headers: argThat(isA<Map<String, String>>(), named: 'headers'),
         )).called(1);
       });

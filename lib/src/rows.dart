@@ -383,7 +383,22 @@ class ListRowsOptions {
   ///   },
   /// )
   /// ```
-  final Map<String, Map<String, String>>? fieldFilters;
+  /// Individual field filters in the format field__filter__type=value.
+  ///
+  /// An alternative to [filters] that uses a simpler map-based format.
+  /// The outer map key is the field name, and the inner map defines
+  /// the filter type and value. Values can be strings or integers.
+  ///
+  /// Example:
+  /// ```dart
+  /// options: ListRowsOptions(
+  ///   fieldFilters: {
+  ///     'status': {'equal': 'active'},
+  ///     'age': {'greater_than': 18},
+  ///   },
+  /// )
+  /// ```
+  final Map<String, Map<String, dynamic>>? fieldFilters;
 
   /// Fields to include in the response.
   ///
@@ -499,7 +514,7 @@ class ListRowsOptions {
     if (fieldFilters != null && fieldFilters!.isNotEmpty) {
       fieldFilters?.forEach((field, conditions) {
         conditions.forEach((type, value) {
-          params['filter__${field}__$type'] = value;
+          params['filter__${field}__$type'] = value.toString();
         });
       });
     }
