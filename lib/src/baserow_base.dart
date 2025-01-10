@@ -5,12 +5,13 @@ import 'package:http/http.dart' as http;
 import 'auth.dart';
 import 'client_interface.dart';
 import 'exceptions.dart';
-import 'models.dart';
 import 'mixins/user_operations_mixin.dart';
 import 'mixins/workspace_operations_mixin.dart';
 import 'mixins/database_token_operations_mixin.dart';
 import 'mixins/row_operations_mixin.dart';
 import 'mixins/file_operations_mixin.dart';
+import 'mixins/database_operations_mixin.dart';
+import 'mixins/table_operations_mixin.dart';
 
 /// The main Baserow client class for interacting with the Baserow API.
 class BaserowClient
@@ -19,7 +20,9 @@ class BaserowClient
         WorkspaceOperationsMixin,
         DatabaseTokenOperationsMixin,
         RowOperationsMixin,
-        FileOperationsMixin
+        FileOperationsMixin,
+        DatabaseOperationsMixin,
+        TableOperationsMixin
     implements BaserowClientInterface {
   @override
   BaserowConfig config;
@@ -229,57 +232,6 @@ class BaserowClient
         response.statusCode,
       );
     }
-  }
-
-  /// Lists all databases accessible to the authenticated user
-  @override
-  Future<List<Database>> listDatabases() async {
-    final response = await get('applications/');
-    final List<dynamic> data = response['applications'] as List<dynamic>;
-
-    return data
-        .where((app) => app['type'] == 'database')
-        .map((db) => Database.fromJson(db as Map<String, dynamic>))
-        .toList();
-  }
-
-  /// Lists all tables in a database
-  @override
-  Future<List<Table>> listTables(int databaseId) async {
-    final response = await get('database/tables/database/$databaseId/');
-    if (response is! List) {
-      throw BaserowException(
-          'Response is not a list: ${response.runtimeType}', 0);
-    }
-
-    return response.cast<Map<String, dynamic>>().map(Table.fromJson).toList();
-  }
-
-  /// Lists all fields in a table
-  @override
-  Future<List<Field>> listFields(int tableId) async {
-    final response = await get('database/fields/table/$tableId/');
-    final List<dynamic> data = response['fields'] as List<dynamic>;
-
-    return data
-        .map((field) => Field.fromJson(field as Map<String, dynamic>))
-        .toList();
-  }
-
-  /// Gets a table with its fields
-  @override
-  Future<Table> getTableWithFields(int tableId) async {
-    final response = await get('database/tables/$tableId/');
-    final table = Table.fromJson(response as Map<String, dynamic>);
-
-    // Fetch fields separately
-    final fields = await listFields(tableId);
-    return Table(
-      id: table.id,
-      name: table.name,
-      order: table.order,
-      fields: fields,
-    );
   }
 
   /// Closes the HTTP client
