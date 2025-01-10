@@ -1,10 +1,10 @@
 import 'auth.dart';
-import 'files.dart';
 import 'models.dart';
 import 'interfaces/row_operations.dart';
+import 'interfaces/file_operations.dart';
 
 /// Abstract interface for interacting with the Baserow API.
-abstract class BaserowClientInterface implements RowOperations {
+abstract class BaserowClientInterface implements RowOperations, FileOperations {
   /// The current configuration for the client
   BaserowConfig get config;
 
@@ -45,12 +45,6 @@ abstract class BaserowClientInterface implements RowOperations {
 
   /// Gets a table with its fields
   Future<Table> getTableWithFields(int tableId);
-
-  /// Uploads a file to Baserow
-  Future<FileUploadResponse> uploadFile(List<int> fileBytes, String filename);
-
-  /// Uploads a file to Baserow by downloading it from a URL
-  Future<FileUploadResponse> uploadFileViaUrl(String url);
 
   /// Checks if a database token is valid
   Future<void> checkDatabaseToken();
