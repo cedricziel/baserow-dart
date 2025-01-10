@@ -2,9 +2,11 @@ import 'auth.dart';
 import 'models.dart';
 import 'interfaces/row_operations.dart';
 import 'interfaces/file_operations.dart';
+import 'interfaces/database_token_operations.dart';
 
 /// Abstract interface for interacting with the Baserow API.
-abstract class BaserowClientInterface implements RowOperations, FileOperations {
+abstract class BaserowClientInterface
+    implements RowOperations, FileOperations, DatabaseTokenOperations {
   /// The current configuration for the client
   BaserowConfig get config;
 
@@ -45,24 +47,6 @@ abstract class BaserowClientInterface implements RowOperations, FileOperations {
 
   /// Gets a table with its fields
   Future<Table> getTableWithFields(int tableId);
-
-  /// Checks if a database token is valid
-  Future<void> checkDatabaseToken();
-
-  /// Returns the requested database token
-  Future<DatabaseToken> getDatabaseToken(int tokenId);
-
-  /// Lists all database tokens that belong to the authorized user
-  Future<List<DatabaseToken>> listDatabaseTokens();
-
-  /// Creates a new database token for a given workspace
-  Future<DatabaseToken> createDatabaseToken({
-    required String name,
-    required int workspace,
-  });
-
-  /// Deletes a database token
-  Future<void> deleteDatabaseToken(int tokenId);
 
   /// Lists all workspaces of the authorized user
   Future<List<Workspace>> listWorkspaces();
