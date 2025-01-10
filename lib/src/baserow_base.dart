@@ -11,6 +11,7 @@ import 'rows.dart';
 
 /// The main Baserow client class for interacting with the Baserow API.
 class BaserowClient implements BaserowClientInterface {
+  @override
   BaserowConfig config;
   final http.Client _httpClient;
   Timer? _refreshTimer;
@@ -40,6 +41,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Creates headers for API requests including authentication if available
+  @override
   Map<String, String> createHeaders() {
     final headers = {
       'Content-Type': 'application/json',
@@ -65,6 +67,7 @@ class BaserowClient implements BaserowClientInterface {
   /// - ERROR_DEACTIVATED_USER: User account is deactivated
   /// - ERROR_AUTH_PROVIDER_DISABLED: Authentication provider is disabled
   /// - ERROR_EMAIL_VERIFICATION_REQUIRED: Email verification is required
+  @override
   Future<AuthResponse> login(
     String email,
     String password,
@@ -117,6 +120,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Refresh JWT token
+  @override
   Future<String> refreshToken(String refreshToken) async {
     final response = await post('user/token-refresh/', {
       'refresh_token': refreshToken,
@@ -138,6 +142,7 @@ class BaserowClient implements BaserowClientInterface {
   /// Verify JWT token
   ///
   /// [token] can be either an access_token or a deprecated token
+  @override
   Future<bool> verifyToken(String token) async {
     final url = Uri.parse('${config.baseUrl}/api/user/token-verify/');
     final headers = {'Content-Type': 'application/json'};
@@ -166,6 +171,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Logs out the user by blacklisting their refresh token
+  @override
   Future<void> logout() async {
     if (config.authType != BaserowAuthType.jwt || config.refreshToken == null) {
       throw BaserowException(
@@ -205,6 +211,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Performs a GET request to the Baserow API
+  @override
   Future<dynamic> get(String path, [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
     if (queryParams != null) {
@@ -227,6 +234,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Performs a POST request to the Baserow API
+  @override
   Future<dynamic> post(String path, Map<String, dynamic> data,
       [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
@@ -271,6 +279,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Performs a PATCH request to the Baserow API
+  @override
   Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> data,
       [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
@@ -294,6 +303,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Performs a multipart file upload request to the Baserow API
+  @override
   Future<Map<String, dynamic>> uploadMultipart(
     String path,
     List<int> fileBytes,
@@ -337,6 +347,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Performs a DELETE request to the Baserow API
+  @override
   Future<void> delete(String path, [Map<String, String>? queryParams]) async {
     var url = Uri.parse('${config.baseUrl}/api/$path');
     if (queryParams != null) {
@@ -357,6 +368,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Lists all databases accessible to the authenticated user
+  @override
   Future<List<Database>> listDatabases() async {
     final response = await get('applications/');
     final List<dynamic> data = response['applications'] as List<dynamic>;
@@ -368,6 +380,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Lists all tables in a database
+  @override
   Future<List<Table>> listTables(int databaseId) async {
     final response = await get('database/tables/database/$databaseId/');
     if (response is! List) {
@@ -379,6 +392,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Lists all fields in a table
+  @override
   Future<List<Field>> listFields(int tableId) async {
     final response = await get('database/fields/table/$tableId/');
     final List<dynamic> data = response['fields'] as List<dynamic>;
@@ -389,6 +403,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Gets a table with its fields
+  @override
   Future<Table> getTableWithFields(int tableId) async {
     final response = await get('database/tables/$tableId/');
     final table = Table.fromJson(response as Map<String, dynamic>);
@@ -404,6 +419,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Lists rows in a table with optional filtering and pagination
+  @override
   Future<RowsResponse> listRows(
     int tableId, {
     ListRowsOptions options = const ListRowsOptions(),
@@ -417,6 +433,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Lists all rows in a table, automatically handling pagination
+  @override
   Future<List<Row>> listAllRows(
     int tableId, {
     ListRowsOptions options = const ListRowsOptions(),
@@ -457,6 +474,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Returns a stream of rows from a table, yielding rows as they are fetched
+  @override
   Stream<Row> streamRows(
     int tableId, {
     ListRowsOptions options = const ListRowsOptions(),
@@ -496,6 +514,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Creates a new row in a table
+  @override
   Future<Row> createRow(
     int tableId,
     Map<String, dynamic> fields, {
@@ -512,6 +531,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Creates multiple rows in a table
+  @override
   Future<List<Row>> createRows(
     int tableId,
     List<Map<String, dynamic>> fieldsList, {
@@ -533,6 +553,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Updates an existing row in a table
+  @override
   Future<Row> updateRow(
     int tableId,
     int rowId,
@@ -550,6 +571,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Updates multiple rows in a table
+  @override
   Future<List<Row>> updateRows(
     int tableId,
     Map<int, Map<String, dynamic>> updates, {
@@ -585,6 +607,7 @@ class BaserowClient implements BaserowClientInterface {
   /// // Delete row without triggering webhooks
   /// await client.deleteRow(586, 123, sendWebhookEvents: false);
   /// ```
+  @override
   Future<void> deleteRow(int tableId, int rowId,
       {bool sendWebhookEvents = true}) async {
     final queryParams =
@@ -593,6 +616,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Uploads a file to Baserow
+  @override
   Future<FileUploadResponse> uploadFile(
       List<int> fileBytes, String filename) async {
     final response = await uploadMultipart(
@@ -604,6 +628,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Uploads a file to Baserow by downloading it from a URL
+  @override
   Future<FileUploadResponse> uploadFileViaUrl(String url) async {
     final response = await post(
       'user-files/upload-via-url/',
@@ -616,6 +641,7 @@ class BaserowClient implements BaserowClientInterface {
   ///
   /// Returns void if the token is valid (200 response)
   /// Throws [BaserowException] with error code ERROR_TOKEN_DOES_NOT_EXIST if invalid (403 response)
+  @override
   Future<void> checkDatabaseToken() async {
     var url = Uri.parse('${config.baseUrl}/api/database/tokens/check/');
     final response = await _httpClient.get(
@@ -651,6 +677,7 @@ class BaserowClient implements BaserowClientInterface {
   /// - ERROR_USER_NOT_IN_GROUP: User is not a member of the workspace
   /// - ERROR_TABLE_DOES_NOT_EXIST: Table does not exist
   /// - ERROR_ROW_DOES_NOT_EXIST: Row does not exist
+  @override
   Future<Row> getRow(
     int tableId,
     int rowId, {
@@ -675,6 +702,7 @@ class BaserowClient implements BaserowClientInterface {
   /// // Delete multiple rows without triggering webhooks
   /// await client.deleteRows(586, [123, 456], sendWebhookEvents: false);
   /// ```
+  @override
   Future<void> deleteRows(
     int tableId,
     List<int> rowIds, {
@@ -703,6 +731,7 @@ class BaserowClient implements BaserowClientInterface {
   ///   options: MoveRowOptions(beforeId: 456),
   /// );
   /// ```
+  @override
   Future<Row> moveRow(
     int tableId,
     int rowId, {
@@ -726,6 +755,7 @@ class BaserowClient implements BaserowClientInterface {
   /// user is not a member of the workspace.
   /// Throws [BaserowNotFoundError] with error code ERROR_TOKEN_DOES_NOT_EXIST if the
   /// token does not exist.
+  @override
   Future<DatabaseToken> getDatabaseToken(int tokenId) async {
     var url = Uri.parse('${config.baseUrl}/api/database/tokens/$tokenId/');
     final response = await _httpClient.get(
@@ -769,6 +799,7 @@ class BaserowClient implements BaserowClientInterface {
   /// A token can be used to create, read, update and delete rows in the tables of
   /// the token's workspace. It only works on the tables if the token has the correct
   /// permissions.
+  @override
   Future<List<DatabaseToken>> listDatabaseTokens() async {
     final response = await get('database/tokens/');
     if (response is! List) {
@@ -794,6 +825,7 @@ class BaserowClient implements BaserowClientInterface {
   /// Throws [BaserowException] with specific error codes:
   /// - ERROR_USER_NOT_IN_GROUP: User is not a member of the workspace
   /// - ERROR_REQUEST_BODY_VALIDATION: Invalid request parameters
+  @override
   Future<DatabaseToken> createDatabaseToken({
     required String name,
     required int workspace,
@@ -819,6 +851,7 @@ class BaserowClient implements BaserowClientInterface {
   /// Throws [BaserowException] with specific error codes:
   /// - ERROR_USER_NOT_IN_GROUP: User is not a member of the workspace
   /// - ERROR_TOKEN_DOES_NOT_EXIST: Token does not exist
+  @override
   Future<void> deleteDatabaseToken(int tokenId) async {
     var url = Uri.parse('${config.baseUrl}/api/database/tokens/$tokenId/');
     final response = await _httpClient.delete(
@@ -867,6 +900,7 @@ class BaserowClient implements BaserowClientInterface {
   /// via the order_workspaces endpoint.
   ///
   /// Returns a list of [Workspace] objects containing workspace details and users.
+  @override
   Future<List<Workspace>> listWorkspaces() async {
     final response = await get('workspaces/');
     if (response is! List) {
@@ -881,6 +915,7 @@ class BaserowClient implements BaserowClientInterface {
   }
 
   /// Closes the HTTP client
+  @override
   void close() {
     _refreshTimer?.cancel();
     _httpClient.close();
