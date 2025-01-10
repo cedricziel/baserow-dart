@@ -74,11 +74,15 @@ void main() {
                 'id': 1,
                 'name': 'Table 1',
                 'order': 1,
+                'database_id': databaseId,
+                'data_sync': null
               },
               {
                 'id': 2,
                 'name': 'Table 2',
                 'order': 2,
+                'database_id': databaseId,
+                'data_sync': null
               },
             ]),
             200,
@@ -141,6 +145,8 @@ void main() {
               'id': tableId,
               'name': 'Table 1',
               'order': 1,
+              'database_id': 1,
+              'data_sync': null,
             }),
             200,
           ));

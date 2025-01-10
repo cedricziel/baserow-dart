@@ -43,6 +43,8 @@ mixin TableOperationsMixin implements TableOperations {
       id: table.id,
       name: table.name,
       order: table.order,
+      databaseId: table.databaseId,
+      dataSync: table.dataSync,
       fields: fields,
     );
   }

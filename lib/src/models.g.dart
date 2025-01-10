@@ -117,6 +117,69 @@ Map<String, dynamic> _$DatabaseToJson(Database instance) => <String, dynamic>{
       'type': instance.type,
     };
 
+DataSync _$DataSyncFromJson(Map<String, dynamic> json) => DataSync(
+      id: (json['id'] as num).toInt(),
+      type: json['type'] as String,
+      syncedProperties: (json['synced_properties'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
+      lastSync: DateTime.parse(json['last_sync'] as String),
+      lastError: json['last_error'] as String?,
+    );
+
+Map<String, dynamic> _$DataSyncToJson(DataSync instance) => <String, dynamic>{
+      'id': instance.id,
+      'type': instance.type,
+      'synced_properties': instance.syncedProperties,
+      'last_sync': instance.lastSync.toIso8601String(),
+      'last_error': instance.lastError,
+    };
+
+Table _$TableFromJson(Map<String, dynamic> json) => Table(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      order: (json['order'] as num).toInt(),
+      databaseId: (json['database_id'] as num).toInt(),
+      dataSync: json['data_sync'] == null
+          ? null
+          : DataSync.fromJson(json['data_sync'] as Map<String, dynamic>),
+      fields: (json['fields'] as List<dynamic>?)
+          ?.map((e) => Field.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$TableToJson(Table instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'order': instance.order,
+      'database_id': instance.databaseId,
+      'data_sync': instance.dataSync,
+      'fields': instance.fields,
+    };
+
+Application _$ApplicationFromJson(Map<String, dynamic> json) => Application(
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
+      order: (json['order'] as num).toInt(),
+      type: json['type'] as String,
+      workspace: Workspace.fromJson(json['workspace'] as Map<String, dynamic>),
+      createdOn: DateTime.parse(json['created_on'] as String),
+      tables: (json['tables'] as List<dynamic>)
+          .map((e) => Table.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ApplicationToJson(Application instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'order': instance.order,
+      'type': instance.type,
+      'workspace': instance.workspace,
+      'created_on': instance.createdOn.toIso8601String(),
+      'tables': instance.tables,
+    };
+
 Field _$FieldFromJson(Map<String, dynamic> json) => Field(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
