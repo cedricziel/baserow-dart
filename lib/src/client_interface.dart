@@ -4,6 +4,7 @@ import 'interfaces/row_operations.dart';
 import 'interfaces/file_operations.dart';
 import 'interfaces/database_token_operations.dart';
 import 'interfaces/workspace_operations.dart';
+import 'interfaces/user_operations.dart';
 
 /// Abstract interface for interacting with the Baserow API.
 abstract class BaserowClientInterface
@@ -11,35 +12,13 @@ abstract class BaserowClientInterface
         RowOperations,
         FileOperations,
         DatabaseTokenOperations,
-        WorkspaceOperations {
+        WorkspaceOperations,
+        UserOperations {
   /// The current configuration for the client
   BaserowConfig get config;
 
   /// Creates headers for API requests including authentication if available
   Map<String, String> createHeaders();
-
-  /// Login with email and password to get authentication tokens
-  ///
-  /// [email] is the user's email address
-  /// [password] is the user's password
-  ///
-  /// Throws [BaserowException] with specific error codes:
-  /// - ERROR_INVALID_CREDENTIALS: Invalid email/password combination
-  /// - ERROR_DEACTIVATED_USER: User account is deactivated
-  /// - ERROR_AUTH_PROVIDER_DISABLED: Authentication provider is disabled
-  /// - ERROR_EMAIL_VERIFICATION_REQUIRED: Email verification is required
-  Future<AuthResponse> login(String email, String password);
-
-  /// Refresh JWT token
-  Future<String> refreshToken(String refreshToken);
-
-  /// Verify JWT token
-  ///
-  /// [token] can be either an access_token or a deprecated token
-  Future<bool> verifyToken(String token);
-
-  /// Logs out the user by blacklisting their refresh token
-  Future<void> logout();
 
   /// Lists all databases accessible to the authenticated user
   Future<List<Database>> listDatabases();
