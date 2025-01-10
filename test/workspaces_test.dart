@@ -63,8 +63,8 @@ void main() {
       expect(workspaces.length, equals(1));
       expect(workspaces[0].id, equals(1));
       expect(workspaces[0].name, equals("Acme Corp"));
-      expect(workspaces[0].users.length, equals(1));
-      expect(workspaces[0].users[0].name, equals("John Doe"));
+      expect(workspaces[0].users?.length, equals(1));
+      expect(workspaces[0].users?.first.name, equals("John Doe"));
       expect(workspaces[0].permissions, equals("ADMIN"));
       expect(workspaces[0].unreadNotificationsCount, equals(0));
       expect(

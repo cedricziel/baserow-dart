@@ -37,23 +37,44 @@ class WorkspaceUser {
 class Workspace {
   final int id;
   final String name;
-  final List<WorkspaceUser> users;
-  final int order;
-  final String permissions;
+  final List<WorkspaceUser>? users;
+  final int? order;
+  final String? permissions;
   @JsonKey(name: 'unread_notifications_count')
-  final int unreadNotificationsCount;
+  final int? unreadNotificationsCount;
   @JsonKey(name: 'generative_ai_models_enabled')
   final Map<String, dynamic> generativeAiModelsEnabled;
 
   Workspace({
     required this.id,
     required this.name,
-    required this.users,
-    required this.order,
-    required this.permissions,
-    required this.unreadNotificationsCount,
+    this.users,
+    this.order,
+    this.permissions,
+    this.unreadNotificationsCount,
     required this.generativeAiModelsEnabled,
   });
+
+  /// Creates a Workspace instance with required users field for workspace endpoints
+  factory Workspace.withUsers({
+    required int id,
+    required String name,
+    required List<WorkspaceUser> users,
+    required int order,
+    required String permissions,
+    required int unreadNotificationsCount,
+    required Map<String, dynamic> generativeAiModelsEnabled,
+  }) {
+    return Workspace(
+      id: id,
+      name: name,
+      users: users,
+      order: order,
+      permissions: permissions,
+      unreadNotificationsCount: unreadNotificationsCount,
+      generativeAiModelsEnabled: generativeAiModelsEnabled,
+    );
+  }
 
   factory Workspace.fromJson(Map<String, dynamic> json) =>
       _$WorkspaceFromJson(json);
@@ -203,6 +224,7 @@ class Application {
   final Workspace workspace;
   @JsonKey(name: 'created_on')
   final DateTime createdOn;
+  @JsonKey(defaultValue: <Table>[])
   final List<Table> tables;
 
   Application({
@@ -212,7 +234,7 @@ class Application {
     required this.type,
     required this.workspace,
     required this.createdOn,
-    required this.tables,
+    this.tables = const [],
   });
 
   factory Application.fromJson(Map<String, dynamic> json) =>

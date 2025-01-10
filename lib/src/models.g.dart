@@ -33,13 +33,13 @@ Map<String, dynamic> _$WorkspaceUserToJson(WorkspaceUser instance) =>
 Workspace _$WorkspaceFromJson(Map<String, dynamic> json) => Workspace(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      users: (json['users'] as List<dynamic>)
-          .map((e) => WorkspaceUser.fromJson(e as Map<String, dynamic>))
+      users: (json['users'] as List<dynamic>?)
+          ?.map((e) => WorkspaceUser.fromJson(e as Map<String, dynamic>))
           .toList(),
-      order: (json['order'] as num).toInt(),
-      permissions: json['permissions'] as String,
+      order: (json['order'] as num?)?.toInt(),
+      permissions: json['permissions'] as String?,
       unreadNotificationsCount:
-          (json['unread_notifications_count'] as num).toInt(),
+          (json['unread_notifications_count'] as num?)?.toInt(),
       generativeAiModelsEnabled:
           json['generative_ai_models_enabled'] as Map<String, dynamic>,
     );
@@ -164,9 +164,10 @@ Application _$ApplicationFromJson(Map<String, dynamic> json) => Application(
       type: json['type'] as String,
       workspace: Workspace.fromJson(json['workspace'] as Map<String, dynamic>),
       createdOn: DateTime.parse(json['created_on'] as String),
-      tables: (json['tables'] as List<dynamic>)
-          .map((e) => Table.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      tables: (json['tables'] as List<dynamic>?)
+              ?.map((e) => Table.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$ApplicationToJson(Application instance) =>

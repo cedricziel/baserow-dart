@@ -1,3 +1,4 @@
+import 'dart:convert';
 import '../interfaces/application_operations.dart';
 import '../models.dart';
 import '../client_interface.dart';
@@ -16,5 +17,37 @@ mixin ApplicationOperationsMixin
     return response
         .map((json) => Application.fromJson(json as Map<String, dynamic>))
         .toList();
+  }
+
+  @override
+  Future<Application> getApplication(int applicationId) async {
+    try {
+      final response = await get('applications/$applicationId/');
+
+      if (response is! Map<String, dynamic>) {
+        throw BaserowException('Invalid response format', 0);
+      }
+
+      if (response.containsKey('error')) {
+        final error = response['error'] as String;
+        final detail = response['detail'];
+
+        switch (error) {
+          case 'ERROR_USER_NOT_IN_GROUP':
+            throw BaserowException('User not in workspace', 400);
+          case 'ERROR_APPLICATION_DOES_NOT_EXIST':
+            throw BaserowException('Application does not exist', 404);
+          default:
+            throw BaserowException(detail?.toString() ?? error, 400);
+        }
+      }
+
+      return Application.fromJson(response);
+    } catch (e) {
+      if (e is BaserowException) {
+        rethrow;
+      }
+      throw BaserowException('Failed to get application: $e', 500);
+    }
   }
 }

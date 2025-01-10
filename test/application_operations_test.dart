@@ -70,8 +70,39 @@ void main() {
       expect(applications[0].type, equals('database'));
       expect(applications[0].workspace.id, equals(1));
       expect(applications[0].tables, hasLength(1));
-      expect(applications[0].tables[0].id, equals(1));
-      expect(applications[0].tables[0].name, equals('Test Table'));
+      expect(applications[0].tables?.first.id, equals(1));
+      expect(applications[0].tables?.first.name, equals('Test Table'));
+    });
+
+    test('listAllApplications handles empty list response', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/applications/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode([]),
+            200,
+          ));
+
+      final applications = await client.listAllApplications();
+      expect(applications, isEmpty);
+    });
+
+    test('listAllApplications throws when response is not a list', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/applications/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({'data': 'not a list'}),
+            200,
+          ));
+
+      expect(
+        () => client.listAllApplications(),
+        throwsA(predicate((e) =>
+            e is BaserowException &&
+            e.statusCode == 0 &&
+            e.message.contains('Response is not a list'))),
+      );
     });
 
     test('listAllApplications handles error response', () async {
@@ -85,6 +116,93 @@ void main() {
 
       expect(
         () => client.listAllApplications(),
+        throwsA(isA<BaserowException>()),
+      );
+    });
+
+    test('getApplication returns single application', () async {
+      final mockResponse = {
+        'id': 1,
+        'name': 'Test App',
+        'order': 1,
+        'type': 'database',
+        'workspace': {
+          'id': 1,
+          'name': 'Test Workspace',
+          'generative_ai_models_enabled': {}
+        },
+        'created_on': '2023-01-01T00:00:00Z'
+      };
+
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/applications/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode(mockResponse),
+            200,
+          ));
+
+      final application = await client.getApplication(1);
+
+      expect(application.id, equals(1));
+      expect(application.name, equals('Test App'));
+      expect(application.type, equals('database'));
+      expect(application.workspace.id, equals(1));
+    });
+
+    test('getApplication throws when user not in workspace', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/applications/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_USER_NOT_IN_GROUP',
+              'detail': 'User not in workspace'
+            }),
+            200,
+          ));
+
+      expect(
+        () => client.getApplication(1),
+        throwsA(predicate((e) =>
+            e is BaserowException &&
+            e.statusCode == 400 &&
+            e.message == 'User not in workspace')),
+      );
+    });
+
+    test('getApplication throws when application does not exist', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/applications/999/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({
+              'error': 'ERROR_APPLICATION_DOES_NOT_EXIST',
+              'detail': 'Application does not exist'
+            }),
+            200,
+          ));
+
+      expect(
+        () => client.getApplication(999),
+        throwsA(predicate((e) =>
+            e is BaserowException &&
+            e.statusCode == 404 &&
+            e.message == 'Application does not exist')),
+      );
+    });
+
+    test('getApplication handles invalid response format', () async {
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/applications/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            'invalid json',
+            200,
+          ));
+
+      expect(
+        () => client.getApplication(1),
         throwsA(isA<BaserowException>()),
       );
     });
