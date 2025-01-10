@@ -2,6 +2,7 @@
 library;
 
 export 'src/auth.dart';
+export 'src/client_interface.dart';
 export 'src/baserow_base.dart';
 export 'src/baserow_websocket.dart';
 export 'src/exceptions.dart';

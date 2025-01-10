@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'auth.dart';
+import 'client_interface.dart';
 import 'exceptions.dart';
 import 'files.dart';
 import 'models.dart';
 import 'rows.dart';
 
 /// The main Baserow client class for interacting with the Baserow API.
-class BaserowClient {
+class BaserowClient implements BaserowClientInterface {
   BaserowConfig config;
   final http.Client _httpClient;
   Timer? _refreshTimer;
