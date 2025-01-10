@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.0](https://github.com/cedricziel/baserow-dart/compare/v1.3.3...v1.4.0) (2025-01-10)
+
+
+### Features
+
+* add listing applications ([f5c1981](https://github.com/cedricziel/baserow-dart/commit/f5c198153bb6d92731128c3b6221cea186e6bfed))
+* add method to list apps in a workspace ([9170f2d](https://github.com/cedricziel/baserow-dart/commit/9170f2d7151cb185859deef62207ce7b44c519c9))
+* add method to retrieve single application ([fd914fa](https://github.com/cedricziel/baserow-dart/commit/fd914fa3ad7b062019d71ee0bb44028489d94774))
+* extract interfaces from humongous client class ([41b6127](https://github.com/cedricziel/baserow-dart/commit/41b61277f1783a5b6e1a7866e3b7d4126c3772d0))
+* retrieve a database table by id ([2a9bddc](https://github.com/cedricziel/baserow-dart/commit/2a9bddc2461b55bfad6c74625ca0efb2a9c901b1))
+
 ## [1.3.3](https://github.com/cedricziel/baserow-dart/compare/v1.3.2...v1.3.3) (2025-01-09)
 
 
