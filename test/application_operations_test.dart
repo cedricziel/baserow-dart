@@ -312,5 +312,155 @@ void main() {
         throwsA(isA<BaserowException>()),
       );
     });
+
+    group('workspaceListApplications', () {
+      test('returns list of applications in workspace', () async {
+        final mockResponse = [
+          {
+            'id': 1,
+            'name': 'Test Database App',
+            'order': 1,
+            'type': 'database',
+            'workspace': {
+              'id': 1,
+              'name': 'Test Workspace',
+              'generative_ai_models_enabled': {}
+            },
+            'created_on': '2023-01-01T00:00:00Z',
+            'tables': [
+              {
+                'id': 1,
+                'name': 'Test Table',
+                'order': 1,
+                'database_id': 1,
+                'data_sync': null
+              }
+            ]
+          },
+          {
+            'id': 2,
+            'name': 'Test Builder App',
+            'order': 2,
+            'type': 'builder',
+            'workspace': {
+              'id': 1,
+              'name': 'Test Workspace',
+              'generative_ai_models_enabled': {}
+            },
+            'created_on': '2023-01-01T00:00:00Z',
+            'pages': [
+              {
+                'id': 1,
+                'name': 'Home',
+                'path': '/',
+                'path_params': [],
+                'order': 1,
+                'builder_id': 2,
+                'shared': true,
+                'visibility': 'all',
+                'role_type': 'allow_all',
+                'roles': null
+              }
+            ],
+            'theme': {'primary_color': '#007bff', 'secondary_color': '#6c757d'}
+          }
+        ];
+
+        when(mockClient.get(
+          Uri.parse('http://localhost/api/applications/workspace/1/'),
+          headers: anyNamed('headers'),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode(mockResponse),
+              200,
+            ));
+
+        final applications = await client.workspaceListApplications(1);
+
+        expect(applications, hasLength(2));
+        expect(applications[0].id, equals(1));
+        expect(applications[0].name, equals('Test Database App'));
+        expect(applications[0].type, equals('database'));
+        expect(applications[1].id, equals(2));
+        expect(applications[1].name, equals('Test Builder App'));
+        expect(applications[1].type, equals('builder'));
+      });
+
+      test('handles empty list response', () async {
+        when(mockClient.get(
+          Uri.parse('http://localhost/api/applications/workspace/1/'),
+          headers: anyNamed('headers'),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode([]),
+              200,
+            ));
+
+        final applications = await client.workspaceListApplications(1);
+        expect(applications, isEmpty);
+      });
+
+      test('throws when user not in workspace', () async {
+        when(mockClient.get(
+          Uri.parse('http://localhost/api/applications/workspace/1/'),
+          headers: anyNamed('headers'),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode([
+                {
+                  'error': 'ERROR_USER_NOT_IN_GROUP',
+                  'detail': 'User not in workspace'
+                }
+              ]),
+              200,
+            ));
+
+        expect(
+          () => client.workspaceListApplications(1),
+          throwsA(predicate((e) =>
+              e is BaserowException &&
+              e.statusCode == 400 &&
+              e.message == 'User not in workspace')),
+        );
+      });
+
+      test('throws when workspace does not exist', () async {
+        when(mockClient.get(
+          Uri.parse('http://localhost/api/applications/workspace/999/'),
+          headers: anyNamed('headers'),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode([
+                {
+                  'error': 'ERROR_GROUP_DOES_NOT_EXIST',
+                  'detail': 'Workspace does not exist'
+                }
+              ]),
+              200,
+            ));
+
+        expect(
+          () => client.workspaceListApplications(999),
+          throwsA(predicate((e) =>
+              e is BaserowException &&
+              e.statusCode == 404 &&
+              e.message == 'Workspace does not exist')),
+        );
+      });
+
+      test('throws when response is not a list', () async {
+        when(mockClient.get(
+          Uri.parse('http://localhost/api/applications/workspace/1/'),
+          headers: anyNamed('headers'),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode({'data': 'not a list'}),
+              200,
+            ));
+
+        expect(
+          () => client.workspaceListApplications(1),
+          throwsA(predicate((e) =>
+              e is BaserowException &&
+              e.statusCode == 0 &&
+              e.message == 'Response is not a list')),
+        );
+      });
+    });
   });
 }

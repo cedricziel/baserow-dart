@@ -19,4 +19,15 @@ abstract class ApplicationOperations {
   /// - The user is not in the workspace (400 ERROR_USER_NOT_IN_GROUP)
   /// - The application does not exist (404 ERROR_APPLICATION_DOES_NOT_EXIST)
   Future<Application> getApplication(int applicationId);
+
+  /// Lists all applications in a specific workspace.
+  ///
+  /// Returns a list of applications with their properties if the authorized user
+  /// is in that workspace. If the workspace is related to a template, then this
+  /// endpoint will be publicly accessible.
+  ///
+  /// Throws [BaserowException] if:
+  /// - The user is not in the workspace (400 ERROR_USER_NOT_IN_GROUP)
+  /// - The workspace does not exist (404 ERROR_GROUP_DOES_NOT_EXIST)
+  Future<List<Application>> workspaceListApplications(int workspaceId);
 }

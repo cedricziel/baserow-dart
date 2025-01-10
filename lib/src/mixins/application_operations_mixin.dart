@@ -49,4 +49,40 @@ mixin ApplicationOperationsMixin
       throw BaserowException('Failed to get application: $e', 500);
     }
   }
+
+  @override
+  Future<List<Application>> workspaceListApplications(int workspaceId) async {
+    try {
+      final response = await get('applications/workspace/$workspaceId/');
+
+      if (response is! List) {
+        throw BaserowException('Response is not a list', 0);
+      }
+
+      if (response.isNotEmpty &&
+          response[0] is Map<String, dynamic> &&
+          response[0].containsKey('error')) {
+        final error = response[0]['error'] as String;
+        final detail = response[0]['detail'];
+
+        switch (error) {
+          case 'ERROR_USER_NOT_IN_GROUP':
+            throw BaserowException('User not in workspace', 400);
+          case 'ERROR_GROUP_DOES_NOT_EXIST':
+            throw BaserowException('Workspace does not exist', 404);
+          default:
+            throw BaserowException(detail?.toString() ?? error, 400);
+        }
+      }
+
+      return response
+          .map((json) => Application.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      if (e is BaserowException) {
+        rethrow;
+      }
+      throw BaserowException('Failed to list workspace applications: $e', 500);
+    }
+  }
 }
