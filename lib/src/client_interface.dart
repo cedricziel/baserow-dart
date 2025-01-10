@@ -3,10 +3,15 @@ import 'models.dart';
 import 'interfaces/row_operations.dart';
 import 'interfaces/file_operations.dart';
 import 'interfaces/database_token_operations.dart';
+import 'interfaces/workspace_operations.dart';
 
 /// Abstract interface for interacting with the Baserow API.
 abstract class BaserowClientInterface
-    implements RowOperations, FileOperations, DatabaseTokenOperations {
+    implements
+        RowOperations,
+        FileOperations,
+        DatabaseTokenOperations,
+        WorkspaceOperations {
   /// The current configuration for the client
   BaserowConfig get config;
 
@@ -47,9 +52,6 @@ abstract class BaserowClientInterface
 
   /// Gets a table with its fields
   Future<Table> getTableWithFields(int tableId);
-
-  /// Lists all workspaces of the authorized user
-  Future<List<Workspace>> listWorkspaces();
 
   /// Performs a GET request to the Baserow API
   Future<dynamic> get(String path, [Map<String, String>? queryParams]);
