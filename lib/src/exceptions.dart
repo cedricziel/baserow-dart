@@ -8,3 +8,14 @@ class BaserowException implements Exception {
   @override
   String toString() => 'BaserowException: $message (Status Code: $statusCode)';
 }
+
+/// Exception thrown when JWT token needs to be refreshed
+class TokenRefreshException implements Exception {
+  final String message;
+  final String? refreshToken;
+
+  TokenRefreshException(this.message, {this.refreshToken});
+
+  @override
+  String toString() => 'TokenRefreshException: $message';
+}

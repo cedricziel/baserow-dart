@@ -31,36 +31,19 @@ class BaserowClient
 
   @override
   final http.Client httpClient;
-  Timer? _refreshTimer;
-
   BaserowClient({
     required this.config,
     http.Client? httpClient,
-  }) : httpClient = httpClient ?? http.Client() {
-    setupTokenRefresh();
+  }) : httpClient = httpClient ?? http.Client();
+
+  @override
+  void setupTokenRefresh() {
+    // No-op: Token refresh is now handled by throwing TokenRefreshException
   }
 
   @override
   void updateConfig(BaserowConfig newConfig) {
     config = newConfig;
-  }
-
-  @override
-  void setupTokenRefresh() {
-    if (config.authType == BaserowAuthType.jwt &&
-        config.token != null &&
-        config.refreshToken != null) {
-      _refreshTimer?.cancel();
-      _refreshTimer = Timer.periodic(config.refreshInterval, (_) async {
-        try {
-          final newToken = await refreshToken(config.refreshToken!);
-          config = config.copyWith(token: newToken);
-          config.onTokenRefresh?.call(newToken, config.refreshToken!);
-        } catch (e) {
-          // Token refresh failed - could add error callback here if needed
-        }
-      });
-    }
   }
 
   /// Creates headers for API requests including authentication if available
@@ -92,7 +75,12 @@ class BaserowClient
       headers: createHeaders(),
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401 && config.authType == BaserowAuthType.jwt) {
+      throw TokenRefreshException(
+        'Token expired, needs refresh',
+        refreshToken: config.refreshToken,
+      );
+    } else if (response.statusCode != 200) {
       throw BaserowException(
         'Failed to perform GET request: ${response.statusCode}',
         response.statusCode,
@@ -120,7 +108,12 @@ class BaserowClient
       return null;
     }
 
-    if (response.statusCode != 201 && response.statusCode != 200) {
+    if (response.statusCode == 401 && config.authType == BaserowAuthType.jwt) {
+      throw TokenRefreshException(
+        'Token expired, needs refresh',
+        refreshToken: config.refreshToken,
+      );
+    } else if (response.statusCode != 201 && response.statusCode != 200) {
       String errorMessage =
           'Failed to perform POST request: ${response.statusCode}';
       try {
@@ -161,7 +154,12 @@ class BaserowClient
       body: json.encode(data),
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 401 && config.authType == BaserowAuthType.jwt) {
+      throw TokenRefreshException(
+        'Token expired, needs refresh',
+        refreshToken: config.refreshToken,
+      );
+    } else if (response.statusCode != 200) {
       throw BaserowException(
         'Failed to perform PATCH request: ${response.statusCode}',
         response.statusCode,
@@ -205,7 +203,12 @@ class BaserowClient
     final streamedResponse = await httpClient.send(request);
     final response = await http.Response.fromStream(streamedResponse);
 
-    if (response.statusCode != 201 && response.statusCode != 200) {
+    if (response.statusCode == 401 && config.authType == BaserowAuthType.jwt) {
+      throw TokenRefreshException(
+        'Token expired, needs refresh',
+        refreshToken: config.refreshToken,
+      );
+    } else if (response.statusCode != 201 && response.statusCode != 200) {
       throw BaserowException(
         'Failed to perform file upload: ${response.statusCode}',
         response.statusCode,
@@ -228,7 +231,12 @@ class BaserowClient
       headers: createHeaders(),
     );
 
-    if (response.statusCode != 204) {
+    if (response.statusCode == 401 && config.authType == BaserowAuthType.jwt) {
+      throw TokenRefreshException(
+        'Token expired, needs refresh',
+        refreshToken: config.refreshToken,
+      );
+    } else if (response.statusCode != 204) {
       throw BaserowException(
         'Failed to perform DELETE request: ${response.statusCode}',
         response.statusCode,
@@ -239,7 +247,6 @@ class BaserowClient
   /// Closes the HTTP client
   @override
   void close() {
-    _refreshTimer?.cancel();
     httpClient.close();
   }
 }

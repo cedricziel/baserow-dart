@@ -62,7 +62,6 @@ mixin UserOperationsMixin implements UserOperations {
         token: authResponse.accessToken,
         refreshToken: authResponse.refreshToken,
       ));
-      setupTokenRefresh();
     }
 
     return authResponse;
@@ -152,8 +151,6 @@ mixin UserOperationsMixin implements UserOperations {
       updateConfig(BaserowConfig(
         baseUrl: config.baseUrl,
         authType: config.authType,
-        refreshInterval: config.refreshInterval,
-        onTokenRefresh: config.onTokenRefresh,
       ));
     } catch (e) {
       if (e is BaserowException) {

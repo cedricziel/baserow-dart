@@ -64,14 +64,13 @@ void main() {
       expect(headers.containsKey('Authorization'), isFalse);
     });
 
-    test('closes http client and cancels refresh timer', () {
+    test('closes http client', () {
       final client = BaserowClient(
         config: BaserowConfig(
           baseUrl: 'http://localhost',
           token: 'test-token',
           refreshToken: 'refresh-token',
           authType: BaserowAuthType.jwt,
-          refreshInterval: const Duration(minutes: 1),
         ),
         httpClient: mockClient,
       );

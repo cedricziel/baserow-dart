@@ -4,7 +4,6 @@ import 'package:baserow/baserow.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:fake_async/fake_async.dart';
 
 import 'baserow_test.mocks.dart';
 
@@ -26,109 +25,35 @@ void main() {
     });
 
     group('JWT Authentication', () {
-      test('automatically refreshes token on interval', () {
-        return fakeAsync((async) {
-          final mockClient = MockClient();
-          var tokenRefreshCount = 0;
-          final refreshToken = 'refresh-token';
+      test('throws TokenRefreshException on expired token', () async {
+        final mockClient = MockClient();
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'expired-token',
+            refreshToken: 'refresh-token',
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: mockClient,
+        );
 
-          final refreshUri =
-              Uri.parse('http://localhost/api/user/token-refresh/');
+        final uri = Uri.parse('http://localhost/api/some-endpoint');
+        when(mockClient.get(
+          uri,
+          headers: anyNamed('headers'),
+        )).thenAnswer((_) async => http.Response('Unauthorized', 401));
 
-          when(mockClient.post(
-            refreshUri,
-            headers: anyNamed('headers'),
-            body: jsonEncode({'refresh_token': refreshToken}),
-          )).thenAnswer((_) async {
-            tokenRefreshCount++;
-            return http.Response(
-              jsonEncode({
-                'access_token': 'new-access-token-$tokenRefreshCount',
-                'token': 'old-token-$tokenRefreshCount', // Deprecated field
-              }),
-              200,
-            );
-          });
+        expect(
+          () => client.get('some-endpoint'),
+          throwsA(
+            isA<TokenRefreshException>()
+                .having(
+                    (e) => e.message, 'message', 'Token expired, needs refresh')
+                .having((e) => e.refreshToken, 'refreshToken', 'refresh-token'),
+          ),
+        );
 
-          // Verify it rejects wrong request body
-          when(mockClient.post(
-            refreshUri,
-            headers: anyNamed('headers'),
-            body: jsonEncode({'token': refreshToken}), // Wrong field name
-          )).thenAnswer((_) async => http.Response(
-              jsonEncode({
-                'error': 'Invalid request body',
-                'detail': 'Missing refresh_token field',
-              }),
-              400));
-
-          final client = BaserowClient(
-            config: BaserowConfig(
-              baseUrl: 'http://localhost',
-              token: 'initial-token',
-              refreshToken: refreshToken,
-              authType: BaserowAuthType.jwt,
-              refreshInterval: const Duration(minutes: 1),
-              onTokenRefresh: (token, _) {
-                expect(token, equals('new-access-token-$tokenRefreshCount'));
-              },
-            ),
-            httpClient: mockClient,
-          );
-
-          async.elapse(const Duration(minutes: 3));
-
-          verify(mockClient.post(
-            refreshUri,
-            headers: anyNamed('headers'),
-            body: jsonEncode({'refresh_token': refreshToken}),
-          )).called(3);
-          expect(client.config.token, equals('new-access-token-3'));
-
-          client.close();
-        });
-      });
-
-      test('handles refresh token failure gracefully', () {
-        return fakeAsync((async) {
-          final mockClient = MockClient();
-          var refreshAttempts = 0;
-
-          final refreshUri =
-              Uri.parse('http://localhost/api/user/token-refresh/');
-
-          when(mockClient.post(
-            refreshUri,
-            headers: anyNamed('headers'),
-            body: anyNamed('body'),
-          )).thenAnswer((_) async {
-            refreshAttempts++;
-            return http.Response(
-              jsonEncode({
-                'error': 'Unauthorized',
-                'detail': 'Invalid refresh token',
-              }),
-              401,
-            );
-          });
-
-          final client = BaserowClient(
-            config: BaserowConfig(
-              baseUrl: 'http://localhost',
-              token: 'initial-token',
-              refreshToken: 'refresh-token',
-              authType: BaserowAuthType.jwt,
-              refreshInterval: const Duration(minutes: 1),
-            ),
-            httpClient: mockClient,
-          );
-
-          async.elapse(const Duration(minutes: 1));
-          expect(refreshAttempts, equals(1));
-          expect(client.config.token, equals('initial-token'));
-
-          client.close();
-        });
+        client.close();
       });
 
       test('verifyToken handles both token formats', () async {
@@ -189,7 +114,7 @@ void main() {
     });
 
     group('login', () {
-      test('sets up refresh timer after successful login', () async {
+      test('performs login without auto-refresh setup', () async {
         final mockClient = MockClient();
         final loginResponse = {
           'token': 'old-token',
@@ -407,7 +332,6 @@ void main() {
             token: 'test-token',
             refreshToken: refreshToken,
             authType: BaserowAuthType.jwt,
-            refreshInterval: const Duration(minutes: 1),
           ),
           httpClient: mockClient,
         );

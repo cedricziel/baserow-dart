@@ -11,17 +11,14 @@ void main() async {
   );
 
   // Or create a client with JWT authentication
+  // Note: Token refresh is handled by catching TokenRefreshException
+  // and manually refreshing the token when needed
   final jwtClient = BaserowClient(
     config: BaserowConfig(
       baseUrl: 'https://api.baserow.io',
       token: 'YOUR_JWT_TOKEN',
       refreshToken: 'YOUR_REFRESH_TOKEN',
       authType: BaserowAuthType.jwt,
-      onTokenRefresh: (token, refreshToken) {
-        // Store new tokens
-        print('New token: $token');
-        print('New refresh token: $refreshToken');
-      },
     ),
   );
 
@@ -42,78 +39,89 @@ void main() async {
     print('User: ${authResponse.user}');
     print('Refresh token: ${authResponse.refreshToken}');
 
-    // List databases
-    final databases = await client.listDatabases();
-    print('\nDatabases:');
-    for (final db in databases) {
-      print('${db.name} (${db.id})');
+    // Example of handling token refresh
+    try {
+      // List databases
+      final databases = await client.listDatabases();
+      print('\nDatabases:');
+      for (final db in databases) {
+        print('${db.name} (${db.id})');
 
-      // List tables in database
-      final tables = await client.listTables(db.id);
-      print('\nTables in ${db.name}:');
-      for (final table in tables) {
-        print('${table.name} (${table.id})');
+        // List tables in database
+        final tables = await client.listTables(db.id);
+        print('\nTables in ${db.name}:');
+        for (final table in tables) {
+          print('${table.name} (${table.id})');
 
-        // Get table with fields
-        final tableWithFields = await client.getTableWithFields(table.id);
-        print('\nFields in ${table.name}:');
-        for (final field in tableWithFields.fields!) {
-          print('${field.name} (${field.type})');
+          // Get table with fields
+          final tableWithFields = await client.getTableWithFields(table.id);
+          print('\nFields in ${table.name}:');
+          for (final field in tableWithFields.fields!) {
+            print('${field.name} (${field.type})');
+          }
+
+          // List rows with options
+          final rows = await client.listRows(
+            table.id,
+            options: ListRowsOptions(
+              page: 1,
+              size: 10,
+              orderBy: ['-id'],
+              filters: [
+                RowFilter(
+                  field: 'field_123',
+                  operator: FilterOperator.equal,
+                  value: 'test',
+                ),
+              ],
+              includeFieldMetadata: true,
+              userFieldNames: true,
+              // Example of additional features:
+              search: 'search term',
+              include: ['field_123', 'field_456'],
+              exclude: ['sensitive_field'],
+              fieldFilters: {
+                'status': {'equal': 'active'},
+                'age': {'greater_than': '18'},
+              },
+              linkRowJoins: {
+                'company': ['name', 'address'],
+              },
+            ),
+          );
+
+          print('\nRows in ${table.name}:');
+          for (final row in rows.results) {
+            print('Row ${row.id}: ${row.fields}');
+          }
+
+          // Create a row
+          final newRow = await client.createRow(
+            table.id,
+            {'field_123': 'test value'},
+          );
+          print('\nCreated row: ${newRow.id}');
+
+          // Update the row
+          final updatedRow = await client.updateRow(
+            table.id,
+            newRow.id,
+            {'field_123': 'updated value'},
+          );
+          print('Updated row: ${updatedRow.id}');
+
+          // Delete the row
+          await client.deleteRow(table.id, newRow.id);
+          print('Deleted row: ${newRow.id}');
         }
-
-        // List rows with options
-        final rows = await client.listRows(
-          table.id,
-          options: ListRowsOptions(
-            page: 1,
-            size: 10,
-            orderBy: ['-id'],
-            filters: [
-              RowFilter(
-                field: 'field_123',
-                operator: FilterOperator.equal,
-                value: 'test',
-              ),
-            ],
-            includeFieldMetadata: true,
-            userFieldNames: true,
-            // Example of additional features:
-            search: 'search term',
-            include: ['field_123', 'field_456'],
-            exclude: ['sensitive_field'],
-            fieldFilters: {
-              'status': {'equal': 'active'},
-              'age': {'greater_than': '18'},
-            },
-            linkRowJoins: {
-              'company': ['name', 'address'],
-            },
-          ),
-        );
-
-        print('\nRows in ${table.name}:');
-        for (final row in rows.results) {
-          print('Row ${row.id}: ${row.fields}');
-        }
-
-        // Create a row
-        final newRow = await client.createRow(
-          table.id,
-          {'field_123': 'test value'},
-        );
-        print('\nCreated row: ${newRow.id}');
-
-        // Update the row
-        final updatedRow = await client.updateRow(
-          table.id,
-          newRow.id,
-          {'field_123': 'updated value'},
-        );
-        print('Updated row: ${updatedRow.id}');
-
-        // Delete the row
-        await client.deleteRow(table.id, newRow.id);
-        print('Deleted row: ${newRow.id}');
+      }
+    } on TokenRefreshException catch (e) {
+      // Handle token refresh
+      if (e.refreshToken != null) {
+        final newToken = await client.refreshToken(e.refreshToken!);
+        // Update client config with new token
+        client.updateConfig(client.config.copyWith(token: newToken));
+        // Retry the failed operation...
       }
     }
   } catch (e) {
