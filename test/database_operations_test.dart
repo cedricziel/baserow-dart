@@ -188,5 +188,81 @@ void main() {
       expect(table.fields?[1].name, 'Field 2');
       expect(table.fields?[1].type, 'number');
     });
+
+    test('getDatabaseTable returns a single table', () async {
+      const tableId = 1;
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tables/$tableId/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            json.encode({
+              'id': tableId,
+              'name': 'Table 1',
+              'order': 1,
+              'database_id': 1,
+              'data_sync': {
+                'id': 1,
+                'type': 'local',
+                'synced_properties': [
+                  {'field_id': 1, 'key': 'id', 'unique_primary': true}
+                ],
+                'last_sync': '2023-08-24T14:15:22Z',
+                'last_error': null
+              },
+            }),
+            200,
+          ));
+
+      final table = await client.getDatabaseTable(tableId);
+
+      expect(table.id, tableId);
+      expect(table.name, 'Table 1');
+      expect(table.order, 1);
+      expect(table.databaseId, 1);
+      expect(table.dataSync?.id, 1);
+      expect(table.dataSync?.type, 'local');
+      expect(table.dataSync?.syncedProperties.length, 1);
+      expect(table.dataSync?.syncedProperties[0].fieldId, 1);
+      expect(table.dataSync?.syncedProperties[0].key, 'id');
+      expect(table.dataSync?.syncedProperties[0].uniquePrimary, true);
+    });
+
+    test('getDatabaseTable throws when table does not exist', () async {
+      const tableId = 999;
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tables/$tableId/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            json.encode({
+              'error': 'ERROR_TABLE_DOES_NOT_EXIST',
+              'detail': 'The requested table does not exist.',
+            }),
+            404,
+          ));
+
+      expect(
+        () => client.getDatabaseTable(tableId),
+        throwsA(isA<BaserowException>()),
+      );
+    });
+
+    test('getDatabaseTable throws when user has no access', () async {
+      const tableId = 1;
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tables/$tableId/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+            json.encode({
+              'error': 'ERROR_USER_NOT_IN_GROUP',
+              'detail': 'The user does not belong to the related workspace.',
+            }),
+            400,
+          ));
+
+      expect(
+        () => client.getDatabaseTable(tableId),
+        throwsA(isA<BaserowException>()),
+      );
+    });
   });
 }

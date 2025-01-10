@@ -21,15 +21,36 @@ class Database {
   Map<String, dynamic> toJson() => _$DatabaseToJson(this);
 }
 
+/// Represents a synchronized property in a data sync configuration
+@JsonSerializable()
+class DataSyncProperty {
+  @JsonKey(name: 'field_id')
+  final int fieldId;
+  final String key;
+  @JsonKey(name: 'unique_primary')
+  final bool uniquePrimary;
+
+  DataSyncProperty({
+    required this.fieldId,
+    required this.key,
+    required this.uniquePrimary,
+  });
+
+  factory DataSyncProperty.fromJson(Map<String, dynamic> json) =>
+      _$DataSyncPropertyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataSyncPropertyToJson(this);
+}
+
 /// Represents data synchronization information for a table
 @JsonSerializable()
 class DataSync {
   final int id;
   final String type;
   @JsonKey(name: 'synced_properties')
-  final List<Map<String, dynamic>> syncedProperties;
+  final List<DataSyncProperty> syncedProperties;
   @JsonKey(name: 'last_sync')
-  final DateTime lastSync;
+  final DateTime? lastSync;
   @JsonKey(name: 'last_error')
   final String? lastError;
 
@@ -37,7 +58,7 @@ class DataSync {
     required this.id,
     required this.type,
     required this.syncedProperties,
-    required this.lastSync,
+    this.lastSync,
     this.lastError,
   });
 

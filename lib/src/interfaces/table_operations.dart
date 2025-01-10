@@ -16,4 +16,12 @@ abstract class TableOperations {
   ///
   /// [tableId] is the ID of the table to retrieve
   Future<Table> getTableWithFields(int tableId);
+
+  /// Gets a database table by its ID
+  ///
+  /// Returns the requested table if the authorized user has access to the related database's workspace.
+  /// Throws [BaserowException] if the table doesn't exist or the user doesn't have access.
+  ///
+  /// [tableId] is the ID of the table to retrieve
+  Future<Table> getDatabaseTable(int tableId);
 }

@@ -48,4 +48,10 @@ mixin TableOperationsMixin implements TableOperations {
       fields: fields,
     );
   }
+
+  @override
+  Future<Table> getDatabaseTable(int tableId) async {
+    final response = await get('database/tables/$tableId/');
+    return Table.fromJson(response as Map<String, dynamic>);
+  }
 }
