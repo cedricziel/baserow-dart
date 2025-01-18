@@ -16,9 +16,6 @@ mixin UserOperationsMixin implements UserOperations {
   /// Function to update the config
   void updateConfig(BaserowConfig newConfig);
 
-  /// Function to setup token refresh
-  void setupTokenRefresh();
-
   @override
   Future<AuthResponse> login(String email, String password) async {
     final url = Uri.parse('${config.baseUrl}/api/user/token-auth/');

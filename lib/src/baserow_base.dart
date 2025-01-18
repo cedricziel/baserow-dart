@@ -48,11 +48,6 @@ class BaserowClient
   }) : httpClient = httpClient ?? http.Client();
 
   @override
-  void setupTokenRefresh() {
-    // No-op: Token refresh is now handled by throwing TokenRefreshException
-  }
-
-  @override
   void updateConfig(BaserowConfig newConfig) {
     config = newConfig;
   }
