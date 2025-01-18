@@ -4,20 +4,20 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
 
 ## Features
 
-- 📤 File uploads
+- 📤 [File uploads](#file-uploads)
   - Upload files to Baserow
   - Support for images with thumbnails
   - Detailed file metadata
-- 🔐 Authentication support
+- 🔐 [Authentication support](#authentication)
   - API token authentication
   - JWT authentication with refresh capabilities
-- 📚 Database management
+- 📚 [Database management](#listing-databases-and-tables)
   - List all accessible databases
   - View database details
 - 📋 Table operations
   - List tables in a database
   - View table structure and fields
-- 📝 Row operations
+- 📝 [Row operations](#working-with-rows)
   - List rows in a table
   - Create new rows
   - Update existing rows
@@ -29,9 +29,9 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
   - Subscribe to application events
   - Subscribe to user events
   - Automatic reconnection handling
-- 🛠️ Type-safe data models for Baserow entities
+- 🛠️ [Type-safe data models](#models) for Baserow entities
 - ⚡ Efficient HTTP connection management
-- 🧪 Comprehensive testing utilities
+- 🧪 [Comprehensive testing utilities](#testing-support)
 
 ## Installation
 
@@ -420,7 +420,7 @@ client.close();
 
 ## API Documentation
 
-### BaserowConfig
+### BaserowConfig {#baserowconfig}
 
 Configuration class for the Baserow client.
 
@@ -431,7 +431,7 @@ BaserowConfig({
 })
 ```
 
-### BaserowClient
+### BaserowClient {#baserowclient}
 
 Main client class for interacting with the Baserow API.
 
@@ -574,7 +574,7 @@ options: ListRowsOptions(
   - Takes a list of row IDs to delete
   - Optional `sendWebhookEvents` parameter controls webhook triggering (defaults to true)
 
-### Models
+### Models {#models}
 
 - `Database` - Represents a Baserow database
 - `Table` - Represents a table within a database
@@ -648,7 +648,7 @@ void main() {
 }
 ```
 
-### Testing Real-time Events
+### Testing Real-time Events {#testing-real-time-events}
 
 ```dart
 import 'package:baserow/baserow.dart';
@@ -685,7 +685,7 @@ void main() {
 }
 ```
 
-### User Stream
+### User Stream {#user-stream}
 
 The client provides a stream of the current user that you can listen to for authentication state changes:
 
@@ -715,7 +715,7 @@ This is particularly useful for:
 - Updating UI based on user login status
 - Accessing current user information in real-time
 
-### Testing Error Handling
+### Testing Error Handling {#testing-error-handling}
 
 ```dart
 test('handling WebSocket errors', () async {
