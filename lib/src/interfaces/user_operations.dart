@@ -1,7 +1,16 @@
+import 'dart:async';
+
 import '../auth.dart';
+import '../models/user.dart';
 
 /// Interface for user related operations in Baserow
 abstract class UserOperations {
+  /// Stream of the current user. Emits null on logout.
+  StreamController<User?> get userController;
+
+  /// Stream of the current user. Emits a User object when logged in and null when logged out.
+  Stream<User?> get userStream;
+
   /// Login with email and password to get authentication tokens
   ///
   /// [email] is the user's email address

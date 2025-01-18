@@ -114,7 +114,7 @@ void main() {
     });
 
     group('login', () {
-      test('performs login without auto-refresh setup', () async {
+      test('performs login successfully', () async {
         final mockClient = MockClient();
         final loginResponse = {
           'token': 'old-token',
@@ -153,12 +153,89 @@ void main() {
 
         expect(response.accessToken, equals('new-token'));
         expect(response.refreshToken, equals('new-refresh-token'));
-        expect(response.user['first_name'], equals('Test'));
-        expect(response.user['username'], equals('test@example.com'));
-        expect(response.user['language'], equals('en'));
+        expect(response.user.firstName, equals('Test'));
+        expect(response.user.username, equals('test@example.com'));
+        expect(response.user.language, equals('en'));
         expect(client.config.token, equals('new-token'));
         expect(client.config.refreshToken, equals('new-refresh-token'));
 
+        client.close();
+      });
+
+      test('emits user to stream on login', () async {
+        final mockClient = MockClient();
+        final loginResponse = {
+          'token': 'old-token',
+          'access_token': 'new-token',
+          'refresh_token': 'new-refresh-token',
+          'user': {
+            'first_name': 'Test',
+            'username': 'test@example.com',
+            'language': 'en',
+          },
+        };
+
+        final loginUri = Uri.parse('http://localhost/api/user/token-auth/');
+
+        when(mockClient.post(
+          loginUri,
+          headers: anyNamed('headers'),
+          body: jsonEncode({
+            'email': 'test@example.com',
+            'password': 'password',
+          }),
+        )).thenAnswer((_) async => http.Response(
+              jsonEncode(loginResponse),
+              200,
+            ));
+
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: mockClient,
+        );
+
+        final streamTest = expectLater(
+          client.userStream,
+          emits(
+            isA<User>()
+                .having((u) => u.firstName, 'firstName', 'Test')
+                .having((u) => u.username, 'username', 'test@example.com')
+                .having((u) => u.language, 'language', 'en'),
+          ),
+        );
+
+        await client.login('test@example.com', 'password');
+        await streamTest;
+        client.close();
+      });
+
+      test('emits null to stream on logout', () async {
+        final mockClient = MockClient();
+        final refreshToken = 'refresh-token';
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'test-token',
+            refreshToken: refreshToken,
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: mockClient,
+        );
+
+        final blacklistUri =
+            Uri.parse('http://localhost/api/user/token-blacklist/');
+        when(mockClient.post(
+          blacklistUri,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'refresh': refreshToken}),
+        )).thenAnswer((_) async => http.Response('', 204));
+
+        final streamTest = expectLater(client.userStream, emits(null));
+        await client.logout();
+        await streamTest;
         client.close();
       });
 

@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'models/user.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +30,15 @@ class BaserowClient
     implements BaserowClientInterface {
   @override
   BaserowConfig config;
+
+  final StreamController<User?> _userController =
+      StreamController<User?>.broadcast();
+
+  @override
+  StreamController<User?> get userController => _userController;
+
+  @override
+  Stream<User?> get userStream => _userController.stream;
 
   @override
   final http.Client httpClient;
@@ -247,6 +258,7 @@ class BaserowClient
   /// Closes the HTTP client
   @override
   void close() {
+    _userController.close();
     httpClient.close();
   }
 }

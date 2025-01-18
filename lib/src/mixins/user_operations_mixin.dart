@@ -64,6 +64,8 @@ mixin UserOperationsMixin implements UserOperations {
       ));
     }
 
+    // Emit the user object after successful login
+    userController.add(authResponse.user);
     return authResponse;
   }
 
@@ -152,6 +154,9 @@ mixin UserOperationsMixin implements UserOperations {
         baseUrl: config.baseUrl,
         authType: config.authType,
       ));
+
+      // Emit null after successful logout
+      userController.add(null);
     } catch (e) {
       if (e is BaserowException) {
         rethrow;

@@ -27,6 +27,7 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
   - Subscribe to table changes
   - Subscribe to workspace events
   - Subscribe to application events
+  - Subscribe to user events
   - Automatic reconnection handling
 - 🛠️ Type-safe data models for Baserow entities
 - ⚡ Efficient HTTP connection management
@@ -683,6 +684,36 @@ void main() {
   });
 }
 ```
+
+### User Stream
+
+The client provides a stream of the current user that you can listen to for authentication state changes:
+
+```dart
+// Get access to the user stream
+Stream<User?> userStream = client.userStream;
+
+// Listen for user changes
+userStream.listen((user) {
+  if (user != null) {
+    print('User is logged in: ${user.name}');
+    print('Email: ${user.email}');
+  } else {
+    print('User has logged out');
+  }
+});
+```
+
+The user stream emits:
+
+- A User object when the user logs in or when their information changes
+- null when the user logs out
+
+This is particularly useful for:
+
+- Tracking authentication state changes
+- Updating UI based on user login status
+- Accessing current user information in real-time
 
 ### Testing Error Handling
 

@@ -1,3 +1,5 @@
+import 'models/user.dart';
+
 /// Authentication type for Baserow
 enum BaserowAuthType {
   /// Traditional token-based authentication
@@ -45,7 +47,7 @@ class BaserowConfig {
 /// Response from login attempt
 class AuthResponse {
   /// The user object containing user information
-  final Map<String, dynamic> user;
+  final User user;
 
   /// Deprecated. Use accessToken instead.
   @Deprecated('Use accessToken instead')
@@ -65,18 +67,12 @@ class AuthResponse {
   });
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    final user = json['user'];
-    if (user == null || user is! Map<String, dynamic>) {
+    final userJson = json['user'];
+    if (userJson == null || userJson is! Map<String, dynamic>) {
       throw FormatException('Missing or invalid field: user');
     }
 
-    // Check required user fields
-    if (!user.containsKey('first_name') ||
-        !user.containsKey('username') ||
-        !user.containsKey('language')) {
-      throw FormatException(
-          'Missing required user fields: first_name, username, or language');
-    }
+    final user = User.fromJson(userJson);
 
     final accessToken = json['access_token'];
     if (accessToken == null || accessToken is! String) {
