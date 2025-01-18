@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/cedricziel/baserow-dart/compare/v1.4.0...v2.0.0) (2025-01-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove timer-based auto-refresh of JWT tokens
+
+### Features
+
+* add a stream of user to identify whether we're logged in or not ([b61e775](https://github.com/cedricziel/baserow-dart/commit/b61e775ffd66e9fdb76c4431e8be124675896c7b))
+* add refresh token lifetime to public api ([e412c23](https://github.com/cedricziel/baserow-dart/commit/e412c237d3b0091bb73ac68c3a0d40c568c8e49b))
+
+
+### Miscellaneous Chores
+
+* Remove timer-based auto-refresh of JWT tokens ([0a077b5](https://github.com/cedricziel/baserow-dart/commit/0a077b552a8017301c704301d36168cb254ad36a))
+
 ## [1.4.0](https://github.com/cedricziel/baserow-dart/compare/v1.3.3...v1.4.0) (2025-01-10)
 
 
