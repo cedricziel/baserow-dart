@@ -20,6 +20,9 @@ class BaserowConfig {
   /// Optional refresh token for JWT authentication
   final String? refreshToken;
 
+  /// Optional DateTime indicating when the refresh token will expire
+  final DateTime? refreshTokenExpiresAt;
+
   /// The type of authentication to use
   final BaserowAuthType authType;
 
@@ -27,18 +30,22 @@ class BaserowConfig {
     required this.baseUrl,
     this.token,
     this.refreshToken,
+    this.refreshTokenExpiresAt,
     this.authType = BaserowAuthType.token,
   });
 
-  /// Creates a new config with updated tokens
+  /// Creates a new config with updated tokens and expiry
   BaserowConfig copyWith({
     String? token,
     String? refreshToken,
+    DateTime? refreshTokenExpiresAt,
   }) {
     return BaserowConfig(
       baseUrl: baseUrl,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
+      refreshTokenExpiresAt:
+          refreshTokenExpiresAt ?? this.refreshTokenExpiresAt,
       authType: authType,
     );
   }

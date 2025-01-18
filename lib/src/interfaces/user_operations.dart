@@ -5,6 +5,14 @@ import '../models/user.dart';
 
 /// Interface for user related operations in Baserow
 abstract class UserOperations {
+  /// Optional DateTime indicating when the current JWT access token will expire.
+  /// Will be null when using database tokens or when logged out.
+  DateTime? get tokenExpiresAt;
+
+  /// Optional DateTime indicating when the current JWT refresh token will expire.
+  /// Will be null when using database tokens or when logged out.
+  DateTime? get refreshTokenExpiresAt;
+
   /// Stream of the current user. Emits null on logout.
   StreamController<User?> get userController;
 

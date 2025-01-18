@@ -7,6 +7,14 @@ import '../interfaces/user_operations.dart';
 
 /// Mixin that implements user related operations for Baserow
 mixin UserOperationsMixin implements UserOperations {
+  DateTime? _tokenExpiresAt;
+
+  @override
+  DateTime? get tokenExpiresAt => _tokenExpiresAt;
+
+  @override
+  DateTime? get refreshTokenExpiresAt => config.refreshTokenExpiresAt;
+
   /// The HTTP client used to make requests
   http.Client get httpClient;
 
@@ -55,9 +63,15 @@ mixin UserOperationsMixin implements UserOperations {
 
     final authResponse = AuthResponse.fromJson(responseData);
     if (config.authType == BaserowAuthType.jwt) {
+      // Set token expiry and update config with new tokens and refresh expiry
+      final now = DateTime.now();
+      _tokenExpiresAt = now.add(const Duration(minutes: 10));
+      final refreshExpiry = now.add(const Duration(hours: 168)); // 7 days
+
       updateConfig(config.copyWith(
         token: authResponse.accessToken,
         refreshToken: authResponse.refreshToken,
+        refreshTokenExpiresAt: refreshExpiry,
       ));
     }
 
@@ -83,6 +97,7 @@ mixin UserOperationsMixin implements UserOperations {
     }
 
     final responseData = json.decode(response.body);
+    _tokenExpiresAt = DateTime.now().add(const Duration(minutes: 10));
     final accessToken = responseData['access_token'];
     if (accessToken == null || accessToken is! String) {
       // Fallback to deprecated token field
@@ -146,7 +161,8 @@ mixin UserOperationsMixin implements UserOperations {
         );
       }
 
-      // Clean up tokens and stop refresh timer
+      // Clean up tokens and expiry time
+      _tokenExpiresAt = null;
       updateConfig(BaserowConfig(
         baseUrl: config.baseUrl,
         authType: config.authType,

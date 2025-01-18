@@ -25,6 +25,23 @@ void main() {
     });
 
     group('JWT Authentication', () {
+      test('initializes with refresh token expiry', () {
+        final refreshExpiry = DateTime.now().add(const Duration(hours: 100));
+        final client = BaserowClient(
+          config: BaserowConfig(
+            baseUrl: 'http://localhost',
+            token: 'test-token',
+            refreshToken: 'refresh-token',
+            refreshTokenExpiresAt: refreshExpiry,
+            authType: BaserowAuthType.jwt,
+          ),
+          httpClient: MockClient(),
+        );
+
+        expect(client.refreshTokenExpiresAt, equals(refreshExpiry));
+        client.close();
+      });
+
       test('throws TokenRefreshException on expired token', () async {
         final mockClient = MockClient();
         final client = BaserowClient(
@@ -114,7 +131,8 @@ void main() {
     });
 
     group('login', () {
-      test('performs login successfully', () async {
+      test('performs login successfully with JWT auth and sets token expiry',
+          () async {
         final mockClient = MockClient();
         final loginResponse = {
           'token': 'old-token',
@@ -158,6 +176,34 @@ void main() {
         expect(response.user.language, equals('en'));
         expect(client.config.token, equals('new-token'));
         expect(client.config.refreshToken, equals('new-refresh-token'));
+        // Check access token expiry
+        // Check access token expiry
+        expect(client.tokenExpiresAt, isNotNull);
+        final expectedTokenExpiry =
+            DateTime.now().add(const Duration(minutes: 10));
+        expect(
+          client.tokenExpiresAt!
+              .difference(expectedTokenExpiry)
+              .inSeconds
+              .abs(),
+          lessThan(2), // Allow 2 seconds tolerance for test execution time
+        );
+
+        // Check refresh token expiry is set to 7 days
+        expect(client.refreshTokenExpiresAt, isNotNull);
+        final expectedRefreshExpiry =
+            DateTime.now().add(const Duration(hours: 168));
+        expect(
+          client.refreshTokenExpiresAt!
+              .difference(expectedRefreshExpiry)
+              .inSeconds
+              .abs(),
+          lessThan(2), // Allow 2 seconds tolerance for test execution time
+        );
+
+        // Verify refresh token expiry is stored in config
+        expect(client.config.refreshTokenExpiresAt,
+            equals(client.refreshTokenExpiresAt));
 
         client.close();
       });
@@ -399,6 +445,83 @@ void main() {
       });
     });
 
+    test('token expiry remains null with non-JWT auth', () async {
+      final mockClient = MockClient();
+      final loginResponse = {
+        'token': 'old-token',
+        'access_token': 'new-token',
+        'refresh_token': 'new-refresh-token',
+        'user': {
+          'first_name': 'Test',
+          'username': 'test@example.com',
+          'language': 'en',
+        },
+      };
+
+      final loginUri = Uri.parse('http://localhost/api/user/token-auth/');
+
+      when(mockClient.post(
+        loginUri,
+        headers: anyNamed('headers'),
+        body: jsonEncode({
+          'email': 'test@example.com',
+          'password': 'password',
+        }),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode(loginResponse),
+            200,
+          ));
+
+      final client = BaserowClient(
+        config: const BaserowConfig(
+          baseUrl: 'http://localhost',
+          authType: BaserowAuthType.token, // Using token auth instead of JWT
+        ),
+        httpClient: mockClient,
+      );
+
+      await client.login('test@example.com', 'password');
+      expect(client.tokenExpiresAt, isNull);
+      expect(client.refreshTokenExpiresAt, isNull);
+      expect(client.config.refreshTokenExpiresAt, isNull);
+
+      client.close();
+    });
+
+    test('token expiry is updated on token refresh', () async {
+      final mockClient = MockClient();
+      final client = BaserowClient(
+        config: BaserowConfig(
+          baseUrl: 'http://localhost',
+          token: 'old-token',
+          refreshToken: 'old-refresh-token',
+          authType: BaserowAuthType.jwt,
+        ),
+        httpClient: mockClient,
+      );
+
+      final refreshUri = Uri.parse('http://localhost/api/user/token-refresh/');
+      when(mockClient.post(
+        refreshUri,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'refresh_token': 'old-refresh-token'}),
+      )).thenAnswer((_) async => http.Response(
+            jsonEncode({'access_token': 'new-token'}),
+            200,
+          ));
+
+      await client.refreshToken('old-refresh-token');
+
+      expect(client.tokenExpiresAt, isNotNull);
+      final expectedExpiry = DateTime.now().add(const Duration(minutes: 10));
+      expect(
+        client.tokenExpiresAt!.difference(expectedExpiry).inSeconds.abs(),
+        lessThan(2), // Allow 2 seconds tolerance for test execution time
+      );
+
+      client.close();
+    });
+
     group('logout', () {
       test('successfully logs out with JWT auth', () async {
         final mockClient = MockClient();
@@ -431,6 +554,9 @@ void main() {
 
         expect(client.config.token, isNull);
         expect(client.config.refreshToken, isNull);
+        expect(client.tokenExpiresAt, isNull);
+        expect(client.refreshTokenExpiresAt, isNull);
+        expect(client.config.refreshTokenExpiresAt, isNull);
       });
 
       test('throws error when not using JWT auth', () async {
