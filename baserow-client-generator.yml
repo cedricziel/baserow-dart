@@ -7,3 +7,4 @@ apis: "Database tables"
 validateSpec: false
 
 additionalProperties:
+  apis: "Database tables"
