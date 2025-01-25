@@ -20,3 +20,13 @@ updates:
       root-pub:
         patterns:
           - "*"
+  - package-ecosystem: pub
+    directory: /baserow
+    schedule:
+      interval: daily
+    assignees:
+      - cedricziel
+    groups:
+      root-pub:
+        patterns:
+          - "*"
