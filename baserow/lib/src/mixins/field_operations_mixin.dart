@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 
 import '../models.dart';
-import '../exceptions.dart';
 import '../interfaces/field_operations.dart';
 
 /// Mixin that implements field operations for Baserow
@@ -81,7 +80,7 @@ mixin FieldOperationsMixin implements FieldOperations {
       data,
     );
 
-    return Field.fromJson(response as Map<String, dynamic>);
+    return Field.fromJson(response);
   }
 
   @override
