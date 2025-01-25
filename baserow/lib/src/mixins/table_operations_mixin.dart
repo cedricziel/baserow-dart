@@ -113,24 +113,43 @@ mixin TableOperationsMixin implements TableOperations {
       final existingFields = await listFields(table.id);
       final existingFieldsByName = {for (var f in existingFields) f.name: f};
 
-      // Ensure each field exists
+      // Ensure each field exists and track primary field
+      Field? primaryField;
+      final createdFields = <Field>[];
+
       for (final fieldBuilder in builder.fields) {
         final existingField = existingFieldsByName[fieldBuilder.name];
         final fieldConfig = fieldBuilder.build();
 
+        Field field;
         if (existingField == null) {
           // Create new field
-          await post(
+          final response = await post(
             'database/fields/table/${table.id}/',
             fieldConfig,
           );
+          field = Field.fromJson(response as Map<String, dynamic>);
         } else {
           // Update existing field
-          await patch(
+          final response = await patch(
             'database/fields/${existingField.id}/',
             fieldConfig,
           );
+          field = Field.fromJson(response);
         }
+        createdFields.add(field);
+
+        if (fieldBuilder.primary) {
+          primaryField = field;
+        }
+      }
+
+      // Set primary field if specified
+      if (primaryField != null) {
+        await post(
+          'database/fields/table/${table.id}/change-primary-field/',
+          {'new_primary_field_id': primaryField.id},
+        );
       }
 
       // Get existing views to compare
@@ -181,11 +200,28 @@ mixin TableOperationsMixin implements TableOperations {
         firstRowHeader: builder.firstRowHeader,
       );
 
-      // Create fields
+      // Create fields and track the primary field
+      Field? primaryField;
+      final createdFields = <Field>[];
+
       for (final fieldBuilder in builder.fields) {
-        await post(
+        final response = await post(
           'database/fields/table/${table.id}/',
           fieldBuilder.build(),
+        );
+        final field = Field.fromJson(response as Map<String, dynamic>);
+        createdFields.add(field);
+
+        if (fieldBuilder.primary) {
+          primaryField = field;
+        }
+      }
+
+      // Set primary field if specified
+      if (primaryField != null) {
+        await post(
+          'database/fields/table/${table.id}/change-primary-field/',
+          {'new_primary_field_id': primaryField.id},
         );
       }
 

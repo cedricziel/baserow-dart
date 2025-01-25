@@ -79,7 +79,7 @@ Field _$FieldFromJson(Map<String, dynamic> json) => Field(
       name: json['name'] as String,
       type: json['type'] as String,
       order: (json['order'] as num).toInt(),
-      primary: json['primary'] as bool,
+      primary: json['primary'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$FieldToJson(Field instance) => <String, dynamic>{

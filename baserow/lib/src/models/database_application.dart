@@ -101,6 +101,7 @@ class Field {
   final String name;
   final String type;
   final int order;
+  @JsonKey(defaultValue: false)
   final bool primary;
 
   Field({
@@ -108,7 +109,7 @@ class Field {
     required this.name,
     required this.type,
     required this.order,
-    required this.primary,
+    this.primary = false,
   });
 
   factory Field.fromJson(Map<String, dynamic> json) => _$FieldFromJson(json);

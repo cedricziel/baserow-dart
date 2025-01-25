@@ -133,10 +133,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = TextFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
@@ -145,10 +147,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = LongTextFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
@@ -157,10 +161,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = NumberFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
@@ -169,10 +175,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = EmailFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
@@ -181,10 +189,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = URLFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
@@ -193,10 +203,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = PhoneNumberFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
@@ -205,8 +217,11 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? defaultValue,
+    bool primary = false,
   }) {
-    final field = BooleanFieldBuilder(name)..description = description;
+    final field = BooleanFieldBuilder(name)
+      ..description = description
+      ..primary = primary;
     if (defaultValue != null) {
       field.withDefaultValue(defaultValue);
     }
@@ -220,10 +235,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     bool? required,
     bool includeTime = false,
     String? timezone,
+    bool primary = false,
   }) {
     final field = DateFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     field.withDateFormat(
       includeTime: includeTime,
       timezone: timezone,
@@ -238,10 +255,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     required List<String> options,
     String? defaultOption,
     bool? required,
+    bool primary = false,
   }) {
     final field = SingleSelectFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     field.withOptions(options, defaultOption: defaultOption);
     addField(field);
     return field;
@@ -253,10 +272,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     required List<String> options,
     List<String>? defaultOptions,
     bool? required,
+    bool primary = false,
   }) {
     final field = MultipleSelectFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     field.withOptions(options, defaultOptions: defaultOptions);
     addField(field);
     return field;
@@ -266,10 +287,12 @@ extension TableBuilderFieldTypes on TableBuilder {
     String name, {
     String? description,
     bool? required,
+    bool primary = false,
   }) {
     final field = UUIDFieldBuilder(name)
       ..description = description
-      ..required = required;
+      ..required = required
+      ..primary = primary;
     addField(field);
     return field;
   }
