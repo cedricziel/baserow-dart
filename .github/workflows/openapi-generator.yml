@@ -27,7 +27,6 @@ jobs:
           generator: dart
           config-file: baserow-client-generator.yml
           openapi-file: spec/openapi.json
-          command-args: --skip-validate-spec
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
