@@ -1,0 +1,241 @@
+{
+  "get": {
+    "operationId": "get_auth_provider",
+    "description": "Get an authentication provider.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "auth_provider_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The authentication provider id to fetch.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Auth"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Authentication_ProviderAuthProvider.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_AUTH_PROVIDER_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "patch": {
+    "operationId": "update_auth_provider",
+    "description": "Updates a new authentication provider. This can be used to enable authentication with a third party service like Google or Facebook.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "auth_provider_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The authentication provider id to update.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Auth"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Authentication_ProviderAuthProvider.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_AUTH_PROVIDER_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "delete": {
+    "operationId": "delete_auth_provider",
+    "description": "Delete an authentication provider.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "auth_provider_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The authentication provider id to delete.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Auth"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_AUTH_PROVIDER_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

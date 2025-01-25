@@ -1,0 +1,81 @@
+{
+  "patch": {
+    "operationId": "update_account",
+    "description": "Updates the account information of the authenticated user.",
+    "tags": [
+      "User"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedAccount.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedAccount.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedAccount.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Account.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

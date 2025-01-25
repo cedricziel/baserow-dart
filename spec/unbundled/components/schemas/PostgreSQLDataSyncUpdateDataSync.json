@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "postgresql_host": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_username": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_port": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": 0
+    },
+    "postgresql_database": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_schema": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_table": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_sslmode": {
+      "$ref": "./PostgresqlSslmodeEnum.json"
+    }
+  },
+  "required": [
+    "postgresql_database",
+    "postgresql_host",
+    "postgresql_table",
+    "postgresql_username"
+  ]
+}

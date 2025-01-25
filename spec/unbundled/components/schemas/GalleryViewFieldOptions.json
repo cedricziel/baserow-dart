@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "hidden": {
+      "type": "boolean",
+      "description": "Whether or not the field should be hidden in the card."
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The order that the field has in the form. Lower value is first."
+    }
+  }
+}

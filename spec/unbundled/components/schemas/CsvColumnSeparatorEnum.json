@@ -1,0 +1,12 @@
+{
+  "enum": [
+    ",",
+    ";",
+    "|",
+    "tab",
+    "record_separator",
+    "unit_separator"
+  ],
+  "type": "string",
+  "description": "* `,` - ,\n* `;` - ;\n* `|` - |\n* `tab` - \t\n* `record_separator` - \u001e\n* `unit_separator` - \u001f"
+}

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "github_issues_owner": {
+      "type": "string",
+      "description": "The owner of the repository on GitHub.",
+      "maxLength": 255
+    },
+    "github_issues_repo": {
+      "type": "string",
+      "description": "The name of the repository on GitHub.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "github_issues_owner",
+    "github_issues_repo"
+  ]
+}

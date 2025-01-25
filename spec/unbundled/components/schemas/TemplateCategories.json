@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "$ref": "./Template.json"
+      },
+      "readOnly": true
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "templates"
+  ]
+}

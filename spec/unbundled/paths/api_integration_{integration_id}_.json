@@ -1,0 +1,240 @@
+{
+  "patch": {
+    "operationId": "update_application_integration",
+    "description": "Updates an existing integration.",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "path",
+        "name": "integration_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the integration",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Integrations"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedIntegrationUpdateIntegration.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedIntegrationUpdateIntegration.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedIntegrationUpdateIntegration.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/IntegrationIntegration.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_INTEGRATION_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "delete": {
+    "operationId": "delete_application_integration",
+    "description": "Deletes the integration related by the given id.",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "path",
+        "name": "integration_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the integration",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Integrations"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_INTEGRATION_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

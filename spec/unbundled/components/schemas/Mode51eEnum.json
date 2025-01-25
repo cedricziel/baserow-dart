@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "form",
+    "survey"
+  ],
+  "type": "string",
+  "description": "* `form` - form\n* `survey` - survey"
+}

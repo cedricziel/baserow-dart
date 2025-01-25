@@ -1,0 +1,138 @@
+{
+  "post": {
+    "operationId": "order_database_table_views",
+    "description": "Changes the order of the provided view ids to the matching position that the id has in the list. The order of the not provided views will be set to `0`.",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "header",
+        "name": "ClientUndoRedoActionGroupId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular action group.Then calling the undo/redo endpoint with the same ClientSessionId header, all the actions belonging to the same action group can be undone/redone together in a single API call."
+      },
+      {
+        "in": "path",
+        "name": "table_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Updates the order of the views in the table related to the provided value.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table views"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/OrderViews.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/OrderViews.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/OrderViews.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_VIEW_NOT_IN_TABLE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_TABLE_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

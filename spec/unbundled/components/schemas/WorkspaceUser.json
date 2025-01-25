@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true,
+      "description": "User defined name."
+    },
+    "email": {
+      "type": "string",
+      "readOnly": true,
+      "description": "User email."
+    },
+    "workspace": {
+      "type": "integer",
+      "description": "The workspace that the user has access to."
+    },
+    "permissions": {
+      "type": "string",
+      "description": "The permissions that the user has within the workspace.",
+      "maxLength": 32
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "The user that has access to the workspace.",
+      "readOnly": true
+    },
+    "to_be_deleted": {
+      "type": "boolean",
+      "description": "True if user account is pending deletion."
+    }
+  },
+  "required": [
+    "created_on",
+    "email",
+    "id",
+    "name",
+    "to_be_deleted",
+    "user_id",
+    "workspace"
+  ]
+}

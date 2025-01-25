@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "The total count of rows that are included in this group."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "./ExampleRowResponse.json"
+      },
+      "description": "All the rows that belong in this group and match provided `limit` and `offset`."
+    }
+  },
+  "required": [
+    "count",
+    "results"
+  ]
+}

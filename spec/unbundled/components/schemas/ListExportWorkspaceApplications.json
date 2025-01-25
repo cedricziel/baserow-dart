@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "./ExportApplicationsJobTypeResponse.json"
+      }
+    }
+  },
+  "required": [
+    "results"
+  ]
+}

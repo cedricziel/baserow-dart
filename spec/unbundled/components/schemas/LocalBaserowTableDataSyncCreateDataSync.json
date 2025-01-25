@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./TypeD46Enum.json"
+        }
+      ],
+      "description": "The type of the data sync table that must be created.\n\n* `ical_calendar` - ical_calendar\n* `postgresql` - postgresql\n* `local_baserow_table` - local_baserow_table\n* `jira_issues` - jira_issues\n* `github_issues` - github_issues\n* `gitlab_issues` - gitlab_issues\n* `hubspot_contacts` - hubspot_contacts"
+    },
+    "table_name": {
+      "type": "string"
+    },
+    "source_table_id": {
+      "type": "integer",
+      "description": "The ID of the source table that must be synced."
+    }
+  },
+  "required": [
+    "source_table_id",
+    "synced_properties",
+    "table_name",
+    "type"
+  ]
+}

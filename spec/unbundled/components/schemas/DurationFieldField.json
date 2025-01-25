@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Indicates if the field is a primary field. If `true` the field cannot be deleted and the value should represent the whole row."
+    },
+    "read_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the field is a read only field. If true, it's not possible to update the cell value."
+    },
+    "immutable_type": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field type is immutable. If true, then it won't be possible to change the field type via the API."
+    },
+    "immutable_properties": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field properties are immutable. If true, then it won't be possible to change the properties and the type via the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "duration_format": {
+      "allOf": [
+        {
+          "$ref": "./DurationFormatEnum.json"
+        }
+      ],
+      "description": "The format of the duration.\n\n* `h:mm` - hours:minutes\n* `h:mm:ss` - hours:minutes:seconds\n* `h:mm:ss.s` - hours:minutes:seconds:deciseconds\n* `h:mm:ss.ss` - hours:minutes:seconds:centiseconds\n* `h:mm:ss.sss` - hours:minutes:seconds:milliseconds\n* `d h` - days:hours\n* `d h:mm` - days:hours:minutes\n* `d h:mm:ss` - days:hours:minutes:seconds\n* `d h mm` - days:hours:minutes:with_spaces\n* `d h mm ss` - days:hours:minutes:seconds:with_spaces"
+    }
+  },
+  "required": [
+    "id",
+    "immutable_properties",
+    "immutable_type",
+    "name",
+    "order",
+    "read_only",
+    "table_id",
+    "type"
+  ]
+}

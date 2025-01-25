@@ -1,0 +1,251 @@
+{
+  "get": {
+    "operationId": "list_database_table_view_decorations",
+    "description": "Lists all decorations of the view related to the provided `view_id` if the user has access to the related database's workspace. A view can have multiple decorations. View decorators can be used to decorate rows. This can, for example, be used to change the border or background color of a row if it matches certain conditions.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "view_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns only decoration of the view given to the provided value.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table view decorations"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "../components/schemas/Decorator_Value_Provider_TypeViewDecoration.json"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_VIEW_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "post": {
+    "operationId": "create_database_table_view_decoration",
+    "description": "Creates a new decoration for the view related to the provided `view_id` parameter if the authorized user has access to the related database's workspace.",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "header",
+        "name": "ClientUndoRedoActionGroupId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular action group.Then calling the undo/redo endpoint with the same ClientSessionId header, all the actions belonging to the same action group can be undone/redone together in a single API call."
+      },
+      {
+        "in": "path",
+        "name": "view_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Creates a decoration for the view related to the given value.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table view decorations"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/Decorator_Value_Provider_TypeCreateViewDecoration.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/Decorator_Value_Provider_TypeCreateViewDecoration.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/Decorator_Value_Provider_TypeCreateViewDecoration.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Decorator_Value_Provider_TypeViewDecoration.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_VIEW_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "description": "Basic builder workflow action serializer",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "element_id": {
+      "type": "integer",
+      "nullable": true,
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the workflow action"
+    },
+    "event": {
+      "type": "string",
+      "description": "The event that triggers the execution",
+      "maxLength": 60
+    },
+    "service": {
+      "allOf": [
+        {
+          "$ref": "./Integration_ServiceService.json"
+        }
+      ],
+      "description": "The service which this workflow action is associated with."
+    }
+  },
+  "required": [
+    "element_id",
+    "event",
+    "id",
+    "order",
+    "service",
+    "type"
+  ]
+}

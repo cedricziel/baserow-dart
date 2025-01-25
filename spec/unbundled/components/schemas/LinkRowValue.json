@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The unique identifier of the row in the related table."
+    },
+    "value": {
+      "type": "string",
+      "description": "The primary field's value as a string of the row in the related table."
+    },
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$"
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

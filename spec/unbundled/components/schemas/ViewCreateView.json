@@ -1,0 +1,33 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./GridViewCreateView.json"
+    },
+    {
+      "$ref": "./GalleryViewCreateView.json"
+    },
+    {
+      "$ref": "./FormViewCreateView.json"
+    },
+    {
+      "$ref": "./KanbanViewCreateView.json"
+    },
+    {
+      "$ref": "./CalendarViewCreateView.json"
+    },
+    {
+      "$ref": "./TimelineViewCreateView.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "grid": "./GridViewCreateView.json",
+      "gallery": "./GalleryViewCreateView.json",
+      "form": "./FormViewCreateView.json",
+      "kanban": "./KanbanViewCreateView.json",
+      "calendar": "./CalendarViewCreateView.json",
+      "timeline": "./TimelineViewCreateView.json"
+    }
+  }
+}

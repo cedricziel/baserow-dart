@@ -1,0 +1,97 @@
+{
+  "get": {
+    "operationId": "admin_license_lookup_users",
+    "description": "This endpoint can be used to lookup users that can be added to a  license. Users that are already in the license are not returned here. Optionally a `search` query parameter can be provided to filter the results.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The internal identifier of the license, this is `id` and not `license_id`.",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines which page of users should be returned."
+      },
+      {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided, only users where the name or email contains the value are returned."
+      },
+      {
+        "in": "query",
+        "name": "size",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines how many users should be returned per page."
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerLicenseUserLookup.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_LICENSE_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

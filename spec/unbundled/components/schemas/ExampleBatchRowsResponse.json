@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "./ExampleRowResponseSerializerWithUserFieldNames.json"
+      },
+      "maxItems": 200,
+      "minItems": 1
+    }
+  },
+  "required": [
+    "items"
+  ]
+}

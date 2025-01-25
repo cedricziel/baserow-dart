@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type509Enum.json"
+        }
+      ],
+      "description": "The type of the domain.\n\n* `custom` - custom\n* `sub_domain` - sub_domain"
+    },
+    "domain_name": {
+      "type": "string",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "domain_name",
+    "type"
+  ]
+}

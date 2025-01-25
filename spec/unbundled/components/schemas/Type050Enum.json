@@ -1,0 +1,7 @@
+{
+  "enum": [
+    "local_baserow"
+  ],
+  "type": "string",
+  "description": "* `local_baserow` - local_baserow"
+}

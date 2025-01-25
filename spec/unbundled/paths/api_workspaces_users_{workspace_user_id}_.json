@@ -1,0 +1,225 @@
+{
+  "patch": {
+    "operationId": "update_workspace_user",
+    "description": "Updates the existing workspace user related to the provided `workspace_user_id` param if the authorized user has admin rights to the related workspace.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "workspace_user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Updates the workspace user related to the provided value.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Workspaces"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedUpdateWorkspaceUser.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedUpdateWorkspaceUser.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedUpdateWorkspaceUser.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/WorkspaceUser.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_USER_INVALID_GROUP_PERMISSIONS",
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_GROUP_USER_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "delete": {
+    "operationId": "delete_workspace_user",
+    "description": "Deletes a workspace user if the authorized user has admin rights to the related workspace.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "workspace_user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Deletes the workspace user related to the provided value.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Workspaces"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_USER_INVALID_GROUP_PERMISSIONS"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_GROUP_INVITATION_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

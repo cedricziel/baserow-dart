@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "view": {
+      "type": "integer",
+      "description": "The view to which the decoration applies. Each view can have his own decorations."
+    },
+    "type": {
+      "type": "string",
+      "description": "The decorator type. This is then interpreted by the frontend to display the decoration.",
+      "maxLength": 255
+    },
+    "value_provider_type": {
+      "type": "string",
+      "description": "The value provider type that gives the value to the decorator.",
+      "maxLength": 255
+    },
+    "value_provider_conf": {
+      "allOf": [
+        {
+          "$ref": "./SelectColorValueProviderConf.json"
+        }
+      ],
+      "description": "The configuration of the value provider"
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The position of the decorator has within the view, lowest first. If there is another decorator with the same order value then the decorator with the lowest id must be shown first."
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

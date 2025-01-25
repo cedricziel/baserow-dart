@@ -1,0 +1,10 @@
+{
+  "enum": [
+    "csv",
+    "json",
+    "xml",
+    "excel"
+  ],
+  "type": "string",
+  "description": "* `csv` - csv\n* `json` - json\n* `xml` - xml\n* `excel` - excel"
+}

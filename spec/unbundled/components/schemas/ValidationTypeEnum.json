@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "any",
+    "email",
+    "integer"
+  ],
+  "type": "string",
+  "description": "* `any` - Any\n* `email` - Email\n* `integer` - Integer"
+}

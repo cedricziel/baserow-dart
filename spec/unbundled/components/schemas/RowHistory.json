@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "action_type": {
+      "type": "string",
+      "description": "The type of the action that was performed."
+    },
+    "user": {
+      "allOf": [
+        {
+          "$ref": "./RowHistoryUser.json"
+        }
+      ],
+      "description": "The user that performed the action."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp of the action that was performed."
+    },
+    "before": {
+      "description": "The mapping between field_ids and values for the row before the action was performed."
+    },
+    "after": {
+      "description": "The mapping between field_ids and values for the row after the action was performed."
+    },
+    "fields_metadata": {
+      "description": "The metadata of the fields that were changed."
+    }
+  },
+  "required": [
+    "action_type",
+    "after",
+    "before",
+    "fields_metadata",
+    "id",
+    "timestamp",
+    "user"
+  ]
+}

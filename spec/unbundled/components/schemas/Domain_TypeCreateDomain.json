@@ -1,0 +1,17 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./CustomDomainCreateDomain.json"
+    },
+    {
+      "$ref": "./SubDomainCreateDomain.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "custom": "./CustomDomainCreateDomain.json",
+      "sub_domain": "./SubDomainCreateDomain.json"
+    }
+  }
+}

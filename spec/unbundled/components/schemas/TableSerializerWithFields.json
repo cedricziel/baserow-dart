@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "database_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "./FieldField.json"
+      },
+      "description": "Fields of this table"
+    }
+  },
+  "required": [
+    "database_id",
+    "fields",
+    "id",
+    "name",
+    "order"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "email_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field to use as email for the user account."
+    },
+    "name_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user name."
+    },
+    "role_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user role."
+    }
+  },
+  "required": [
+    "id",
+    "roles"
+  ]
+}

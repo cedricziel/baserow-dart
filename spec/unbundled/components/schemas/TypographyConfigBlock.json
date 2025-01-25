@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "Style overrides for this element.",
+  "properties": {
+    "typography": {
+      "allOf": [
+        {
+          "$ref": "./TypographyThemeConfigBlock.json"
+        }
+      ],
+      "description": "Styles overrides for typography"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "page_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "The ids of the pages in the order they are supposed to be set in"
+    }
+  },
+  "required": [
+    "page_ids"
+  ]
+}

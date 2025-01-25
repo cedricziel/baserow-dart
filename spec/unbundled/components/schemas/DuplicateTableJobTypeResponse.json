@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the job."
+    },
+    "progress_percentage": {
+      "type": "integer",
+      "description": "A percentage indicating how far along the job is. 100 means that it's finished."
+    },
+    "state": {
+      "type": "string",
+      "description": "Indicates the state of the import job."
+    },
+    "human_readable_error": {
+      "type": "string",
+      "description": "A human readable error message indicating what went wrong."
+    },
+    "original_table": {
+      "allOf": [
+        {
+          "$ref": "./Table.json"
+        }
+      ],
+      "readOnly": true
+    },
+    "duplicated_table": {
+      "allOf": [
+        {
+          "$ref": "./Table.json"
+        }
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "duplicated_table",
+    "id",
+    "original_table",
+    "progress_percentage",
+    "state",
+    "type"
+  ]
+}

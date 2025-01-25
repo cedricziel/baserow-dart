@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "element_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the element the workflow action is associated with"
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type051Enum.json"
+        }
+      ],
+      "description": "The type of the workflow action\n\n* `notification` - notification\n* `open_page` - open_page\n* `create_row` - create_row\n* `update_row` - update_row\n* `delete_row` - delete_row\n* `logout` - logout\n* `refresh_data_source` - refresh_data_source"
+    },
+    "event": {
+      "type": "string",
+      "description": "The event that triggers the execution",
+      "maxLength": 60
+    },
+    "service": {
+      "allOf": [
+        {
+          "$ref": "./Integration_Service.json"
+        }
+      ],
+      "description": "The service which this workflow action is associated with."
+    }
+  },
+  "required": [
+    "event",
+    "id",
+    "type"
+  ]
+}

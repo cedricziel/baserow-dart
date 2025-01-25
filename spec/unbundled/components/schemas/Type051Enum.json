@@ -1,0 +1,13 @@
+{
+  "enum": [
+    "notification",
+    "open_page",
+    "create_row",
+    "update_row",
+    "delete_row",
+    "logout",
+    "refresh_data_source"
+  ],
+  "type": "string",
+  "description": "* `notification` - notification\n* `open_page` - open_page\n* `create_row` - create_row\n* `update_row` - update_row\n* `delete_row` - delete_row\n* `logout` - logout\n* `refresh_data_source` - refresh_data_source"
+}

@@ -1,0 +1,124 @@
+{
+  "post": {
+    "operationId": "duplicate_database_table_view",
+    "description": "Duplicates an existing view if the user has access to it. When a view is duplicated everything is copied except:\n- The name is appended with the copy number. Ex: `ViewName`->`ViewName(2)` and `View(2)`->`View(3)`\n- If the original view is publicly shared, the new view will not be shared anymore",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "header",
+        "name": "ClientUndoRedoActionGroupId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular action group.Then calling the undo/redo endpoint with the same ClientSessionId header, all the actions belonging to the same action group can be undone/redone together in a single API call."
+      },
+      {
+        "in": "path",
+        "name": "view_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Duplicates the view related to the provided value.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table views"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ViewView.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_VIEW_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "enum": [
+    "star",
+    "heart",
+    "thumbs-up",
+    "flag",
+    "smile"
+  ],
+  "type": "string",
+  "description": "* `star` - Star\n* `heart` - Heart\n* `thumbs-up` - Thumbs-up\n* `flag` - Flags\n* `smile` - Smile"
+}

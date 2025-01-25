@@ -1,0 +1,431 @@
+{
+  "type": "object",
+  "properties": {
+    "primary_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "secondary_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "border_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "main_success_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "main_warning_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "main_error_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "body_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "body_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "body_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "body_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_1_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_1_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_1_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_1_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_2_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_2_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_2_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_2_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_3_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_3_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_3_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_3_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_4_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_4_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_4_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_4_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_5_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_5_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_5_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_5_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_6_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_6_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_6_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_6_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "button_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "button_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "button_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "button_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "button_width": {
+      "$ref": "./ButtonWidthEnum.json"
+    },
+    "button_background_color": {
+      "type": "string",
+      "description": "The background color of buttons",
+      "maxLength": 20
+    },
+    "button_text_color": {
+      "type": "string",
+      "description": "The text color of buttons",
+      "maxLength": 20
+    },
+    "button_border_color": {
+      "type": "string",
+      "description": "The border color of buttons",
+      "maxLength": 20
+    },
+    "button_border_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button border size"
+    },
+    "button_border_radius": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button border radius"
+    },
+    "button_vertical_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button vertical padding"
+    },
+    "button_horizontal_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button horizontal padding"
+    },
+    "button_hover_background_color": {
+      "type": "string",
+      "description": "The background color of buttons when hovered",
+      "maxLength": 20
+    },
+    "button_hover_text_color": {
+      "type": "string",
+      "description": "The text color of buttons when hovered",
+      "maxLength": 20
+    },
+    "button_hover_border_color": {
+      "type": "string",
+      "description": "The border color of buttons when hovered",
+      "maxLength": 20
+    },
+    "link_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "link_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "link_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "link_text_color": {
+      "type": "string",
+      "description": "The text color of links",
+      "maxLength": 20
+    },
+    "link_hover_text_color": {
+      "type": "string",
+      "description": "The hover color of links when hovered",
+      "maxLength": 20
+    },
+    "image_max_height": {
+      "type": "integer",
+      "description": "The image max height"
+    },
+    "image_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "image_max_width": {
+      "type": "integer",
+      "maximum": 100,
+      "minimum": 0,
+      "description": "The max-width for this image element."
+    },
+    "image_constraint": {
+      "allOf": [
+        {
+          "$ref": "./ImageConstraintEnum.json"
+        }
+      ],
+      "description": "The image constraint to apply to this image\n\n* `cover` - Cover\n* `contain` - Contain\n* `full-width` - Full Width"
+    },
+    "page_background_file": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The image file"
+    },
+    "page_background_color": {
+      "type": "string",
+      "description": "The background color of the page",
+      "maxLength": 20
+    },
+    "page_background_mode": {
+      "allOf": [
+        {
+          "$ref": "./PageBackgroundModeEnum.json"
+        }
+      ],
+      "description": "The mode of the background image\n\n* `tile` - Tile\n* `fill` - Fill\n* `fit` - Fit"
+    },
+    "label_font_family": {
+      "type": "string",
+      "description": "The font family of the label",
+      "maxLength": 250
+    },
+    "label_text_color": {
+      "type": "string",
+      "description": "The text color of the label",
+      "maxLength": 20
+    },
+    "label_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The font size of the label"
+    },
+    "input_font_family": {
+      "type": "string",
+      "description": "The font family of the input",
+      "maxLength": 250
+    },
+    "input_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "input_text_color": {
+      "type": "string",
+      "description": "The text color of the input",
+      "maxLength": 20
+    },
+    "input_background_color": {
+      "type": "string",
+      "description": "The background color of the input",
+      "maxLength": 20
+    },
+    "input_border_color": {
+      "type": "string",
+      "description": "The color of the input border",
+      "maxLength": 20
+    },
+    "input_border_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input border size"
+    },
+    "input_border_radius": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input border radius"
+    },
+    "input_vertical_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input vertical padding"
+    },
+    "input_horizontal_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input horizontal padding"
+    },
+    "table_border_color": {
+      "type": "string",
+      "description": "The color of the table border",
+      "maxLength": 20
+    },
+    "table_border_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table border size"
+    },
+    "table_border_radius": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table border radius"
+    },
+    "table_header_background_color": {
+      "type": "string",
+      "description": "The background color of the table header cells",
+      "maxLength": 20
+    },
+    "table_header_text_color": {
+      "type": "string",
+      "description": "The text color of the table header cells",
+      "maxLength": 20
+    },
+    "table_header_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The font size of the header cells"
+    },
+    "table_header_font_family": {
+      "type": "string",
+      "description": "The font family of the table header cells",
+      "maxLength": 250
+    },
+    "table_header_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "table_cell_background_color": {
+      "type": "string",
+      "description": "The background color of the table cells",
+      "maxLength": 20
+    },
+    "table_cell_alternate_background_color": {
+      "type": "string",
+      "description": "The alternate background color of the table cells",
+      "maxLength": 20
+    },
+    "table_cell_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "table_cell_vertical_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table cell vertical padding"
+    },
+    "table_cell_horizontal_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table cell horizontal padding"
+    },
+    "table_vertical_separator_color": {
+      "type": "string",
+      "description": "The color of the table vertical separator",
+      "maxLength": 20
+    },
+    "table_vertical_separator_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table vertical separator size"
+    },
+    "table_horizontal_separator_color": {
+      "type": "string",
+      "description": "The color of the table horizontal separator",
+      "maxLength": 20
+    },
+    "table_horizontal_separator_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table horizontal separator size"
+    }
+  }
+}

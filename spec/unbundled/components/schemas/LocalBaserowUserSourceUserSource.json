@@ -1,0 +1,90 @@
+{
+  "type": "object",
+  "description": "Basic user_source serializer mostly for returned values.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "uid": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Unique id for this user source."
+    },
+    "application_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "integration_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The Integration used to establish the connection with the service.",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the user_source."
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$",
+      "readOnly": true,
+      "description": "Lowest first."
+    },
+    "auth_providers": {
+      "type": "array",
+      "items": {
+        "$ref": "./App_Auth_ProviderAppAuthProvider.json"
+      },
+      "description": "Auth providers related to this user source."
+    },
+    "user_count": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The total number of users in the user source."
+    },
+    "user_count_updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true,
+      "description": "When the last user count took place."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "email_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field to use as email for the user account."
+    },
+    "name_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user name."
+    },
+    "role_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user role."
+    }
+  },
+  "required": [
+    "application_id",
+    "id",
+    "integration_id",
+    "name",
+    "order",
+    "type",
+    "uid",
+    "user_count",
+    "user_count_updated_at"
+  ]
+}

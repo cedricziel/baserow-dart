@@ -1,0 +1,95 @@
+{
+  "post": {
+    "operationId": "dispatch_builder_page_data_source",
+    "description": "Dispatches the service of the related data_source and returns the result.",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "path",
+        "name": "data_source_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the data_source you want to call the dispatch for",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Builder data sources"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/DispatchDataSourceRequest.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/DispatchDataSourceRequest.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/DispatchDataSourceRequest.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_DATA_SOURCE_DOES_NOT_EXIST",
+                    "ERROR_DATA_SOURCE_IMPROPERLY_CONFIGURED",
+                    "ERROR_IN_DISPATCH_CONTEXT",
+                    "ERROR_DATA_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "./IdEnum.json"
+    },
+    "value": {
+      "type": "string",
+      "description": "Given the *incoming* primitive data, return the value for this field\nthat should be validated and transformed to a native value.",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "id",
+    "value"
+  ]
+}

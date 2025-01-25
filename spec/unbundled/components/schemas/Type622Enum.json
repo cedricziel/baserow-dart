@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "local_baserow_password",
+    "saml"
+  ],
+  "type": "string",
+  "description": "* `local_baserow_password` - local_baserow_password\n* `saml` - saml"
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "ai_type": {
+      "type": "string",
+      "description": "The AI model type that must be used when generating the formula."
+    },
+    "ai_model": {
+      "type": "string",
+      "description": "The AI model that must be used when generating the formula."
+    },
+    "ai_temperature": {
+      "type": "number",
+      "format": "double",
+      "maximum": 2,
+      "minimum": 0,
+      "nullable": true,
+      "description": "Between 0 and 2, adjusts response randomness—lower values yield focused answers, while higher values increase creativity."
+    },
+    "ai_prompt": {
+      "type": "string",
+      "description": "The human readable input used to generate the formula.",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "ai_model",
+    "ai_prompt",
+    "ai_type"
+  ]
+}

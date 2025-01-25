@@ -1,0 +1,13 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./LocalBaserowUserSourceCreateUserSource.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "local_baserow": "./LocalBaserowUserSourceCreateUserSource.json"
+    }
+  }
+}

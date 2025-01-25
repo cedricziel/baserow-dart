@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the job."
+    },
+    "progress_percentage": {
+      "type": "integer",
+      "description": "A percentage indicating how far along the job is. 100 means that it's finished."
+    },
+    "state": {
+      "type": "string",
+      "description": "Indicates the state of the import job."
+    },
+    "human_readable_error": {
+      "type": "string",
+      "description": "A human readable error message indicating what went wrong."
+    },
+    "database_id": {
+      "type": "integer",
+      "description": "Database id where the table will be created."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the new table.",
+      "maxLength": 255
+    },
+    "table_id": {
+      "type": "integer",
+      "description": "Table id where the data will be imported."
+    },
+    "first_row_header": {
+      "type": "boolean",
+      "default": false
+    },
+    "report": {
+      "allOf": [
+        {
+          "$ref": "./Report.json"
+        }
+      ],
+      "description": "Import error report."
+    }
+  },
+  "required": [
+    "database_id",
+    "id",
+    "progress_percentage",
+    "report",
+    "state",
+    "type"
+  ]
+}

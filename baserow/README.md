@@ -17,6 +17,8 @@ A Dart client library for interacting with the [Baserow](https://baserow.io) API
 - 📋 Table operations
   - List tables in a database
   - View table structure and fields
+  - Create new tables with initial data
+  - Create and manage table fields
 - 📝 [Row operations](#working-with-rows)
   - List rows in a table
   - Create new rows
@@ -300,6 +302,68 @@ The workspace listing provides:
 - User-specific information like unread notification count
 - Workspace settings like enabled AI models
 - Custom ordering of workspaces per user (configurable via the order_workspaces endpoint)
+
+### Table Operations
+
+#### Creating Tables
+
+```dart
+// Create a new table
+final table = await client.createTable(
+  databaseId,
+  name: "Customers",
+  data: [
+    ["Name", "Email", "Status"],           // Field names
+    ["John Doe", "john@example.com", "Active"],  // Initial data
+  ],
+  firstRowHeader: true,  // Use first row as field names
+);
+
+// Create a table without initial data
+final emptyTable = await client.createTable(
+  databaseId,
+  name: "Products",
+);
+```
+
+#### Managing Fields
+
+```dart
+// Create a text field
+final nameField = await client.createField(
+  tableId,
+  name: "Name",
+  type: "text",
+  options: {"text_default": "New Customer"},
+);
+
+// Create a number field
+final priceField = await client.createField(
+  tableId,
+  name: "Price",
+  type: "number",
+  options: {
+    "number_decimal_places": 2,
+    "number_negative": true,
+  },
+);
+
+// List all fields in a table
+final fields = await client.listFields(tableId);
+for (final field in fields) {
+  print('Field: ${field.name} (Type: ${field.type})');
+}
+
+// Update a field
+final updatedField = await client.updateField(
+  fieldId,
+  name: "Full Name",
+  description: "Customer's full name",
+);
+
+// Delete a field
+await client.deleteField(fieldId);
+```
 
 ### Working with Rows
 

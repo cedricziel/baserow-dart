@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "description": "This serializer allow to set the type of an user_source and the user_source id\nbefore which we want to insert the new user_source.",
+  "properties": {
+    "before_id": {
+      "type": "integer",
+      "description": "If provided, creates the user_source before the user_source with the given id."
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type050Enum.json"
+        }
+      ],
+      "description": "The type of the user_source.\n\n* `local_baserow` - local_baserow"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "integration_id": {
+      "type": "integer",
+      "description": "The related integration id."
+    },
+    "auth_providers": {
+      "type": "array",
+      "items": {
+        "$ref": "./App_Auth_ProviderBaseAppAuthProvider.json"
+      },
+      "description": "Auth providers related to this user source."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "email_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field to use as email for the user account."
+    },
+    "name_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user name."
+    },
+    "role_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user role."
+    }
+  },
+  "required": [
+    "integration_id",
+    "name",
+    "type"
+  ]
+}

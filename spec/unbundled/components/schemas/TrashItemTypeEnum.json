@@ -1,0 +1,16 @@
+{
+  "enum": [
+    "workspace",
+    "application",
+    "table",
+    "field",
+    "row",
+    "rows",
+    "view",
+    "builder_domain",
+    "row_comment",
+    "team"
+  ],
+  "type": "string",
+  "description": "* `workspace` - workspace\n* `application` - application\n* `table` - table\n* `field` - field\n* `row` - row\n* `rows` - rows\n* `view` - view\n* `builder_domain` - builder_domain\n* `row_comment` - row_comment\n* `team` - team"
+}

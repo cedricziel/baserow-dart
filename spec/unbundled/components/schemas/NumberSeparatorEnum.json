@@ -1,0 +1,10 @@
+{
+  "enum": [
+    "SPACE_COMMA",
+    "SPACE_PERIOD",
+    "COMMA_PERIOD",
+    "PERIOD_COMMA"
+  ],
+  "type": "string",
+  "description": "* `` - No formatting\n* `SPACE_COMMA` - Space, comma\n* `SPACE_PERIOD` - Space, period\n* `COMMA_PERIOD` - Comma, period\n* `PERIOD_COMMA` - Period, comma"
+}

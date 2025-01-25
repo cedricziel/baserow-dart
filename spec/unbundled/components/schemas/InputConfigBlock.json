@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "Style overrides for this element.",
+  "properties": {
+    "input": {
+      "allOf": [
+        {
+          "$ref": "./InputThemeConfigBlock.json"
+        }
+      ],
+      "description": "Styles overrides for input"
+    }
+  }
+}

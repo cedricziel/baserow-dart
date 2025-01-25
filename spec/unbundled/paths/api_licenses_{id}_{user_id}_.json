@@ -1,0 +1,225 @@
+{
+  "post": {
+    "operationId": "admin_add_user_to_license",
+    "description": "Adds the user related to the provided parameter and to the license related to the parameter. This only happens if there are enough seats left on the license and if the user is not already on the license.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The internal identifier of the license, this is `id` and not `license_id`.",
+        "required": true
+      },
+      {
+        "in": "path",
+        "name": "user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The ID of the user that must be added to the license.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/LicenseUser.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_ALREADY_ON_LICENSE",
+                    "ERROR_NO_SEATS_LEFT_IN_LICENSE",
+                    "ERROR_CANT_MANUALLY_CHANGE_SEATS"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_LICENSE_DOES_NOT_EXIST",
+                    "ERROR_USER_NOT_FOUND"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "delete": {
+    "operationId": "admin_remove_user_from_license",
+    "description": "Removes the user related to the provided parameter and to the license related to the parameter. This only happens if the user is on the license, otherwise nothing will happen.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The internal identifier of the license, this is `id` and not `license_id`.",
+        "required": true
+      },
+      {
+        "in": "path",
+        "name": "user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The ID of the user that must be removed from the license.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_CANT_MANUALLY_CHANGE_SEATS"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_LICENSE_DOES_NOT_EXIST",
+                    "ERROR_USER_NOT_FOUND"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

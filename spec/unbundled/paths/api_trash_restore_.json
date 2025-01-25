@@ -1,0 +1,80 @@
+{
+  "patch": {
+    "operationId": "restore",
+    "description": "Restores the specified trashed item back into baserow.",
+    "tags": [
+      "Trash"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedTrashEntryRequest.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedTrashEntryRequest.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedTrashEntryRequest.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_TRASH_ITEM_DOES_NOT_EXIST",
+                    "ERROR_CANNOT_RESTORE_PARENT_BEFORE_CHILD",
+                    "ERROR_PARENT_ID_MUST_NOT_BE_PROVIDED",
+                    "ERROR_PARENT_ID_MUST_BE_PROVIDED",
+                    "ERROR_CANT_RESTORE_AS_RELATED_TABLE_TRASHED",
+                    "ERROR_CANNOT_RESTORE_ITEM_NOT_OWNED_BY_USER"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

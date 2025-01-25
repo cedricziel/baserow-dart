@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "description": "Mixin to a DRF serializer class to raise an exception if data with unknown fields\nis provided to the serializer.",
+  "properties": {
+    "schema_property": {
+      "type": "string",
+      "description": "The name of the property in the schema this option belongs to.",
+      "maxLength": 225
+    },
+    "filterable": {
+      "type": "boolean",
+      "description": "Whether this element is filterable or not by visitors."
+    },
+    "sortable": {
+      "type": "boolean",
+      "description": "Whether this element is sortable or not by visitors."
+    },
+    "searchable": {
+      "type": "boolean",
+      "description": "Whether this element is searchable or not by visitors."
+    }
+  },
+  "required": [
+    "schema_property"
+  ]
+}

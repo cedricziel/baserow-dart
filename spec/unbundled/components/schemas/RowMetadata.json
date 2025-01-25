@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "row_comment_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "How many row comments exist for this row."
+    },
+    "row_comments_notification_mode": {
+      "$ref": "./RowCommentsNotificationModeEnum.json"
+    }
+  }
+}

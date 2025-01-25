@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 165
+    },
+    "generative_ai_models_enabled": {
+      "type": "string",
+      "readOnly": true
+    }
+  }
+}

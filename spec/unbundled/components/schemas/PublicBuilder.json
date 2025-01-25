@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "description": "A public version of the builder serializer with less data to prevent data leaks.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "$ref": "./PublicPage.json"
+      },
+      "readOnly": true,
+      "description": "This field is specific to the `builder` application and contains an array of pages that are in the builder."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the object."
+    },
+    "theme": {
+      "allOf": [
+        {
+          "$ref": "./CombinedThemeConfigBlocks.json"
+        }
+      ],
+      "readOnly": true,
+      "description": "This field is specific to the `builder` application and contains the theme settings."
+    },
+    "user_sources": {
+      "type": "array",
+      "items": {
+        "$ref": "./User_SourceBasePublicUserSource.json"
+      },
+      "readOnly": true,
+      "description": "The user sources related with this builder."
+    },
+    "favicon_file": {
+      "type": "string",
+      "readOnly": true,
+      "description": "This field is specific to the `builder` application and contains the favicon settings."
+    },
+    "login_page_id": {
+      "type": "integer",
+      "description": "The login page for this application. This is related to the visibility settings of builder pages."
+    }
+  },
+  "required": [
+    "favicon_file",
+    "id",
+    "login_page_id",
+    "name",
+    "pages",
+    "theme",
+    "type",
+    "user_sources"
+  ]
+}

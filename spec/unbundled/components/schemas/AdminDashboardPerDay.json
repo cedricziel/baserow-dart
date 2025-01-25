@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "count",
+    "date"
+  ]
+}

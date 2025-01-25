@@ -1,0 +1,17 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./LocalBaserowPasswordAppAuthProviderAppAuthProvider.json"
+    },
+    {
+      "$ref": "./SamlAppAuthProviderModelAppAuthProvider.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "local_baserow_password": "./LocalBaserowPasswordAppAuthProviderAppAuthProvider.json",
+      "saml": "./SamlAppAuthProviderModelAppAuthProvider.json"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "get": {
+    "operationId": "workspace_permissions",
+    "description": "Returns a the permission data necessary to determine the permissions of a specific user over a specific workspace. \nSee `core.handler.CoreHandler.get_permissions()` for more details.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "workspace_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The workspace id we want the permission object for.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Workspaces"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "../components/schemas/PermissionObject.json"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_GROUP_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

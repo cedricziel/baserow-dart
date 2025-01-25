@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "table_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Table ids in the desired order."
+    }
+  },
+  "required": [
+    "table_ids"
+  ]
+}

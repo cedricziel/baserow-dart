@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "access": {
+      "type": "string",
+      "readOnly": true
+    },
+    "refresh_token": {
+      "type": "string"
+    },
+    "token": {
+      "type": "string",
+      "description": "Deprecated. Use `refresh_token` instead.",
+      "deprecated": true
+    }
+  },
+  "required": [
+    "access"
+  ]
+}

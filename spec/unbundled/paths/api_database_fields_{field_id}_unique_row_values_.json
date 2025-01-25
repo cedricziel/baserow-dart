@@ -1,0 +1,122 @@
+{
+  "get": {
+    "operationId": "get_database_field_unique_row_values",
+    "description": "Returns a list of all the unique row values for an existing field, sorted in order of frequency.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "field_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns the values related to the provided field.",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "limit",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines how many values should be returned."
+      },
+      {
+        "in": "query",
+        "name": "split_comma_separated",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "Indicates whether the original column values must be splitted by comma."
+      }
+    ],
+    "tags": [
+      "Database table fields"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/UniqueRowValues.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_FIELD_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

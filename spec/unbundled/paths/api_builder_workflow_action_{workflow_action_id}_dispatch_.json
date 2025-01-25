@@ -1,0 +1,73 @@
+{
+  "post": {
+    "operationId": "dispatch_builder_page_workflow_action",
+    "description": "Dispatches the service of the related workflow_action and returns the result.",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "path",
+        "name": "workflow_action_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the workflow_action you want to call the dispatch for.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Builder workflow actions"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_WORKFLOW_ACTION_CANNOT_BE_DISPATCHED"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "description": "This serializer must be kept in sync with `UserSerializer`.",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "maxLength": 150,
+      "minLength": 2
+    },
+    "language": {
+      "type": "string",
+      "description": "An ISO 639 language code (with optional variant) selected by the user. Ex: en-GB.",
+      "maxLength": 10,
+      "minLength": 2
+    },
+    "email_notification_frequency": {
+      "allOf": [
+        {
+          "$ref": "./EmailNotificationFrequencyEnum.json"
+        }
+      ],
+      "description": "The maximum frequency at which the user wants to receive email notifications.\n\n* `instant` - instant\n* `daily` - daily\n* `weekly` - weekly\n* `never` - never"
+    },
+    "completed_onboarding": {
+      "type": "boolean",
+      "description": "Indicates whether the user has completed the onboarding."
+    }
+  }
+}

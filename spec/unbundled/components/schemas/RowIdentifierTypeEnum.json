@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "id",
+    "count"
+  ],
+  "type": "string",
+  "description": "* `id` - Id\n* `count` - Count"
+}

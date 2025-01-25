@@ -1,0 +1,37 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./ICalCalendarDataSyncUpdateDataSync.json"
+    },
+    {
+      "$ref": "./PostgreSQLDataSyncUpdateDataSync.json"
+    },
+    {
+      "$ref": "./LocalBaserowTableDataSyncUpdateDataSync.json"
+    },
+    {
+      "$ref": "./JiraIssuesDataSyncUpdateDataSync.json"
+    },
+    {
+      "$ref": "./GitHubIssuesDataSyncUpdateDataSync.json"
+    },
+    {
+      "$ref": "./GitLabIssuesDataSyncUpdateDataSync.json"
+    },
+    {
+      "$ref": "./HubSpotContactsDataSyncUpdateDataSync.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "ical_calendar": "./ICalCalendarDataSyncUpdateDataSync.json",
+      "postgresql": "./PostgreSQLDataSyncUpdateDataSync.json",
+      "local_baserow_table": "./LocalBaserowTableDataSyncUpdateDataSync.json",
+      "jira_issues": "./JiraIssuesDataSyncUpdateDataSync.json",
+      "github_issues": "./GitHubIssuesDataSyncUpdateDataSync.json",
+      "gitlab_issues": "./GitLabIssuesDataSyncUpdateDataSync.json",
+      "hubspot_contacts": "./HubSpotContactsDataSyncUpdateDataSync.json"
+    }
+  }
+}

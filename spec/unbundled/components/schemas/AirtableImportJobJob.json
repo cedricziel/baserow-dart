@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the job."
+    },
+    "progress_percentage": {
+      "type": "integer",
+      "description": "A percentage indicating how far along the job is. 100 means that it's finished."
+    },
+    "state": {
+      "type": "string",
+      "description": "Indicates the state of the import job."
+    },
+    "human_readable_error": {
+      "type": "string",
+      "description": "A human readable error message indicating what went wrong."
+    },
+    "workspace_id": {
+      "type": "integer",
+      "description": "The workspace ID where the Airtable base must be imported into."
+    },
+    "database": {
+      "$ref": "./ApplicationApplication.json"
+    },
+    "airtable_share_id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Public ID of the shared Airtable base that must be imported.",
+      "maxLength": 200
+    }
+  },
+  "required": [
+    "airtable_share_id",
+    "database",
+    "id",
+    "progress_percentage",
+    "state",
+    "type",
+    "workspace_id"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "type": "object",
+  "properties": {
+    "body_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "body_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "body_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "body_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_1_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_1_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_1_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_1_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_2_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_2_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_2_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_2_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_3_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_3_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_3_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_3_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_4_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_4_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_4_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_4_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_5_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_5_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_5_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_5_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "heading_6_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "heading_6_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "heading_6_text_color": {
+      "type": "string",
+      "maxLength": 9
+    },
+    "heading_6_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    }
+  }
+}

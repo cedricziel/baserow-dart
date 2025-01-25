@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "MESSAGE",
+    "REDIRECT"
+  ],
+  "type": "string",
+  "description": "* `MESSAGE` - Message\n* `REDIRECT` - Redirect"
+}

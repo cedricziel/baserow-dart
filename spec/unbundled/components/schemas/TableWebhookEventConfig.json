@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "allOf": [
+        {
+          "$ref": "./EventTypeEnum.json"
+        }
+      ],
+      "description": "The type of the event.\n\n* `rows.created` - rows.created\n* `rows.updated` - rows.updated\n* `rows.deleted` - rows.deleted\n* `field.created` - field.created\n* `field.updated` - field.updated\n* `field.deleted` - field.deleted\n* `view.created` - view.created\n* `view.updated` - view.updated\n* `view.deleted` - view.deleted"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "A list of field IDs that are related to the event."
+    }
+  },
+  "required": [
+    "event_type",
+    "fields"
+  ]
+}

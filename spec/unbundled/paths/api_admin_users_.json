@@ -1,0 +1,184 @@
+{
+  "get": {
+    "operationId": "admin_list_users",
+    "description": "Returns all users with detailed information on each user, if the requesting user is staff.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines which page should be returned."
+      },
+      {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided only users with id or username or first_name that match the query will be returned."
+      },
+      {
+        "in": "query",
+        "name": "size",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines how many users should be returned per page."
+      },
+      {
+        "in": "query",
+        "name": "sorts",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A comma separated string of attributes to sort by, each attribute must be prefixed with `+` for a descending sort or a `-` for an ascending sort. The accepted attribute names are: `id, is_active, name, username, date_joined, last_login`. For example `sorts=-id,-is_active` will sort the users first by descending id and then ascending is_active. A sortparameter with multiple instances of the same sort attribute will respond with the ERROR_INVALID_SORT_ATTRIBUTE error."
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerUserAdminResponse.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_PAGE_SIZE_LIMIT",
+                    "ERROR_INVALID_PAGE",
+                    "ERROR_INVALID_SORT_DIRECTION",
+                    "ERROR_INVALID_SORT_ATTRIBUTE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  },
+  "post": {
+    "operationId": "admin_create_user",
+    "description": "Creates and returns a new user if the requesting user is staff. This works even if new signups are disabled.",
+    "tags": [
+      "Admin"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/UserAdminCreate.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/UserAdminCreate.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/UserAdminCreate.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/UserAdminResponse.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_REQUEST_BODY_VALIDATION",
+                    "ERROR_FEATURE_NOT_AVAILABLE",
+                    "USER_ADMIN_ALREADY_EXISTS"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

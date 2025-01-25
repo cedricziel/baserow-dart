@@ -1,0 +1,23 @@
+{
+  "post": {
+    "operationId": "send_verify_email",
+    "description": "Sends an email to the user with an email verification link if the user's email is not verified yet.",
+    "tags": [
+      "User"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_table_id": {
+      "type": "integer",
+      "description": "The ID of the source table that must be synced."
+    }
+  },
+  "required": [
+    "source_table_id"
+  ]
+}

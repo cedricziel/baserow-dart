@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the domain."
+    },
+    "domain_name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "builder_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "last_published": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Last publication date of this domain"
+    }
+  },
+  "required": [
+    "builder_id",
+    "domain_name",
+    "id",
+    "order",
+    "type"
+  ]
+}

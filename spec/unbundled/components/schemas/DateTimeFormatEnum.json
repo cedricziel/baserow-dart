@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "24",
+    "12"
+  ],
+  "type": "string",
+  "description": "* `24` - 24 hour\n* `12` - 12 hour"
+}

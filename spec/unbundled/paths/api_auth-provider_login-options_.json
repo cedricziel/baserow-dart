@@ -1,0 +1,31 @@
+{
+  "get": {
+    "operationId": "list_auth_providers_login_options",
+    "description": "Lists the available login options for the configured authentication providers.",
+    "tags": [
+      "Auth"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": {}
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

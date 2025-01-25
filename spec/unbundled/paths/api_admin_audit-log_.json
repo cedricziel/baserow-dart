@@ -1,0 +1,134 @@
+{
+  "get": {
+    "operationId": "audit_log_list",
+    "description": "Lists all audit log entries for the given workspace id.\n\nThis is a **enterprise** feature.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "action_type",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Filter the audit log entries by action type."
+      },
+      {
+        "in": "query",
+        "name": "from_timestamp",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ISO timestamp to filter the audit log entries from."
+      },
+      {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines which page should be returned."
+      },
+      {
+        "in": "query",
+        "name": "size",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines how many audit log entries should be returned per page."
+      },
+      {
+        "in": "query",
+        "name": "sorts",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A comma separated string of attributes to sort by, each attribute must be prefixed with `+` for a descending sort or a `-` for an ascending sort. The accepted attribute names are: `user, workspace, type, timestamp, ip_address`. For example `sorts=-user,-workspace` will sort the audit log entries first by descending user and then ascending workspace. A sortparameter with multiple instances of the same sort attribute will respond with the ERROR_INVALID_SORT_ATTRIBUTE error."
+      },
+      {
+        "in": "query",
+        "name": "to_timestamp",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The ISO timestamp to filter the audit log entries to."
+      },
+      {
+        "in": "query",
+        "name": "user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Filter the audit log entries by user id."
+      },
+      {
+        "in": "query",
+        "name": "workspace_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Filter the audit log entries by workspace id. This filter works only for the admin audit log."
+      }
+    ],
+    "tags": [
+      "Audit log"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerAuditLog.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_PAGE_SIZE_LIMIT",
+                    "ERROR_INVALID_PAGE",
+                    "ERROR_INVALID_SORT_DIRECTION",
+                    "ERROR_INVALID_SORT_ATTRIBUTE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  }
+}

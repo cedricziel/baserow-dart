@@ -1,0 +1,33 @@
+{
+  "get": {
+    "operationId": "list_templates",
+    "description": "Lists all the template categories and the related templates that are in that category. The template's `workspace_id` can be used for previewing purposes because that workspace contains the applications that are in the template. All the `get` and `list` endpoints related to that workspace are publicly accessible.",
+    "tags": [
+      "Templates"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "../components/schemas/TemplateCategories.json"
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

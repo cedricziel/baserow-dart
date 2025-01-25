@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "text",
+    "numeric"
+  ],
+  "type": "string",
+  "description": "* `text` - text\n* `numeric` - numeric"
+}

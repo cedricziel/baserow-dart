@@ -6,6 +6,7 @@ import 'interfaces/workspace_operations.dart';
 import 'interfaces/user_operations.dart';
 import 'interfaces/database_operations.dart';
 import 'interfaces/table_operations.dart';
+import 'interfaces/field_operations.dart';
 
 /// Abstract interface for interacting with the Baserow API.
 abstract class BaserowClientInterface
@@ -16,7 +17,8 @@ abstract class BaserowClientInterface
         WorkspaceOperations,
         UserOperations,
         DatabaseOperations,
-        TableOperations {
+        TableOperations,
+        FieldOperations {
   /// The current configuration for the client
   BaserowConfig get config;
 

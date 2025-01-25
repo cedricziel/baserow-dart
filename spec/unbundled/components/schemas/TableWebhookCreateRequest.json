@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "The URL that must be called when the webhook is triggered.",
+      "maxLength": 2000
+    },
+    "include_all_events": {
+      "type": "boolean",
+      "description": "Indicates whether this webhook should listen to all events."
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "./EventsEnum.json"
+      },
+      "description": "A list containing the events that will trigger this webhook."
+    },
+    "event_config": {
+      "type": "array",
+      "items": {
+        "$ref": "./TableWebhookEventConfig.json"
+      },
+      "description": "A list containing the addition event options."
+    },
+    "request_method": {
+      "allOf": [
+        {
+          "$ref": "./RequestMethodEnum.json"
+        }
+      ],
+      "description": "The request method that be used when the event occurs.\n\n* `POST` - Post\n* `GET` - Get\n* `PUT` - Put\n* `PATCH` - Patch\n* `DELETE` - Delete"
+    },
+    "headers": {
+      "type": "object",
+      "additionalProperties": {},
+      "description": "The additional headers as an object where the key is the name and the value the value."
+    },
+    "name": {
+      "type": "string",
+      "description": "An internal name of the webhook.",
+      "maxLength": 255
+    },
+    "use_user_field_names": {
+      "type": "boolean",
+      "description": "Indicates whether the field names must be used as payload key instead of the id."
+    }
+  },
+  "required": [
+    "name",
+    "url"
+  ]
+}

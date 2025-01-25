@@ -1,0 +1,32 @@
+{
+  "get": {
+    "operationId": "admin_dashboard",
+    "description": "Returns the new and active users for the last 24 hours, 7 days and 30 days. The `previous_` values are the values of the period before, so for example `previous_new_users_last_24_hours` are the new users that signed up from 48 to 24 hours ago. It can be used to calculate an increase or decrease in the amount of signups. A list of the new and active users for every day for the last 30 days is also included.",
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/AdminDashboard.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  }
+}

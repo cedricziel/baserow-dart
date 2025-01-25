@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type99fEnum.json"
+        }
+      ],
+      "description": "The type of the job.\n\n* `duplicate_application` - duplicate_application\n* `install_template` - install_template\n* `create_snapshot` - create_snapshot\n* `restore_snapshot` - restore_snapshot\n* `export_applications` - export_applications\n* `import_applications` - import_applications\n* `airtable` - airtable\n* `file_import` - file_import\n* `duplicate_table` - duplicate_table\n* `duplicate_field` - duplicate_field\n* `sync_data_sync_table` - sync_data_sync_table\n* `duplicate_page` - duplicate_page\n* `publish_domain` - publish_domain\n* `audit_log_export` - audit_log_export"
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

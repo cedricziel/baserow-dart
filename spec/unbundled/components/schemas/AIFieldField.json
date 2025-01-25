@@ -1,0 +1,107 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Indicates if the field is a primary field. If `true` the field cannot be deleted and the value should represent the whole row."
+    },
+    "read_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the field is a read only field. If true, it's not possible to update the cell value."
+    },
+    "immutable_type": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field type is immutable. If true, then it won't be possible to change the field type via the API."
+    },
+    "immutable_properties": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field properties are immutable. If true, then it won't be possible to change the properties and the type via the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "select_options": {
+      "type": "array",
+      "items": {
+        "$ref": "./SelectOption.json"
+      }
+    },
+    "ai_generative_ai_type": {
+      "type": "string",
+      "nullable": true,
+      "maxLength": 32
+    },
+    "ai_generative_ai_model": {
+      "type": "string",
+      "nullable": true,
+      "maxLength": 128
+    },
+    "ai_output_type": {
+      "allOf": [
+        {
+          "$ref": "./AiOutputTypeEnum.json"
+        }
+      ],
+      "description": "The desired output type of the field. It will try to force the response of the prompt to match it.\n\n* `text` - text\n* `choice` - choice"
+    },
+    "ai_temperature": {
+      "type": "number",
+      "format": "double",
+      "maximum": 2,
+      "minimum": 0,
+      "nullable": true,
+      "description": "Between 0 and 2, adjusts response randomness—lower values yield focused answers, while higher values increase creativity."
+    },
+    "ai_prompt": {
+      "type": "string",
+      "default": "",
+      "description": "The prompt that must run for each row. Must be an formula."
+    },
+    "ai_file_field_id": {
+      "type": "integer",
+      "minimum": 1,
+      "nullable": true,
+      "description": "File field that will be used as a knowledge base for the AI model."
+    }
+  },
+  "required": [
+    "id",
+    "immutable_properties",
+    "immutable_type",
+    "name",
+    "order",
+    "read_only",
+    "table_id",
+    "type"
+  ]
+}

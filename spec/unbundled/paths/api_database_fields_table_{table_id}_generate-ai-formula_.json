@@ -1,0 +1,130 @@
+{
+  "post": {
+    "operationId": "generate_formula_with_ai",
+    "description": "This endpoint generates a Baserow formula for the table related to the provided id, based on the human readable input provided in the request body.\nThis is a **premium** feature.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "table_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The table to generate the formula for.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table fields"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/GenerateFormulaWithAIRequest.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/GenerateFormulaWithAIRequest.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/GenerateFormulaWithAIRequest.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/GenerateFormulaWithAIResponse.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_GENERATIVE_AI_DOES_NOT_EXIST",
+                    "ERROR_MODEL_DOES_NOT_BELONG_TO_TYPE",
+                    "ERROR_OUTPUT_PARSER",
+                    "ERROR_GENERATIVE_AI_PROMPT",
+                    "ERROR_USER_NOT_IN_GROUP"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_TABLE_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

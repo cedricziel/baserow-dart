@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "field_options": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "./GalleryViewFieldOptions.json"
+      },
+      "description": "An object containing the field id as key and the properties related to view as value."
+    },
+    "count": {
+      "type": "integer",
+      "description": "The total amount of results."
+    },
+    "next": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL to the next page."
+    },
+    "previous": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL to the previous page."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "./ExampleRowResponse.json"
+      }
+    }
+  },
+  "required": [
+    "count",
+    "next",
+    "previous",
+    "results"
+  ]
+}

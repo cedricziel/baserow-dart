@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "table_id"
+  ]
+}

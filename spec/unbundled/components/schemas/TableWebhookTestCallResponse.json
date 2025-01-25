@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "string",
+      "readOnly": true,
+      "description": "A text copy of the request headers and body."
+    },
+    "response": {
+      "type": "string",
+      "readOnly": true,
+      "description": "A text copy of the response headers and body."
+    },
+    "status_code": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The HTTP response status code."
+    },
+    "is_unreachable": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the provided URL could be reached."
+    }
+  },
+  "required": [
+    "is_unreachable",
+    "request",
+    "response",
+    "status_code"
+  ]
+}

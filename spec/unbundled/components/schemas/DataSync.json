@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "$ref": "./DataSyncSyncedProperty.json"
+      }
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the table was last synced."
+    },
+    "last_error": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "id",
+    "synced_properties",
+    "type"
+  ]
+}

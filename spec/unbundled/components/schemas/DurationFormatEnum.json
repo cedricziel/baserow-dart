@@ -1,0 +1,16 @@
+{
+  "enum": [
+    "h:mm",
+    "h:mm:ss",
+    "h:mm:ss.s",
+    "h:mm:ss.ss",
+    "h:mm:ss.sss",
+    "d h",
+    "d h:mm",
+    "d h:mm:ss",
+    "d h mm",
+    "d h mm ss"
+  ],
+  "type": "string",
+  "description": "* `h:mm` - hours:minutes\n* `h:mm:ss` - hours:minutes:seconds\n* `h:mm:ss.s` - hours:minutes:seconds:deciseconds\n* `h:mm:ss.ss` - hours:minutes:seconds:centiseconds\n* `h:mm:ss.sss` - hours:minutes:seconds:milliseconds\n* `d h` - days:hours\n* `d h:mm` - days:hours:minutes\n* `d h:mm:ss` - days:hours:minutes:seconds\n* `d h mm` - days:hours:minutes:with_spaces\n* `d h mm ss` - days:hours:minutes:seconds:with_spaces"
+}

@@ -1,0 +1,76 @@
+{
+  "post": {
+    "operationId": "dispatch_public_builder_page_data_sources",
+    "description": "Dispatches the service of the related page data_sources",
+    "parameters": [
+      {
+        "in": "header",
+        "name": "ClientSessionId",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "An optional header that marks the action performed by this request as having occurred in a particular client session. Then using the undo/redo endpoints with the same ClientSessionId header this action can be undone/redone."
+      },
+      {
+        "in": "path",
+        "name": "page_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The page we want to dispatch the data source for.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Builder data sources"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_DATA_SOURCE_IMPROPERLY_CONFIGURED",
+                    "ERROR_IN_DISPATCH_CONTEXT",
+                    "ERROR_DATA_DOES_NOT_EXIST",
+                    "ERROR_PAGE_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

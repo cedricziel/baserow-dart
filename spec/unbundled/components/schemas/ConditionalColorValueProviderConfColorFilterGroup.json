@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for this condition."
+    },
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "default": "AND",
+      "description": "The boolean operator used to group all conditions.\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "parent_group": {
+      "type": "string",
+      "nullable": true,
+      "description": "The id of the parent filter group."
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

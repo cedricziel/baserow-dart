@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "text",
+    "choice"
+  ],
+  "type": "string",
+  "description": "* `text` - text\n* `choice` - choice"
+}

@@ -1,0 +1,17 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DatabaseApplication.json"
+    },
+    {
+      "$ref": "./BuilderApplication.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "database": "./DatabaseApplication.json",
+      "builder": "./BuilderApplication.json"
+    }
+  }
+}

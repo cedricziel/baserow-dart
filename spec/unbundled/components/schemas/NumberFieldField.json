@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Indicates if the field is a primary field. If `true` the field cannot be deleted and the value should represent the whole row."
+    },
+    "read_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the field is a read only field. If true, it's not possible to update the cell value."
+    },
+    "immutable_type": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field type is immutable. If true, then it won't be possible to change the field type via the API."
+    },
+    "immutable_properties": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field properties are immutable. If true, then it won't be possible to change the properties and the type via the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "number_decimal_places": {
+      "allOf": [
+        {
+          "$ref": "./NumberDecimalPlacesEnum.json"
+        }
+      ],
+      "description": "The amount of digits allowed after the point.\n\n* `0` - 1\n* `1` - 1.0\n* `2` - 1.00\n* `3` - 1.000\n* `4` - 1.0000\n* `5` - 1.00000\n* `6` - 1.000000\n* `7` - 1.0000000\n* `8` - 1.00000000\n* `9` - 1.000000000\n* `10` - 1.0000000000",
+      "minimum": -2147483648,
+      "maximum": 2147483647
+    },
+    "number_negative": {
+      "type": "boolean",
+      "description": "Indicates if negative values are allowed."
+    },
+    "number_prefix": {
+      "type": "string",
+      "description": "The prefix to use for the field.",
+      "maxLength": 10
+    },
+    "number_suffix": {
+      "type": "string",
+      "description": "The suffix to use for the field.",
+      "maxLength": 100
+    },
+    "number_separator": {
+      "description": "The thousand and decimal separator to use for the field.\n\n* `` - No formatting\n* `SPACE_COMMA` - Space, comma\n* `SPACE_PERIOD` - Space, period\n* `COMMA_PERIOD` - Comma, period\n* `PERIOD_COMMA` - Period, comma",
+      "oneOf": [
+        {
+          "$ref": "./NumberSeparatorEnum.json"
+        },
+        {
+          "$ref": "./BlankEnum.json"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "immutable_properties",
+    "immutable_type",
+    "name",
+    "order",
+    "read_only",
+    "table_id",
+    "type"
+  ]
+}

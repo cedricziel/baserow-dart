@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "description": "The builder serializer.\n\n👉 Mind to update the\nbaserow.contrib.builder.api.domains.serializer.PublicBuilderSerializer\nwhen you update this one.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "favicon_file": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The favicon image file"
+    },
+    "login_page_id": {
+      "type": "integer",
+      "nullable": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "post": {
+    "operationId": "public_view_token_auth",
+    "description": "Returns a valid never-expiring JWT token for this public shared view if the password provided matches with the one saved by the view's owner.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "slug",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The slug of the grid view to get public information about.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table views"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PublicViewAuthRequest.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PublicViewAuthRequest.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PublicViewAuthRequest.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublicViewAuthResponse.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "The password provided for this view is incorrect"
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_VIEW_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

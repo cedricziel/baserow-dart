@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "databases": {
+      "type": "array",
+      "items": {
+        "$ref": "./LocalBaserowDatabaseApplication.json"
+      }
+    }
+  },
+  "required": [
+    "databases"
+  ]
+}

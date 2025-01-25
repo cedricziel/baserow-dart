@@ -1,0 +1,34 @@
+{
+  "post": {
+    "operationId": "auth_provider_saml_acs_url",
+    "description": "Complete the SAML authentication flow by validating the SAML response. Sign in the user if already exists in Baserow or create a new one otherwise. Once authenticated, the user will be redirected to the original URL they were trying to access. If the response is invalid, the user will be redirected to an error page with a specific error message.It accepts the language code and the workspace invitation token as query parameters if provided.",
+    "tags": [
+      "Auth"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/SAMLResponse.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/SAMLResponse.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/SAMLResponse.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "302": {
+        "description": "No response body"
+      }
+    }
+  }
+}

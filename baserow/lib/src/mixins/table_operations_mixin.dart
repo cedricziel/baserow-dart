@@ -11,6 +11,10 @@ mixin TableOperationsMixin implements TableOperations {
 
   /// Function to make a GET request
   Future<dynamic> get(String path, [Map<String, String>? queryParams]);
+
+  /// Function to make a POST request
+  Future<dynamic> post(String path, Map<String, dynamic> data,
+      [Map<String, String>? queryParams]);
   @override
   Future<List<Table>> listTables(int databaseId) async {
     final response = await get('database/tables/database/$databaseId/');
@@ -52,6 +56,24 @@ mixin TableOperationsMixin implements TableOperations {
   @override
   Future<Table> getDatabaseTable(int tableId) async {
     final response = await get('database/tables/$tableId/');
+    return Table.fromJson(response as Map<String, dynamic>);
+  }
+
+  @override
+  Future<Table> createTable(
+    int databaseId, {
+    required String name,
+    List<List<dynamic>>? data,
+    bool firstRowHeader = false,
+  }) async {
+    final response = await post(
+      'database/tables/database/$databaseId/',
+      {
+        'name': name,
+        if (data != null) 'data': data,
+        if (data != null) 'first_row_header': firstRowHeader,
+      },
+    );
     return Table.fromJson(response as Map<String, dynamic>);
   }
 }

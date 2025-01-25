@@ -1,0 +1,7 @@
+{
+  "enum": [
+    "auth.User"
+  ],
+  "type": "string",
+  "description": "* `auth.User` - auth.User"
+}

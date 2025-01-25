@@ -1,0 +1,102 @@
+{
+  "get": {
+    "operationId": "admin_list_workspaces",
+    "description": "Returns all workspaces with detailed information on each workspace, if the requesting user is staff.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines which page should be returned."
+      },
+      {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided only workspaces with id or name that match the query will be returned."
+      },
+      {
+        "in": "query",
+        "name": "size",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines how many workspaces should be returned per page."
+      },
+      {
+        "in": "query",
+        "name": "sorts",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A comma separated string of attributes to sort by, each attribute must be prefixed with `+` for a descending sort or a `-` for an ascending sort. The accepted attribute names are: `id, name, application_count, created_on, row_count, storage_usage`. For example `sorts=-id,-name` will sort the workspaces first by descending id and then ascending name. A sortparameter with multiple instances of the same sort attribute will respond with the ERROR_INVALID_SORT_ATTRIBUTE error."
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerWorkspacesAdminResponse.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_PAGE_SIZE_LIMIT",
+                    "ERROR_INVALID_PAGE",
+                    "ERROR_INVALID_SORT_DIRECTION",
+                    "ERROR_INVALID_SORT_ATTRIBUTE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  }
+}

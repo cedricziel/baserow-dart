@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "button_font_family": {
+      "type": "string",
+      "maxLength": 250
+    },
+    "button_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "button_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "button_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "button_width": {
+      "$ref": "./ButtonWidthEnum.json"
+    },
+    "button_background_color": {
+      "type": "string",
+      "description": "The background color of buttons",
+      "maxLength": 20
+    },
+    "button_text_color": {
+      "type": "string",
+      "description": "The text color of buttons",
+      "maxLength": 20
+    },
+    "button_border_color": {
+      "type": "string",
+      "description": "The border color of buttons",
+      "maxLength": 20
+    },
+    "button_border_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button border size"
+    },
+    "button_border_radius": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button border radius"
+    },
+    "button_vertical_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button vertical padding"
+    },
+    "button_horizontal_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Button horizontal padding"
+    },
+    "button_hover_background_color": {
+      "type": "string",
+      "description": "The background color of buttons when hovered",
+      "maxLength": 20
+    },
+    "button_hover_text_color": {
+      "type": "string",
+      "description": "The text color of buttons when hovered",
+      "maxLength": 20
+    },
+    "button_hover_border_color": {
+      "type": "string",
+      "description": "The border color of buttons when hovered",
+      "maxLength": 20
+    }
+  }
+}

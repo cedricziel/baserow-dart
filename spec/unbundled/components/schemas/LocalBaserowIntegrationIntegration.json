@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "description": "Basic integration serializer mostly for returned values.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "application_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the integration."
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$",
+      "readOnly": true,
+      "description": "Lowest first."
+    },
+    "context_data": {
+      "allOf": [
+        {
+          "$ref": "./LocalBaserowContextData.json"
+        }
+      ],
+      "readOnly": true
+    },
+    "authorized_user": {
+      "allOf": [
+        {
+          "$ref": "./SubjectUser.json"
+        }
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "application_id",
+    "authorized_user",
+    "context_data",
+    "id",
+    "name",
+    "order",
+    "type"
+  ]
+}

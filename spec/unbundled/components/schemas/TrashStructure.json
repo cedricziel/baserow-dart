@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "workspaces": {
+      "type": "array",
+      "items": {
+        "$ref": "./TrashStructureWorkspace.json"
+      },
+      "description": "An array of workspace trash structure records"
+    }
+  },
+  "required": [
+    "workspaces"
+  ]
+}

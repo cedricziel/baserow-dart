@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "description": "This serializer allow to set the type of an integration and the integration id\nbefore which we want to insert the new integration.",
+  "properties": {
+    "before_id": {
+      "type": "integer",
+      "description": "If provided, creates the integration before the integration with the given id."
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type050Enum.json"
+        }
+      ],
+      "description": "The type of the integration.\n\n* `local_baserow` - local_baserow"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "context_data": {
+      "allOf": [
+        {
+          "$ref": "./LocalBaserowContextData.json"
+        }
+      ],
+      "readOnly": true
+    },
+    "authorized_user": {
+      "allOf": [
+        {
+          "$ref": "./SubjectUser.json"
+        }
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "authorized_user",
+    "context_data",
+    "name",
+    "type"
+  ]
+}

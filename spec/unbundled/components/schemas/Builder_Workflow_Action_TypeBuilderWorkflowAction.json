@@ -1,0 +1,37 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./NotificationWorkflowActionBuilderWorkflowAction.json"
+    },
+    {
+      "$ref": "./OpenPageWorkflowActionBuilderWorkflowAction.json"
+    },
+    {
+      "$ref": "./LocalBaserowCreateRowWorkflowActionBuilderWorkflowAction.json"
+    },
+    {
+      "$ref": "./LocalBaserowUpdateRowWorkflowActionBuilderWorkflowAction.json"
+    },
+    {
+      "$ref": "./LocalBaserowDeleteRowWorkflowActionBuilderWorkflowAction.json"
+    },
+    {
+      "$ref": "./LogoutWorkflowActionBuilderWorkflowAction.json"
+    },
+    {
+      "$ref": "./RefreshDataSourceWorkflowActionBuilderWorkflowAction.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "notification": "./NotificationWorkflowActionBuilderWorkflowAction.json",
+      "open_page": "./OpenPageWorkflowActionBuilderWorkflowAction.json",
+      "create_row": "./LocalBaserowCreateRowWorkflowActionBuilderWorkflowAction.json",
+      "update_row": "./LocalBaserowUpdateRowWorkflowActionBuilderWorkflowAction.json",
+      "delete_row": "./LocalBaserowDeleteRowWorkflowActionBuilderWorkflowAction.json",
+      "logout": "./LogoutWorkflowActionBuilderWorkflowAction.json",
+      "refresh_data_source": "./RefreshDataSourceWorkflowActionBuilderWorkflowAction.json"
+    }
+  }
+}

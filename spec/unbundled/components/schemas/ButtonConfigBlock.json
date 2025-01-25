@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "Style overrides for this element.",
+  "properties": {
+    "button": {
+      "allOf": [
+        {
+          "$ref": "./ButtonThemeConfigBlock.json"
+        }
+      ],
+      "description": "Styles overrides for button"
+    }
+  }
+}

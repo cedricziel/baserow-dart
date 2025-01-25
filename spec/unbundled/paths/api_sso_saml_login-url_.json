@@ -1,0 +1,91 @@
+{
+  "get": {
+    "operationId": "auth_provider_login_url",
+    "description": "Return the correct redirect_url to initiate the SSO SAML login. It needs an email address if multiple SAML providers are configured otherwise the only configured SAML provider signup URL will be returned.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "email",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The email address of the user that want to sign in using SAML."
+      },
+      {
+        "in": "query",
+        "name": "language",
+        "schema": {
+          "type": "string"
+        },
+        "description": "An ISO 639 language code (with optional variant) selected by the user. Ex: en-GB."
+      },
+      {
+        "in": "query",
+        "name": "original",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The url to which the user should be redirected after a successful login."
+      },
+      {
+        "in": "query",
+        "name": "workspace_invitation_token",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided and valid, the user accepts the workspace invitation and will have access to the workspace after login or signing up."
+      }
+    ],
+    "tags": [
+      "Auth"
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_SAML_INVALID_LOGIN_REQUEST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "get": {
+    "operationId": "ask_public_builder_domain_exists",
+    "description": "This endpoint can be used to check whether a domain exists for SSL certificate purposes. It's compatible with the Caddy on_demand TLS as described here: https://caddyserver.com/docs/json/apps/tls/automation/on_demand/ask/. It will respond with a 200 status code if it exists or a 404 if it doesn't exist.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "domain",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The domain name for which"
+      }
+    ],
+    "tags": [
+      "Builder domains"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "description": "No response body"
+      },
+      "404": {
+        "description": "No response body"
+      }
+    }
+  }
+}

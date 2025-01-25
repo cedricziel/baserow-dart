@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "width": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "The width of the table field in the related view."
+    },
+    "hidden": {
+      "type": "boolean",
+      "description": "Whether or not the field should be hidden in the current view."
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The position that the field has within the view, lowest first. If there is another field with the same order value then the field with the lowest id must be shown first."
+    },
+    "aggregation_type": {
+      "type": "string",
+      "description": "Indicates how the field value is aggregated. This value is different from the `aggregation_raw_type`. The `aggregation_raw_type` is the value extracted from the database, while the `aggregation_type` can implies further calculations. For example: if you want to compute an average, `sum` is going to be the `aggregation_raw_type`, the value extracted from database, and `sum / row_count` will be the aggregation result displayed to the user. This aggregation_type should be used by the client to compute the final value.",
+      "maxLength": 48
+    },
+    "aggregation_raw_type": {
+      "description": "Indicates how to compute the raw aggregation value from database. This type must be registered in the backend prior to use it.\n\n* `empty_count` - empty_count\n* `not_empty_count` - not_empty_count\n* `unique_count` - unique_count\n* `min` - min\n* `max` - max\n* `sum` - sum\n* `average` - average\n* `median` - median\n* `decile` - decile\n* `variance` - variance\n* `std_dev` - std_dev",
+      "oneOf": [
+        {
+          "$ref": "./AggregationRawTypeEnum.json"
+        },
+        {
+          "$ref": "./BlankEnum.json"
+        }
+      ]
+    }
+  }
+}

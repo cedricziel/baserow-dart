@@ -1,0 +1,29 @@
+{
+  "get": {
+    "operationId": "get_instance_id",
+    "description": "Responds with the self hosted instance id. Only a user with staff permissions can request it.",
+    "tags": [
+      "Settings"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/InstanceId.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

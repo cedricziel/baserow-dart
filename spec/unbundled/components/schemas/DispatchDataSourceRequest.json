@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "data_source": {
+      "allOf": [
+        {
+          "$ref": "./DispatchDataSourceDataSourceContext.json"
+        }
+      ],
+      "default": {
+        "element": null
+      },
+      "description": "The data source dispatch context data."
+    }
+  }
+}

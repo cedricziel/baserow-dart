@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "all",
+    "logged-in"
+  ],
+  "type": "string",
+  "description": "* `all` - All\n* `logged-in` - Logged In"
+}

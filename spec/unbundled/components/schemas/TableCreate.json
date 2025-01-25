@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "data": {
+      "type": "array",
+      "items": {},
+      "description": "A list of rows that needs to be created as initial table data. Each row is a list of values that are going to be added in the new table in the same order as provided.\n\nEx: \n```json\n[\n  [\"row1_field1_value\", \"row1_field2_value\"],\n  [\"row2_field1_value\", \"row2_field2_value\"],\n]\n```\nfor creating a two rows table with two fields.\n\nIf not provided, some example data is going to be created.",
+      "minItems": 1
+    },
+    "first_row_header": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicates if the first provided row is the header. If true the field names are going to be the values of the first row. Otherwise they will be called \"Field N\""
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

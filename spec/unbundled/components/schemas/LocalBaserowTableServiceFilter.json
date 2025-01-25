@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "order": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "field": {
+      "type": "integer",
+      "description": "The database Field, in the LocalBaserowTableService, which we would like to filter upon."
+    },
+    "type": {
+      "type": "string",
+      "description": "Indicates how the field's value must be compared to the filter's value. The filter is always in this order `field` `type` `value` (example: `field_1` `contains` `Test`).",
+      "maxLength": 48
+    },
+    "value": {
+      "type": "string",
+      "description": "A formula for the filter's value."
+    },
+    "value_is_formula": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicates whether the value is a formula or not."
+    }
+  },
+  "required": [
+    "field",
+    "id",
+    "order",
+    "type",
+    "value"
+  ]
+}

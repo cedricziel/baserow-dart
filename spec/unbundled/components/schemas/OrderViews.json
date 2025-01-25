@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "view_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "View ids in the desired order.",
+      "minItems": 1
+    }
+  },
+  "required": [
+    "view_ids"
+  ]
+}

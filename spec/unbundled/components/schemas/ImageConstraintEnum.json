@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "cover",
+    "contain",
+    "full-width"
+  ],
+  "type": "string",
+  "description": "* `cover` - Cover\n* `contain` - Contain\n* `full-width` - Full Width"
+}

@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "username": {
+      "type": "string",
+      "format": "email",
+      "description": "Deprecated. Use `email` instead.",
+      "deprecated": true
+    },
+    "password": {
+      "type": "string",
+      "writeOnly": true
+    }
+  },
+  "required": [
+    "password"
+  ]
+}

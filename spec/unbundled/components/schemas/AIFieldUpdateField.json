@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "select_options": {
+      "type": "array",
+      "items": {
+        "$ref": "./SelectOption.json"
+      }
+    },
+    "ai_generative_ai_type": {
+      "type": "string",
+      "nullable": true,
+      "maxLength": 32
+    },
+    "ai_generative_ai_model": {
+      "type": "string",
+      "nullable": true,
+      "maxLength": 128
+    },
+    "ai_output_type": {
+      "allOf": [
+        {
+          "$ref": "./AiOutputTypeEnum.json"
+        }
+      ],
+      "description": "The desired output type of the field. It will try to force the response of the prompt to match it.\n\n* `text` - text\n* `choice` - choice"
+    },
+    "ai_temperature": {
+      "type": "number",
+      "format": "double",
+      "maximum": 2,
+      "minimum": 0,
+      "nullable": true,
+      "description": "Between 0 and 2, adjusts response randomness—lower values yield focused answers, while higher values increase creativity."
+    },
+    "ai_prompt": {
+      "type": "string",
+      "default": "",
+      "description": "The prompt that must run for each row. Must be an formula."
+    },
+    "ai_file_field_id": {
+      "type": "integer",
+      "minimum": 1,
+      "nullable": true,
+      "description": "File field that will be used as a knowledge base for the AI model."
+    }
+  }
+}

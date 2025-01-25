@@ -1,0 +1,29 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./LocalBaserowGetRowPublicDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowListRowsPublicDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowAggregateRowsPublicDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowUpsertRowPublicDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowDeleteRowPublicDataSource.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "local_baserow_get_row": "./LocalBaserowGetRowPublicDataSource.json",
+      "local_baserow_list_rows": "./LocalBaserowListRowsPublicDataSource.json",
+      "local_baserow_aggregate_rows": "./LocalBaserowAggregateRowsPublicDataSource.json",
+      "local_baserow_upsert_row": "./LocalBaserowUpsertRowPublicDataSource.json",
+      "local_baserow_delete_row": "./LocalBaserowDeleteRowPublicDataSource.json"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "readOnly": true,
+      "description": "Event ID where the call originated from."
+    },
+    "event_type": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "called_time": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "called_url": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "request": {
+      "type": "string",
+      "readOnly": true,
+      "description": "A text copy of the request headers and body."
+    },
+    "response": {
+      "type": "string",
+      "readOnly": true,
+      "description": "A text copy of the response headers and body."
+    },
+    "response_status": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true,
+      "description": "The HTTP response status code."
+    },
+    "error": {
+      "type": "string",
+      "nullable": true,
+      "description": "An internal error reflecting what went wrong."
+    }
+  },
+  "required": [
+    "called_url",
+    "event_id",
+    "event_type",
+    "id",
+    "request",
+    "response"
+  ]
+}

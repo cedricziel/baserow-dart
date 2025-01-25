@@ -1,0 +1,74 @@
+{
+  "get": {
+    "operationId": "get_public_builder_by_id",
+    "description": "Returns the public serialized version of the builder and its pages for the given builder id.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "builder_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns the builder related to the provided Id and its pages.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Builder public"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublicBuilder.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_BUILDER_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

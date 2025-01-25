@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "single_select_color",
+    "conditional_color"
+  ],
+  "type": "string",
+  "description": "* `` - \n* `single_select_color` - single_select_color\n* `conditional_color` - conditional_color"
+}

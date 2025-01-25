@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "description": "The builder serializer.\n\n👉 Mind to update the\nbaserow.contrib.builder.api.domains.serializer.PublicBuilderSerializer\nwhen you update this one.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "workspace": {
+      "allOf": [
+        {
+          "$ref": "./Workspace.json"
+        }
+      ],
+      "description": "The workspace that the application belongs to."
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "$ref": "./Page.json"
+      },
+      "readOnly": true,
+      "description": "This field is specific to the `builder` application and contains an array of pages that are in the builder."
+    },
+    "theme": {
+      "allOf": [
+        {
+          "$ref": "./CombinedThemeConfigBlocks.json"
+        }
+      ],
+      "readOnly": true,
+      "description": "This field is specific to the `builder` application and contains the theme settings."
+    },
+    "favicon_file": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The favicon image file"
+    },
+    "login_page_id": {
+      "type": "integer",
+      "nullable": true
+    }
+  },
+  "required": [
+    "created_on",
+    "id",
+    "name",
+    "order",
+    "pages",
+    "theme",
+    "type",
+    "workspace"
+  ]
+}

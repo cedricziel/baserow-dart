@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "jira_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The base URL of your Jira instance (e.g., https://your-domain.atlassian.net).",
+      "maxLength": 2000
+    },
+    "jira_project_key": {
+      "type": "string",
+      "description": "The project key of the Jira project (e.g., PROJ).",
+      "maxLength": 255
+    },
+    "jira_username": {
+      "type": "string",
+      "description": "The username of the Jira account used to authenticate.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "jira_url",
+    "jira_username"
+  ]
+}

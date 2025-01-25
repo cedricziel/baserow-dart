@@ -1,0 +1,44 @@
+{
+  "post": {
+    "operationId": "user_source_token_blacklist",
+    "description": "Blacklists the provided user source token. This can be used the sign the user off.",
+    "tags": [
+      "User sources"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TokenBlacklist.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/TokenBlacklist.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/TokenBlacklist.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "The JWT refresh token is invalid or expired."
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

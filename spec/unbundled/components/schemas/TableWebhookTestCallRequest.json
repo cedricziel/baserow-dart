@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "The URL that must be called when the webhook is triggered.",
+      "maxLength": 2000
+    },
+    "event_type": {
+      "allOf": [
+        {
+          "$ref": "./EventTypeEnum.json"
+        }
+      ],
+      "description": "The event type that must be used for the test call.\n\n* `rows.created` - rows.created\n* `rows.updated` - rows.updated\n* `rows.deleted` - rows.deleted\n* `field.created` - field.created\n* `field.updated` - field.updated\n* `field.deleted` - field.deleted\n* `view.created` - view.created\n* `view.updated` - view.updated\n* `view.deleted` - view.deleted"
+    },
+    "request_method": {
+      "allOf": [
+        {
+          "$ref": "./RequestMethodEnum.json"
+        }
+      ],
+      "description": "The request method that be used when the event occurs.\n\n* `POST` - Post\n* `GET` - Get\n* `PUT` - Put\n* `PATCH` - Patch\n* `DELETE` - Delete"
+    },
+    "headers": {
+      "type": "object",
+      "additionalProperties": {},
+      "description": "The additional headers as an object where the key is the name and the value the value."
+    },
+    "use_user_field_names": {
+      "type": "boolean",
+      "description": "Indicates whether the field names must be used as payload key instead of the id."
+    }
+  },
+  "required": [
+    "event_type",
+    "url"
+  ]
+}

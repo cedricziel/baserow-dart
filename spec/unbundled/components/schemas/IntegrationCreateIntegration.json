@@ -1,0 +1,13 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./LocalBaserowIntegrationCreateIntegration.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "local_baserow": "./LocalBaserowIntegrationCreateIntegration.json"
+    }
+  }
+}

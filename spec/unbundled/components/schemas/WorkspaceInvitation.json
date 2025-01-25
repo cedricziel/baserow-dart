@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "workspace": {
+      "type": "integer",
+      "description": "The workspace that the user will get access to once the invitation is accepted."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address of the user that the invitation is meant for. Only a user with that email address can accept it.",
+      "maxLength": 254
+    },
+    "permissions": {
+      "type": "string",
+      "description": "The permissions that the user is going to get within the workspace after accepting the invitation.",
+      "maxLength": 32
+    },
+    "message": {
+      "type": "string",
+      "description": "An optional message that the invitor can provide. This will be visible to the receiver of the invitation.",
+      "maxLength": 250
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "created_on",
+    "email",
+    "id",
+    "workspace"
+  ]
+}

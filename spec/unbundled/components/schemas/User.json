@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+      "pattern": "^[\\w.@+-]+$",
+      "maxLength": 150
+    }
+  },
+  "required": [
+    "username"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "row_id": {
+      "type": "string",
+      "description": "A formula for defining the intended row."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "integration_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow integration we want the data for."
+    }
+  }
+}

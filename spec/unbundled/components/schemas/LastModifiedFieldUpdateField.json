@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "date_format": {
+      "allOf": [
+        {
+          "$ref": "./DateFormatEnum.json"
+        }
+      ],
+      "description": "EU (20/02/2020), US (02/20/2020) or ISO (2020-02-20)\n\n* `EU` - European (D/M/Y)\n* `US` - US (M/D/Y)\n* `ISO` - ISO (Y-M-D)"
+    },
+    "date_include_time": {
+      "type": "boolean",
+      "description": "Indicates if the field also includes a time."
+    },
+    "date_time_format": {
+      "allOf": [
+        {
+          "$ref": "./DateTimeFormatEnum.json"
+        }
+      ],
+      "description": "24 (14:30) or 12 (02:30 PM)\n\n* `24` - 24 hour\n* `12` - 12 hour"
+    },
+    "date_show_tzinfo": {
+      "type": "boolean",
+      "description": "Indicates if the timezone should be shown."
+    },
+    "date_force_timezone": {
+      "type": "string",
+      "nullable": true,
+      "description": "Force a timezone for the field overriding user profile settings.",
+      "maxLength": 255
+    },
+    "date_force_timezone_offset": {
+      "type": "integer",
+      "nullable": true,
+      "description": "('A UTC offset in minutes to add to all the field datetimes values.',)"
+    }
+  }
+}

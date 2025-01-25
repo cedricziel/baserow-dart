@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "user_who_trashed": {
+      "type": "string",
+      "readOnly": true
+    },
+    "trash_item_type": {
+      "type": "string"
+    },
+    "trash_item_id": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "parent_trash_item_id": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "nullable": true
+    },
+    "trashed_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "application": {
+      "type": "integer",
+      "nullable": true
+    },
+    "workspace": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    },
+    "parent_name": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "parent_trash_item_id",
+    "trash_item_id",
+    "trash_item_type",
+    "trashed_at",
+    "user_who_trashed",
+    "workspace"
+  ]
+}

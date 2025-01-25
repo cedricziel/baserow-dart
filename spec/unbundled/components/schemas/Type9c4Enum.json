@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "left_border_color",
+    "background_color"
+  ],
+  "type": "string",
+  "description": "* `left_border_color` - left_border_color\n* `background_color` - background_color"
+}

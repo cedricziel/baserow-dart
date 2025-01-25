@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "submit_action": {
+      "allOf": [
+        {
+          "$ref": "./SubmitActionEnum.json"
+        }
+      ],
+      "description": "The action that must be performed after the visitor has filled out the form.\n\n* `MESSAGE` - Message\n* `REDIRECT` - Redirect"
+    },
+    "submit_action_message": {
+      "type": "string",
+      "description": "If the `submit_action` is MESSAGE, then this message will be shown to the visitor after submitting the form."
+    },
+    "submit_action_redirect_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "If the `submit_action` is REDIRECT,then the visitors will be redirected to the this URL after submitting the form.",
+      "maxLength": 2000
+    },
+    "row_id": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "row_id"
+  ]
+}

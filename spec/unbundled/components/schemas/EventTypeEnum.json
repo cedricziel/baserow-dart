@@ -1,0 +1,15 @@
+{
+  "enum": [
+    "rows.created",
+    "rows.updated",
+    "rows.deleted",
+    "field.created",
+    "field.updated",
+    "field.deleted",
+    "view.created",
+    "view.updated",
+    "view.deleted"
+  ],
+  "type": "string",
+  "description": "* `rows.created` - rows.created\n* `rows.updated` - rows.updated\n* `rows.deleted` - rows.deleted\n* `field.created` - field.created\n* `field.updated` - field.updated\n* `field.deleted` - field.deleted\n* `view.created` - view.created\n* `view.updated` - view.updated\n* `view.deleted` - view.deleted"
+}

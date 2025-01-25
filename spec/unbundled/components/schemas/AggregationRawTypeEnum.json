@@ -1,0 +1,17 @@
+{
+  "enum": [
+    "empty_count",
+    "not_empty_count",
+    "unique_count",
+    "min",
+    "max",
+    "sum",
+    "average",
+    "median",
+    "decile",
+    "variance",
+    "std_dev"
+  ],
+  "type": "string",
+  "description": "* `empty_count` - empty_count\n* `not_empty_count` - not_empty_count\n* `unique_count` - unique_count\n* `min` - min\n* `max` - max\n* `sum` - sum\n* `average` - average\n* `median` - median\n* `decile` - decile\n* `variance` - variance\n* `std_dev` - std_dev"
+}

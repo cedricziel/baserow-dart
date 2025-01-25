@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "passing": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "False if any of the critical service health checks are failing, true otherwise."
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "readOnly": true,
+      "description": "An object keyed by the name of the health check and the value being the result."
+    },
+    "celery_queue_size": {
+      "type": "integer",
+      "description": "The number of enqueued celery tasks."
+    },
+    "celery_export_queue_size": {
+      "type": "integer",
+      "description": "The number of enqueued celery export worker tasks."
+    }
+  },
+  "required": [
+    "celery_export_queue_size",
+    "celery_queue_size",
+    "checks",
+    "passing"
+  ]
+}

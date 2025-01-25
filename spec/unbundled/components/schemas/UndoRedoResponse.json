@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "./UndoRedoAction.json"
+      }
+    },
+    "result_code": {
+      "type": "string",
+      "description": "Indicates the result of the undo/redo operation. Will be 'SUCCESS' on success, 'NOTHING_TO_DO' when there is no action to undo/redo and 'SKIPPED_DUE_TO_ERROR' when the undo/redo failed due to a conflict or error and was skipped over."
+    }
+  },
+  "required": [
+    "actions",
+    "result_code"
+  ]
+}

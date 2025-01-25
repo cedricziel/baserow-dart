@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type9c4Enum.json"
+        }
+      ],
+      "description": "The decorator type. This is then interpreted by the frontend to display the decoration.\n\n* `left_border_color` - left_border_color\n* `background_color` - background_color"
+    },
+    "value_provider_type": {
+      "description": "The value provider type that gives the value to the decorator.\n\n* `` - \n* `single_select_color` - single_select_color\n* `conditional_color` - conditional_color",
+      "oneOf": [
+        {
+          "$ref": "./ValueProviderTypeEnum.json"
+        },
+        {
+          "$ref": "./BlankEnum.json"
+        }
+      ]
+    },
+    "value_provider_conf": {
+      "allOf": [
+        {
+          "$ref": "./SelectColorValueProviderConf.json"
+        }
+      ],
+      "description": "The configuration of the value provider"
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The position of the decorator has within the view, lowest first. If there is another decorator with the same order value then the decorator with the lowest id must be shown first."
+    }
+  }
+}

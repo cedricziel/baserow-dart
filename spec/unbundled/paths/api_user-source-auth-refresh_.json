@@ -1,0 +1,43 @@
+{
+  "post": {
+    "operationId": "user_source_token_refresh",
+    "description": "Generate a new access_token that can be used to continue operating on Baserow with a user source user starting from a valid refresh token.",
+    "tags": [
+      "User sources"
+    ],
+    "security": [
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "type": "string",
+                  "description": "'access_token' can be used to authorize for other endpoints that require authorization. This token will be valid for 10 minutes."
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "The JWT refresh token is invalid or expired."
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "description": "Serialize notification data along with the recipient information about the\nread status for the given user.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The id of the notification."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of notification"
+    },
+    "sender": {
+      "allOf": [
+        {
+          "$ref": "./Sender.json"
+        }
+      ],
+      "description": "The user that sent the notification."
+    },
+    "workspace": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The workspace that the notification is in (if any)."
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time that the notification was created."
+    },
+    "read": {
+      "type": "boolean",
+      "description": "If True, then the notification has been read by the user. "
+    },
+    "data": {
+      "description": "The data associated with the notification."
+    }
+  },
+  "required": [
+    "created_on",
+    "data",
+    "id",
+    "sender",
+    "type",
+    "workspace"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "enum": [
+    "instant",
+    "daily",
+    "weekly",
+    "never"
+  ],
+  "type": "string",
+  "description": "* `instant` - instant\n* `daily` - daily\n* `weekly` - weekly\n* `never` - never"
+}

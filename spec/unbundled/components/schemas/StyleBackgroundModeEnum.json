@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "tile",
+    "fill",
+    "fit"
+  ],
+  "type": "string",
+  "description": "* `tile` - Tile\n* `fill` - Fill\n* `fit` - Fit"
+}

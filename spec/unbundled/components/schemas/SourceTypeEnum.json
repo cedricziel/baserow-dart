@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "url",
+    "embed"
+  ],
+  "type": "string",
+  "description": "* `url` - Url\n* `embed` - Embed"
+}

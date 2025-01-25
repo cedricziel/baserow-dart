@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "notify_user_when_added": {
+      "type": "boolean"
+    }
+  }
+}

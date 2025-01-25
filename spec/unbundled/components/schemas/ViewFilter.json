@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "view": {
+      "type": "integer",
+      "description": "The view to which the filter applies. Each view can have his own filters."
+    },
+    "field": {
+      "type": "integer",
+      "description": "The field of which the value must be compared to the filter value."
+    },
+    "type": {
+      "type": "string",
+      "description": "Indicates how the field's value must be compared to the filter's value. The filter is always in this order `field` `type` `value` (example: `field_1` `contains` `Test`).",
+      "maxLength": 48
+    },
+    "value": {
+      "type": "string",
+      "description": "The filter value that must be compared to the field's value.",
+      "maxLength": 255
+    },
+    "preload_values": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "Can contain unique preloaded values per filter. This is for example used by the `link_row_has` filter to communicate the display name if a value is provided."
+    },
+    "group": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the filter group this filter belongs to. If this is null, the filter is not part of a filter group."
+    }
+  },
+  "required": [
+    "field",
+    "id",
+    "preload_values",
+    "type",
+    "view"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "get": {
+    "operationId": "get_database_table_row_history",
+    "description": "Fetches the row change history of a given row_id in the table with the given table_id. The row change history is paginated and can be limited with the limit and offset query parameters.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "limit",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The maximum number of row change history entries to return."
+      },
+      {
+        "in": "query",
+        "name": "offset",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The offset of the row change history entries to return."
+      },
+      {
+        "in": "path",
+        "name": "row_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the row to fetch the change history from.",
+        "required": true
+      },
+      {
+        "in": "path",
+        "name": "table_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the table to fetch the row change history from.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table rows"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerRowHistory.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_TABLE_DOES_NOT_EXIST",
+                    "ERROR_ROW_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

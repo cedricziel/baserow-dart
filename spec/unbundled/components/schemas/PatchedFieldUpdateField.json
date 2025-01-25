@@ -1,0 +1,117 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./TextFieldUpdateField.json"
+    },
+    {
+      "$ref": "./LongTextFieldUpdateField.json"
+    },
+    {
+      "$ref": "./URLFieldUpdateField.json"
+    },
+    {
+      "$ref": "./EmailFieldUpdateField.json"
+    },
+    {
+      "$ref": "./NumberFieldUpdateField.json"
+    },
+    {
+      "$ref": "./RatingFieldUpdateField.json"
+    },
+    {
+      "$ref": "./BooleanFieldUpdateField.json"
+    },
+    {
+      "$ref": "./DateFieldUpdateField.json"
+    },
+    {
+      "$ref": "./LastModifiedFieldUpdateField.json"
+    },
+    {
+      "$ref": "./LastModifiedByFieldUpdateField.json"
+    },
+    {
+      "$ref": "./CreatedOnFieldUpdateField.json"
+    },
+    {
+      "$ref": "./CreatedByFieldUpdateField.json"
+    },
+    {
+      "$ref": "./DurationFieldUpdateField.json"
+    },
+    {
+      "$ref": "./LinkRowFieldUpdateField.json"
+    },
+    {
+      "$ref": "./FileFieldUpdateField.json"
+    },
+    {
+      "$ref": "./SingleSelectFieldUpdateField.json"
+    },
+    {
+      "$ref": "./MultipleSelectFieldUpdateField.json"
+    },
+    {
+      "$ref": "./PhoneNumberFieldUpdateField.json"
+    },
+    {
+      "$ref": "./FormulaFieldUpdateField.json"
+    },
+    {
+      "$ref": "./CountFieldUpdateField.json"
+    },
+    {
+      "$ref": "./RollupFieldUpdateField.json"
+    },
+    {
+      "$ref": "./LookupFieldUpdateField.json"
+    },
+    {
+      "$ref": "./MultipleCollaboratorsFieldUpdateField.json"
+    },
+    {
+      "$ref": "./UUIDFieldUpdateField.json"
+    },
+    {
+      "$ref": "./AutonumberFieldUpdateField.json"
+    },
+    {
+      "$ref": "./PasswordFieldUpdateField.json"
+    },
+    {
+      "$ref": "./AIFieldUpdateField.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "text": "./TextFieldUpdateField.json",
+      "long_text": "./LongTextFieldUpdateField.json",
+      "url": "./URLFieldUpdateField.json",
+      "email": "./EmailFieldUpdateField.json",
+      "number": "./NumberFieldUpdateField.json",
+      "rating": "./RatingFieldUpdateField.json",
+      "boolean": "./BooleanFieldUpdateField.json",
+      "date": "./DateFieldUpdateField.json",
+      "last_modified": "./LastModifiedFieldUpdateField.json",
+      "last_modified_by": "./LastModifiedByFieldUpdateField.json",
+      "created_on": "./CreatedOnFieldUpdateField.json",
+      "created_by": "./CreatedByFieldUpdateField.json",
+      "duration": "./DurationFieldUpdateField.json",
+      "link_row": "./LinkRowFieldUpdateField.json",
+      "file": "./FileFieldUpdateField.json",
+      "single_select": "./SingleSelectFieldUpdateField.json",
+      "multiple_select": "./MultipleSelectFieldUpdateField.json",
+      "phone_number": "./PhoneNumberFieldUpdateField.json",
+      "formula": "./FormulaFieldUpdateField.json",
+      "count": "./CountFieldUpdateField.json",
+      "rollup": "./RollupFieldUpdateField.json",
+      "lookup": "./LookupFieldUpdateField.json",
+      "multiple_collaborators": "./MultipleCollaboratorsFieldUpdateField.json",
+      "uuid": "./UUIDFieldUpdateField.json",
+      "autonumber": "./AutonumberFieldUpdateField.json",
+      "password": "./PasswordFieldUpdateField.json",
+      "ai": "./AIFieldUpdateField.json"
+    }
+  }
+}

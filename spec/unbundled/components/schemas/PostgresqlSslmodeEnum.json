@@ -1,0 +1,12 @@
+{
+  "enum": [
+    "disable",
+    "allow",
+    "prefer",
+    "require",
+    "verify-ca",
+    "verify-full"
+  ],
+  "type": "string",
+  "description": "* `disable` - disable\n* `allow` - allow\n* `prefer` - prefer\n* `require` - require\n* `verify-ca` - verify-ca\n* `verify-full` - verify-full"
+}

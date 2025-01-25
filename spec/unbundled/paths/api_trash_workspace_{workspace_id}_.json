@@ -1,0 +1,167 @@
+{
+  "get": {
+    "operationId": "workspace_get_contents",
+    "description": "Responds with trash contents for a workspace optionally filtered to a specific application.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "application_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Optionally filters down the trash to only items for this application in the workspace."
+      },
+      {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Selects which page of trash contents should be returned."
+      },
+      {
+        "in": "path",
+        "name": "workspace_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns the trash for the workspace with this id.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Trash"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerTrashContents.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_APPLICATION_NOT_IN_GROUP",
+                    "ERROR_GROUP_DOES_NOT_EXIST",
+                    "ERROR_APPLICATION_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "delete": {
+    "operationId": "workspace_empty_contents",
+    "description": "Empties the specified workspace and/or application of trash, including the workspace and application themselves if they are trashed also.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "application_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Optionally filters down the trash to delete to only items for this application in the workspace."
+      },
+      {
+        "in": "path",
+        "name": "workspace_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The workspace whose trash contents to empty, including the workspace itself if it is also trashed.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Trash"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_APPLICATION_NOT_IN_GROUP",
+                    "ERROR_GROUP_DOES_NOT_EXIST",
+                    "ERROR_APPLICATION_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gitlab_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The base URL to your GitLab instance (e.g. https://gitlab.com)",
+      "maxLength": 2000
+    },
+    "gitlab_project_id": {
+      "type": "string",
+      "description": "The ID of the GitLab project where to sync the issues with.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "gitlab_project_id"
+  ]
+}

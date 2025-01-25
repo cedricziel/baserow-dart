@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for this condition."
+    },
+    "field": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The field of which the value must be compared to the filter value."
+    },
+    "type": {
+      "nullable": true,
+      "description": "Indicates how the field's value must be compared to the filter's value. The filter is always in this order `field` `type` `value` (example: `field_1` `contains` `Test`).\n\n* `equal` - equal\n* `not_equal` - not_equal\n* `filename_contains` - filename_contains\n* `files_lower_than` - files_lower_than\n* `has_file_type` - has_file_type\n* `contains` - contains\n* `contains_not` - contains_not\n* `contains_word` - contains_word\n* `doesnt_contain_word` - doesnt_contain_word\n* `length_is_lower_than` - length_is_lower_than\n* `higher_than` - higher_than\n* `higher_than_or_equal` - higher_than_or_equal\n* `lower_than` - lower_than\n* `lower_than_or_equal` - lower_than_or_equal\n* `is_even_and_whole` - is_even_and_whole\n* `date_equal` - date_equal\n* `date_before` - date_before\n* `date_before_or_equal` - date_before_or_equal\n* `date_after_days_ago` - date_after_days_ago\n* `date_after` - date_after\n* `date_after_or_equal` - date_after_or_equal\n* `date_not_equal` - date_not_equal\n* `date_equals_today` - date_equals_today\n* `date_before_today` - date_before_today\n* `date_after_today` - date_after_today\n* `date_within_days` - date_within_days\n* `date_within_weeks` - date_within_weeks\n* `date_within_months` - date_within_months\n* `date_equals_days_ago` - date_equals_days_ago\n* `date_equals_months_ago` - date_equals_months_ago\n* `date_equals_years_ago` - date_equals_years_ago\n* `date_equals_week` - date_equals_week\n* `date_equals_month` - date_equals_month\n* `date_equals_day_of_month` - date_equals_day_of_month\n* `date_equals_year` - date_equals_year\n* `date_is` - date_is\n* `date_is_not` - date_is_not\n* `date_is_before` - date_is_before\n* `date_is_on_or_before` - date_is_on_or_before\n* `date_is_after` - date_is_after\n* `date_is_on_or_after` - date_is_on_or_after\n* `date_is_within` - date_is_within\n* `single_select_equal` - single_select_equal\n* `single_select_not_equal` - single_select_not_equal\n* `single_select_is_any_of` - single_select_is_any_of\n* `single_select_is_none_of` - single_select_is_none_of\n* `link_row_has` - link_row_has\n* `link_row_has_not` - link_row_has_not\n* `link_row_contains` - link_row_contains\n* `link_row_not_contains` - link_row_not_contains\n* `boolean` - boolean\n* `empty` - empty\n* `not_empty` - not_empty\n* `multiple_select_has` - multiple_select_has\n* `multiple_select_has_not` - multiple_select_has_not\n* `multiple_collaborators_has` - multiple_collaborators_has\n* `multiple_collaborators_has_not` - multiple_collaborators_has_not\n* `user_is` - user_is\n* `user_is_not` - user_is_not\n* `has_value_equal` - has_value_equal\n* `has_not_value_equal` - has_not_value_equal\n* `has_value_contains` - has_value_contains\n* `has_not_value_contains` - has_not_value_contains\n* `has_value_contains_word` - has_value_contains_word\n* `has_not_value_contains_word` - has_not_value_contains_word\n* `has_value_length_is_lower_than` - has_value_length_is_lower_than\n* `has_all_values_equal` - has_all_values_equal\n* `has_empty_value` - has_empty_value\n* `has_not_empty_value` - has_not_empty_value\n* `has_any_select_option_equal` - has_any_select_option_equal\n* `has_none_select_option_equal` - has_none_select_option_equal",
+      "oneOf": [
+        {
+          "$ref": "./Type2e6Enum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "value": {
+      "type": "string",
+      "default": "",
+      "description": "The field of which the value must be compared to the filter value."
+    },
+    "group": {
+      "type": "string",
+      "nullable": true,
+      "description": "The id of the filter group this filter belongs to. If this is null, the filter is not part of a filter group."
+    }
+  },
+  "required": [
+    "field",
+    "id",
+    "type"
+  ]
+}

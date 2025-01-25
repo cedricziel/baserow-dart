@@ -1,0 +1,17 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./GeneratedSingle_select_colorUpdateViewDecoration.json"
+    },
+    {
+      "$ref": "./GeneratedConditional_colorUpdateViewDecoration.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "value_provider_type",
+    "mapping": {
+      "single_select_color": "./GeneratedSingle_select_colorUpdateViewDecoration.json",
+      "conditional_color": "./GeneratedConditional_colorUpdateViewDecoration.json"
+    }
+  }
+}

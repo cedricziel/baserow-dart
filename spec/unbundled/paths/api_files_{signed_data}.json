@@ -1,0 +1,65 @@
+{
+  "get": {
+    "operationId": "secure_file_serve_download",
+    "description": "Downloads a file using the backend and the secure file serve feature. The signed data is extracted from the URL and used to verify if the user has access to the file. If the permissions check passes and the file exists, the file is served to the user.\n\nThis is a **enterprise** feature.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "signed_data",
+        "schema": {
+          "type": "string",
+          "pattern": "^.*$"
+        },
+        "required": true
+      }
+    ],
+    "tags": [
+      "Secure file serve"
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/octet-stream": {
+            "schema": {
+              "description": "File download"
+            }
+          }
+        },
+        "description": ""
+      },
+      "403": {
+        "content": {
+          "application/octet-stream": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_SECURE_FILE_SERVE_EXCEPTION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

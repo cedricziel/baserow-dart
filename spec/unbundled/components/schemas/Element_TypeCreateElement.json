@@ -1,0 +1,81 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./HeadingElementCreateElement.json"
+    },
+    {
+      "$ref": "./TextElementCreateElement.json"
+    },
+    {
+      "$ref": "./LinkElementCreateElement.json"
+    },
+    {
+      "$ref": "./ImageElementCreateElement.json"
+    },
+    {
+      "$ref": "./InputTextElementCreateElement.json"
+    },
+    {
+      "$ref": "./ColumnElementCreateElement.json"
+    },
+    {
+      "$ref": "./ButtonElementCreateElement.json"
+    },
+    {
+      "$ref": "./TableElementCreateElement.json"
+    },
+    {
+      "$ref": "./RepeatElementCreateElement.json"
+    },
+    {
+      "$ref": "./RecordSelectorElementCreateElement.json"
+    },
+    {
+      "$ref": "./FormContainerElementCreateElement.json"
+    },
+    {
+      "$ref": "./ChoiceElementCreateElement.json"
+    },
+    {
+      "$ref": "./CheckboxElementCreateElement.json"
+    },
+    {
+      "$ref": "./IFrameElementCreateElement.json"
+    },
+    {
+      "$ref": "./DateTimePickerElementCreateElement.json"
+    },
+    {
+      "$ref": "./HeaderElementCreateElement.json"
+    },
+    {
+      "$ref": "./FooterElementCreateElement.json"
+    },
+    {
+      "$ref": "./AuthFormElementCreateElement.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "heading": "./HeadingElementCreateElement.json",
+      "text": "./TextElementCreateElement.json",
+      "link": "./LinkElementCreateElement.json",
+      "image": "./ImageElementCreateElement.json",
+      "input_text": "./InputTextElementCreateElement.json",
+      "column": "./ColumnElementCreateElement.json",
+      "button": "./ButtonElementCreateElement.json",
+      "table": "./TableElementCreateElement.json",
+      "repeat": "./RepeatElementCreateElement.json",
+      "record_selector": "./RecordSelectorElementCreateElement.json",
+      "form_container": "./FormContainerElementCreateElement.json",
+      "choice": "./ChoiceElementCreateElement.json",
+      "checkbox": "./CheckboxElementCreateElement.json",
+      "iframe": "./IFrameElementCreateElement.json",
+      "datetime_picker": "./DateTimePickerElementCreateElement.json",
+      "header": "./HeaderElementCreateElement.json",
+      "footer": "./FooterElementCreateElement.json",
+      "auth_form": "./AuthFormElementCreateElement.json"
+    }
+  }
+}

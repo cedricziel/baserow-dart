@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "duration_format": {
+      "allOf": [
+        {
+          "$ref": "./DurationFormatEnum.json"
+        }
+      ],
+      "description": "The format of the duration.\n\n* `h:mm` - hours:minutes\n* `h:mm:ss` - hours:minutes:seconds\n* `h:mm:ss.s` - hours:minutes:seconds:deciseconds\n* `h:mm:ss.ss` - hours:minutes:seconds:centiseconds\n* `h:mm:ss.sss` - hours:minutes:seconds:milliseconds\n* `d h` - days:hours\n* `d h:mm` - days:hours:minutes\n* `d h:mm:ss` - days:hours:minutes:seconds\n* `d h mm` - days:hours:minutes:with_spaces\n* `d h mm ss` - days:hours:minutes:seconds:with_spaces"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

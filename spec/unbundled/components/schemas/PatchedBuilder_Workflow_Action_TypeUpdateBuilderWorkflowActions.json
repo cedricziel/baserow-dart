@@ -1,0 +1,25 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./NotificationWorkflowActionUpdateBuilderWorkflowActions.json"
+    },
+    {
+      "$ref": "./OpenPageWorkflowActionUpdateBuilderWorkflowActions.json"
+    },
+    {
+      "$ref": "./LocalBaserowCreateRowWorkflowActionUpdateBuilderWorkflowActions.json"
+    },
+    {
+      "$ref": "./LocalBaserowUpdateRowWorkflowActionUpdateBuilderWorkflowActions.json"
+    },
+    {
+      "$ref": "./LocalBaserowDeleteRowWorkflowActionUpdateBuilderWorkflowActions.json"
+    },
+    {
+      "$ref": "./LogoutWorkflowActionUpdateBuilderWorkflowActions.json"
+    },
+    {
+      "$ref": "./RefreshDataSourceWorkflowActionUpdateBuilderWorkflowActions.json"
+    }
+  ]
+}

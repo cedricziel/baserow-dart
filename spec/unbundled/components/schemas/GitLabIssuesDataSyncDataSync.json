@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "$ref": "./DataSyncSyncedProperty.json"
+      }
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the table was last synced."
+    },
+    "last_error": {
+      "type": "string",
+      "nullable": true
+    },
+    "gitlab_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The base URL to your GitLab instance (e.g. https://gitlab.com)",
+      "maxLength": 2000
+    },
+    "gitlab_project_id": {
+      "type": "string",
+      "description": "The ID of the GitLab project where to sync the issues with.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "gitlab_project_id",
+    "id",
+    "synced_properties",
+    "type"
+  ]
+}

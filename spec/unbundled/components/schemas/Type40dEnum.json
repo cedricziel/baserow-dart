@@ -1,0 +1,11 @@
+{
+  "enum": [
+    "local_baserow_get_row",
+    "local_baserow_list_rows",
+    "local_baserow_aggregate_rows",
+    "local_baserow_upsert_row",
+    "local_baserow_delete_row"
+  ],
+  "type": "string",
+  "description": "* `local_baserow_get_row` - local_baserow_get_row\n* `local_baserow_list_rows` - local_baserow_list_rows\n* `local_baserow_aggregate_rows` - local_baserow_aggregate_rows\n* `local_baserow_upsert_row` - local_baserow_upsert_row\n* `local_baserow_delete_row` - local_baserow_delete_row"
+}

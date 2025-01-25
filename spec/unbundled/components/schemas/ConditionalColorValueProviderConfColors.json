@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "colors": {
+      "type": "array",
+      "items": {
+        "$ref": "./ConditionalColorValueProviderConfColor.json"
+      },
+      "description": "A list of color items. For each row, the value provider try to match the defined colors one by one in the given order. The first matching color is returned to the decorator."
+    }
+  },
+  "required": [
+    "colors"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[-a-zA-Z0-9_]+$"
+    },
+    "table": {
+      "$ref": "./PublicViewTable.json"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "sortings": {
+      "type": "array",
+      "items": {
+        "$ref": "./PublicViewSort.json"
+      },
+      "readOnly": true
+    },
+    "group_bys": {
+      "type": "array",
+      "items": {
+        "$ref": "./PublicViewGroupBy.json"
+      },
+      "readOnly": true
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Indicates whether the view is publicly accessible to visitors."
+    },
+    "slug": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The unique slug where the view can be accessed publicly on.",
+      "pattern": "^[-a-zA-Z0-9_]+$"
+    },
+    "show_logo": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "group_bys",
+    "id",
+    "name",
+    "order",
+    "slug",
+    "sortings",
+    "table",
+    "type"
+  ]
+}

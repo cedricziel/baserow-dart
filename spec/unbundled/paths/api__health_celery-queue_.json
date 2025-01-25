@@ -1,0 +1,42 @@
+{
+  "get": {
+    "operationId": "celery_queue_size_check",
+    "description": "Health check endpoint to check if the the celery and/or export celery queue has  exceeded the maximum healthy size. Responds with `200` if there there are less than 10 in all queues provided. Otherwise responds with a `503`.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "queue",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The name of the queues to check. Can be provided multiple times. Accepts either `celery` or `export`."
+      }
+    ],
+    "tags": [
+      "Health"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "description": "No response body"
+      },
+      "400": {
+        "description": "No response body"
+      },
+      "404": {
+        "description": "No response body"
+      },
+      "503": {
+        "description": "No response body"
+      }
+    }
+  }
+}

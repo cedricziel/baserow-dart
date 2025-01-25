@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "link",
+    "button"
+  ],
+  "type": "string",
+  "description": "* `link` - Link\n* `button` - Button"
+}

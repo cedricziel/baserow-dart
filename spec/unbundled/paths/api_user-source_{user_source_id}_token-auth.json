@@ -1,0 +1,78 @@
+{
+  "post": {
+    "operationId": "user_source_token_auth",
+    "description": "Authenticates an existing user against a user source based on their credentials. If successful, an access token and a refresh token will be returned.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "user_source_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the user_source to move",
+        "required": true
+      }
+    ],
+    "tags": [
+      "User sources"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TokenObtainPair.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/TokenObtainPair.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/TokenObtainPair.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "security": [
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "type": "string",
+                  "description": "'access_token' can be used to authorize for other endpoints that require authorization. This token will be valid for 10 minutes."
+                },
+                "refresh_token": {
+                  "type": "string",
+                  "description": "'refresh_token' can be used to get a new valid 'access_token'. This token will be valid for 168 hours."
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "An active user with the provided email and password could not be found."
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

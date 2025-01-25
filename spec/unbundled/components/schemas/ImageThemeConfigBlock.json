@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "image_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "image_max_width": {
+      "type": "integer",
+      "maximum": 100,
+      "minimum": 0,
+      "description": "The max-width for this image element."
+    },
+    "image_max_height": {
+      "type": "integer",
+      "description": "The image max height"
+    },
+    "image_constraint": {
+      "allOf": [
+        {
+          "$ref": "./ImageConstraintEnum.json"
+        }
+      ],
+      "description": "The image constraint to apply to this image\n\n* `cover` - Cover\n* `contain` - Contain\n* `full-width` - Full Width"
+    }
+  }
+}

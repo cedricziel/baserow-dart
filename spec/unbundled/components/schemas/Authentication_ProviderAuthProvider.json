@@ -1,0 +1,37 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./PasswordAuthProviderModelAuthProvider.json"
+    },
+    {
+      "$ref": "./SamlAuthProviderModelAuthProvider.json"
+    },
+    {
+      "$ref": "./GoogleAuthProviderModelAuthProvider.json"
+    },
+    {
+      "$ref": "./FacebookAuthProviderModelAuthProvider.json"
+    },
+    {
+      "$ref": "./GitHubAuthProviderModelAuthProvider.json"
+    },
+    {
+      "$ref": "./GitLabAuthProviderModelAuthProvider.json"
+    },
+    {
+      "$ref": "./OpenIdConnectAuthProviderModelAuthProvider.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "password": "./PasswordAuthProviderModelAuthProvider.json",
+      "saml": "./SamlAuthProviderModelAuthProvider.json",
+      "google": "./GoogleAuthProviderModelAuthProvider.json",
+      "facebook": "./FacebookAuthProviderModelAuthProvider.json",
+      "github": "./GitHubAuthProviderModelAuthProvider.json",
+      "gitlab": "./GitLabAuthProviderModelAuthProvider.json",
+      "openid_connect": "./OpenIdConnectAuthProviderModelAuthProvider.json"
+    }
+  }
+}
