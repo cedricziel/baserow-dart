@@ -1,7 +1,6 @@
 {
     "packages": {
       "baserow": {
-        "release-as": "3.0.1",
         "release-type": "dart"
       }
     }
