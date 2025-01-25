@@ -7,6 +7,7 @@ class FieldBuilder {
   String? description;
   Map<String, dynamic>? options;
   bool? required;
+  bool primary = false;
 
   FieldBuilder(this.name, this.type) {
     _validateName(name);
