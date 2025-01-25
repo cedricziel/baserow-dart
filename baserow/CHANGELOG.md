@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.5](https://github.com/cedricziel/baserow-dart/compare/v3.0.4...v3.0.5) (2025-01-25)
+
+
+### Miscellaneous Chores
+
+* release 3.0.5 ([661bccf](https://github.com/cedricziel/baserow-dart/commit/661bccfcfa702fc8bf6f4c731a4d0541f551305d))
+
 ## [3.0.4](https://github.com/cedricziel/baserow-dart/compare/v3.0.3...v3.0.4) (2025-01-25)
 
 
