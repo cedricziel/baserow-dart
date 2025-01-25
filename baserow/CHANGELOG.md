@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/cedricziel/baserow-dart/compare/v3.0.6...v3.1.0) (2025-01-25)
+
+
+### Features
+
+* allow setting fields as primary via fieldbuilder ([#60](https://github.com/cedricziel/baserow-dart/issues/60)) ([a33793e](https://github.com/cedricziel/baserow-dart/commit/a33793e100bc89519cdd32000698cbcec2c78e10))
+
 ## [3.0.6](https://github.com/cedricziel/baserow-dart/compare/v3.0.5...v3.0.6) (2025-01-25)
 
 
