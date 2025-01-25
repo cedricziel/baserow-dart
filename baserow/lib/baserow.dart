@@ -9,3 +9,4 @@ export 'src/exceptions.dart';
 export 'src/files.dart';
 export 'src/models.dart';
 export 'src/rows.dart';
+export 'src/builders.dart';

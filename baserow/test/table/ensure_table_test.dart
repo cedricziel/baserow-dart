@@ -4,9 +4,6 @@ import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:baserow/baserow.dart';
-import 'package:baserow/src/builders/base_builders.dart';
-import 'package:baserow/src/builders/field_builders.dart';
-import 'package:baserow/src/builders/view_builders.dart';
 
 import 'ensure_table_test.mocks.dart';
 

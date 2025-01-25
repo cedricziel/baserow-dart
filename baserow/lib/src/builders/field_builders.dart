@@ -122,6 +122,11 @@ class MultipleSelectFieldBuilder extends FieldBuilder {
   }
 }
 
+/// Builder for UUID field configuration
+class UUIDFieldBuilder extends FieldBuilder {
+  UUIDFieldBuilder(String name) : super(name, 'uuid');
+}
+
 /// Extension methods for convenient field creation
 extension TableBuilderFieldTypes on TableBuilder {
   TextFieldBuilder withTextField(
@@ -253,6 +258,18 @@ extension TableBuilderFieldTypes on TableBuilder {
       ..description = description
       ..required = required;
     field.withOptions(options, defaultOptions: defaultOptions);
+    addField(field);
+    return field;
+  }
+
+  UUIDFieldBuilder withUUIDField(
+    String name, {
+    String? description,
+    bool? required,
+  }) {
+    final field = UUIDFieldBuilder(name)
+      ..description = description
+      ..required = required;
     addField(field);
     return field;
   }
