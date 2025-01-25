@@ -19,6 +19,10 @@ jobs:
     permissions:
       id-token: write # Required for authentication using OIDC
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1.7.0
+
       # publish baserow package
       - name: Install dependencies
         run: dart pub get
