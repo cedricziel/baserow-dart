@@ -1,4 +1,4 @@
 additionalProperties:
   artifactId: baserow_api
   pubLibrary: baserow_api
-  skipValidate: true
+  validateSpec: false
