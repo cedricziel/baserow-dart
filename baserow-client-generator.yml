@@ -1,4 +1,7 @@
+---
+packageName: baserow_api
+validateSpec: false
+
 additionalProperties:
   artifactId: baserow_api
   pubLibrary: baserow_api
-  validateSpec: false
