@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.2.0](https://github.com/cedricziel/baserow-dart/compare/v3.1.0...v3.2.0) (2025-01-25)
+
+
+### Features
+
+* add file field ([#64](https://github.com/cedricziel/baserow-dart/issues/64)) ([20002a3](https://github.com/cedricziel/baserow-dart/commit/20002a3dedb0d10c98cfb8c22a776112f513d939))
+
+
+### Bug Fixes
+
+* remove the required argument ([#62](https://github.com/cedricziel/baserow-dart/issues/62)) ([79c9ace](https://github.com/cedricziel/baserow-dart/commit/79c9acea76b8c9d42c450ca44aca48994e70907e))
+
 ## [3.1.0](https://github.com/cedricziel/baserow-dart/compare/v3.0.6...v3.1.0) (2025-01-25)
 
 
