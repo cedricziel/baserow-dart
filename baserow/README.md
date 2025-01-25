@@ -303,6 +303,69 @@ The workspace listing provides:
 - Workspace settings like enabled AI models
 - Custom ordering of workspaces per user (configurable via the order_workspaces endpoint)
 
+### View Operations
+
+Views provide different ways to display and interact with table data. Each table can have multiple views (grid, gallery, form, kanban, calendar, timeline) with their own settings.
+
+```dart
+// Create a new grid view
+final gridView = await client.createView(
+  tableId,
+  name: "Main Grid",
+  type: "grid",
+  filterType: "AND",
+  filtersDisabled: false,
+);
+
+// Create a public gallery view
+final galleryView = await client.createView(
+  tableId,
+  name: "Public Gallery",
+  type: "gallery",
+  public: true,
+);
+
+// List all views for a table
+final views = await client.listViews(tableId);
+for (final view in views) {
+  print('View: ${view.name} (Type: ${view.type})');
+  print('Public: ${view.public}');
+  print('Slug: ${view.slug}');
+}
+
+// Get a specific view
+final view = await client.getView(viewId);
+print('View name: ${view.name}');
+print('Filter type: ${view.filterType}');
+print('Filters disabled: ${view.filtersDisabled}');
+
+// Update a view
+final updatedView = await client.updateView(
+  viewId,
+  name: "Updated View",
+  filterType: "OR",
+  filtersDisabled: true,
+);
+
+// Delete a view
+await client.deleteView(viewId);
+```
+
+Each view type has its own specific features:
+
+- Grid: Traditional spreadsheet-like view with rows and columns
+- Gallery: Card-based view ideal for visual content
+- Form: Customizable form for data entry
+- Kanban: Board view for organizing items into columns
+- Calendar: Date-based view for temporal data
+- Timeline: Time-based view for project planning
+
+Views can be:
+
+- Public or private (controlled via the `public` parameter)
+- Collaborative or personal (set via `ownershipType`)
+- Filtered using various conditions (configured with `filterType` and `filtersDisabled`)
+
 ### Table Operations
 
 #### Creating Tables

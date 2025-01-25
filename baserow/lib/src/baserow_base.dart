@@ -16,6 +16,7 @@ import 'mixins/database_operations_mixin.dart';
 import 'mixins/table_operations_mixin.dart';
 import 'mixins/field_operations_mixin.dart';
 import 'mixins/application_operations_mixin.dart';
+import 'mixins/view_operations_mixin.dart';
 
 /// The main Baserow client class for interacting with the Baserow API.
 class BaserowClient
@@ -28,7 +29,8 @@ class BaserowClient
         DatabaseOperationsMixin,
         TableOperationsMixin,
         FieldOperationsMixin,
-        ApplicationOperationsMixin
+        ApplicationOperationsMixin,
+        ViewOperationsMixin
     implements BaserowClientInterface {
   @override
   BaserowConfig config;
