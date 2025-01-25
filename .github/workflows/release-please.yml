@@ -23,23 +23,3 @@ jobs:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
-
-      - uses: actions/checkout@v4
-      - uses: dart-lang/setup-dart@v1.7.0
-
-      # publish baserow package
-      - name: Install dependencies
-        run: dart pub get
-        working-directory: baserow
-        if: ${{ steps.release.outputs['baserow--release_created'] }}
-
-      - name: Publish - dry run
-        run: dart pub publish --dry-run
-        working-directory: baserow
-        if: ${{ steps.release.outputs['baserow--release_created'] }}
-
-      - name: Publish to pub.dev
-        run: dart pub publish -f
-        working-directory: baserow
-        if: ${{ steps.release.outputs['baserow--release_created'] }}
-      # end publish baserow package
