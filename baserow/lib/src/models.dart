@@ -5,3 +5,4 @@ export 'models/database_application.dart';
 export 'models/database_token.dart';
 export 'models/files.dart';
 export 'models/workspace.dart';
+export 'models/view.dart';
