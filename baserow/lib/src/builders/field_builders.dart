@@ -132,12 +132,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   TextFieldBuilder withTextField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = TextFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;
@@ -146,12 +144,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   LongTextFieldBuilder withLongTextField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = LongTextFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;
@@ -160,12 +156,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   NumberFieldBuilder withNumberField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = NumberFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;
@@ -174,12 +168,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   EmailFieldBuilder withEmailField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = EmailFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;
@@ -188,12 +180,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   URLFieldBuilder withURLField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = URLFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;
@@ -202,12 +192,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   PhoneNumberFieldBuilder withPhoneField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = PhoneNumberFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;
@@ -232,14 +220,12 @@ extension TableBuilderFieldTypes on TableBuilder {
   DateFieldBuilder withDateField(
     String name, {
     String? description,
-    bool? required,
     bool includeTime = false,
     String? timezone,
     bool primary = false,
   }) {
     final field = DateFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     field.withDateFormat(
       includeTime: includeTime,
@@ -254,12 +240,10 @@ extension TableBuilderFieldTypes on TableBuilder {
     String? description,
     required List<String> options,
     String? defaultOption,
-    bool? required,
     bool primary = false,
   }) {
     final field = SingleSelectFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     field.withOptions(options, defaultOption: defaultOption);
     addField(field);
@@ -271,12 +255,10 @@ extension TableBuilderFieldTypes on TableBuilder {
     String? description,
     required List<String> options,
     List<String>? defaultOptions,
-    bool? required,
     bool primary = false,
   }) {
     final field = MultipleSelectFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     field.withOptions(options, defaultOptions: defaultOptions);
     addField(field);
@@ -286,12 +268,10 @@ extension TableBuilderFieldTypes on TableBuilder {
   UUIDFieldBuilder withUUIDField(
     String name, {
     String? description,
-    bool? required,
     bool primary = false,
   }) {
     final field = UUIDFieldBuilder(name)
       ..description = description
-      ..required = required
       ..primary = primary;
     addField(field);
     return field;

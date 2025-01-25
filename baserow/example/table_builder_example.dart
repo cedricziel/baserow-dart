@@ -3,7 +3,7 @@ import 'package:baserow/baserow.dart';
 void main() {
   // Create a new table builder
   final tableBuilder = TableBuilder('My Table')
-    ..withField('Name', 'text', required: true)
+    ..withField('Name', 'text')
     ..withField('Age', 'number')
     ..withView('Grid View', 'grid');
 

@@ -11,21 +11,19 @@ void main() {
       expect(config['type'], equals('uuid'));
     });
 
-    test('creates a UUID field with description and required flag', () {
+    test('creates a UUID field with description', () {
       final builder = UUIDFieldBuilder('test_uuid')
-        ..description = 'A UUID field'
-        ..required = true;
+        ..description = 'A UUID field';
       final config = builder.build();
 
       expect(config['name'], equals('test_uuid'));
       expect(config['type'], equals('uuid'));
       expect(config['description'], equals('A UUID field'));
-      expect(config['required'], isTrue);
     });
 
     test('integrates with TableBuilder', () {
       final tableBuilder = TableBuilder('test_table')
-        ..withUUIDField('id', required: true, description: 'Primary UUID');
+        ..withUUIDField('id', description: 'Primary UUID');
       final config = tableBuilder.build();
 
       expect(config['name'], equals('test_table'));
@@ -35,7 +33,6 @@ void main() {
       final field = config['fields'][0] as Map<String, dynamic>;
       expect(field['name'], equals('id'));
       expect(field['type'], equals('uuid'));
-      expect(field['required'], isTrue);
       expect(field['description'], equals('Primary UUID'));
     });
   });
