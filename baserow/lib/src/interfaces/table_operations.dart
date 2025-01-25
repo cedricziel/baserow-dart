@@ -24,4 +24,20 @@ abstract class TableOperations {
   ///
   /// [tableId] is the ID of the table to retrieve
   Future<Table> getDatabaseTable(int tableId);
+
+  /// Creates a new table in the specified database
+  ///
+  /// [databaseId] is the ID of the database to create the table in
+  /// [name] is the name of the table (required, max 255 chars)
+  /// [data] Optional initial data for the table. Each inner list represents a row
+  /// [firstRowHeader] Optional flag to use first row as field names
+  ///
+  /// Returns the created table
+  /// Throws [BaserowException] if the table creation fails or the user doesn't have access
+  Future<Table> createTable(
+    int databaseId, {
+    required String name,
+    List<List<dynamic>>? data,
+    bool firstRowHeader = false,
+  });
 }
