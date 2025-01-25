@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "spec/openapi.json"
+      - "baserow-client-generator.yml"
+      - ".github/workflows/openapi-generator.yml"
+jobs:
+  baserow-client:
+    runs-on: ubuntu-latest
+    name: Generate baserow client
+    steps:
+      # Checkout your code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # grep the version from the openapi.json file
+      - name: Get OpenAPI version
+        id: baserow-schema-version
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: 'jq .info.version spec/openapi.json -r'
+      - name: Generate Baserow API Client
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: dart
+          config-file: baserow-client-generator.yml
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          title: "feat: generate baserow-client ${{ steps.baserow-schema-version.outputs.value }}"
+          commit-message: "feat: generate baserow-api ${{ steps.baserow-schema-version.outputs.value }}"
+          draft: true
+          branch-suffix: random
+          branch: "baserow-api-${{ steps.baserow-schema-version.outputs.value }}"
