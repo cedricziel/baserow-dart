@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.0.4](https://github.com/cedricziel/baserow-dart/compare/v3.0.3...v3.0.4) (2025-01-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* move to monorepo
+
+### Features
+
+* add ability to add tables to a database ([#47](https://github.com/cedricziel/baserow-dart/issues/47)) ([ce9fa58](https://github.com/cedricziel/baserow-dart/commit/ce9fa587ed998356c4facf9a96cd0cfbc740cff7))
+* add ensure api ([#49](https://github.com/cedricziel/baserow-dart/issues/49)) ([0391bbf](https://github.com/cedricziel/baserow-dart/commit/0391bbfd8aa65dfa5dea1393702eb64a66676b9c))
+* add view management ([#48](https://github.com/cedricziel/baserow-dart/issues/48)) ([7e0915e](https://github.com/cedricziel/baserow-dart/commit/7e0915e8b1d2dbb6374bf1b4f3ab3f0fb70871b4))
+
+
+### Miscellaneous Chores
+
+* move to monorepo ([e6f65a5](https://github.com/cedricziel/baserow-dart/commit/e6f65a5259d2595edbbc55af503958e2d19d0f67))
+* release 0.0.2 ([15b2bea](https://github.com/cedricziel/baserow-dart/commit/15b2bea218d8e377021fa60c7a41251d528df48c))
+* release 3.0.1 ([900e7cd](https://github.com/cedricziel/baserow-dart/commit/900e7cdf2d6f723acc3f2f864547cc23f592e5e7))
+* release 3.0.3 ([d853717](https://github.com/cedricziel/baserow-dart/commit/d853717be1205ce03796f6081344cbff5143182b))
+* release 3.0.4 ([2ca6228](https://github.com/cedricziel/baserow-dart/commit/2ca6228e22b7cd8f879bdd144271adb657b493a8))
+
 ## [3.0.3](https://github.com/cedricziel/baserow-dart/compare/baserow-v3.0.1...baserow-v3.0.3) (2025-01-25)
 
 
