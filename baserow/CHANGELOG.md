@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.6](https://github.com/cedricziel/baserow-dart/compare/v3.0.5...v3.0.6) (2025-01-25)
+
+
+### Bug Fixes
+
+* export and implement uuid field building ([#58](https://github.com/cedricziel/baserow-dart/issues/58)) ([c7da771](https://github.com/cedricziel/baserow-dart/commit/c7da77142af22f8e1162dcf763493f7d1bbe532a))
+
 ## [3.0.5](https://github.com/cedricziel/baserow-dart/compare/v3.0.4...v3.0.5) (2025-01-25)
 
 
