@@ -368,7 +368,11 @@ Views can be:
 
 ### Table Operations
 
-#### Creating Tables
+#### Creating and Ensuring Tables
+
+You can create tables in two ways:
+
+1. Basic table creation:
 
 ```dart
 // Create a new table
@@ -388,6 +392,59 @@ final emptyTable = await client.createTable(
   name: "Products",
 );
 ```
+
+2. Using TableBuilder for declarative table creation and updates:
+
+```dart
+// Define a table structure with fields and views
+final table = await client.ensureTable(
+  databaseId,
+  TableBuilder("Customers")
+    ..withTextField("Name")
+    ..withTextField("Email")
+    ..withTextField("Status")
+    ..withGridView("Main Grid")
+    ..withData([
+      ["John Doe", "john@example.com", "Active"],
+      ["Jane Smith", "jane@example.com", "Pending"],
+    ]),
+);
+
+// The ensureTable method will:
+// 1. Create the table if it doesn't exist
+// 2. Update the table if it exists and updateIfExists is true (default)
+// 3. Return the existing table without changes if updateIfExists is false
+
+// You can also use it to ensure a consistent data model across environments:
+final customersTable = await client.ensureTable(
+  databaseId,
+  TableBuilder("Customers")
+    ..withTextField("Name", required: true)
+    ..withTextField("Email", required: true)
+    ..withSelectField("Status", options: ["Active", "Pending", "Inactive"])
+    ..withNumberField("Age", description: "Customer's age")
+    ..withDateField("JoinDate")
+    ..withGridView("All Customers")
+    ..withGalleryView("Customer Cards")
+    ..withFormView("New Customer"),
+);
+```
+
+The TableBuilder provides a fluent interface for defining:
+
+- Table name and structure
+- Fields with their types and options
+- Views (Grid, Gallery, Form, etc.)
+- Initial data
+- Field validation (required fields, etc.)
+- Field descriptions and metadata
+
+This is particularly useful for:
+
+- Setting up consistent table structures across different environments
+- Maintaining data models in version control
+- Automated table creation and updates in tests
+- Ensuring required fields and views exist
 
 #### Managing Fields
 
