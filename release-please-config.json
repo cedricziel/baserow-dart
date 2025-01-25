@@ -1,6 +1,7 @@
 {
     "packages": {
       "baserow": {
+        "include-component-in-tag": false,
         "release-type": "dart"
       }
     }
