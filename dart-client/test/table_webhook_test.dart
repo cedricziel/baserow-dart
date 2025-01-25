@@ -1,0 +1,103 @@
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.18
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'package:openapi/api.dart';
+import 'package:test/test.dart';
+
+// tests for TableWebhook
+void main() {
+  // final instance = TableWebhook();
+
+  group('test TableWebhook', () {
+    // int id
+    test('to test the property `id`', () async {
+      // TODO
+    });
+
+    // A list containing the events that will trigger this webhook.
+    // Map<String, Object> events (default value: const {})
+    test('to test the property `events`', () async {
+      // TODO
+    });
+
+    // A list containing the addition event options.
+    // List<TableWebhookEventConfig> eventConfig (default value: const [])
+    test('to test the property `eventConfig`', () async {
+      // TODO
+    });
+
+    // The additional headers as an object where the key is the name and the value the value.
+    // Map<String, Object> headers (default value: const {})
+    test('to test the property `headers`', () async {
+      // TODO
+    });
+
+    // All the calls that this webhook made.
+    // List<TableWebhookCall> calls (default value: const [])
+    test('to test the property `calls`', () async {
+      // TODO
+    });
+
+    // DateTime createdOn
+    test('to test the property `createdOn`', () async {
+      // TODO
+    });
+
+    // DateTime updatedOn
+    test('to test the property `updatedOn`', () async {
+      // TODO
+    });
+
+    // Indicates whether the field names must be used as payload key instead of the id.
+    // bool useUserFieldNames
+    test('to test the property `useUserFieldNames`', () async {
+      // TODO
+    });
+
+    // The URL that must be called when the webhook is triggered.
+    // String url
+    test('to test the property `url`', () async {
+      // TODO
+    });
+
+    // The request method that be used when the event occurs.  * `POST` - Post * `GET` - Get * `PUT` - Put * `PATCH` - Patch * `DELETE` - Delete
+    // RequestMethodEnum requestMethod
+    test('to test the property `requestMethod`', () async {
+      // TODO
+    });
+
+    // An internal name of the webhook.
+    // String name
+    test('to test the property `name`', () async {
+      // TODO
+    });
+
+    // Indicates whether this webhook should listen to all events.
+    // bool includeAllEvents
+    test('to test the property `includeAllEvents`', () async {
+      // TODO
+    });
+
+    // The amount of failed webhook calls.
+    // int failedTriggers
+    test('to test the property `failedTriggers`', () async {
+      // TODO
+    });
+
+    // Indicates whether the web hook is active. When a webhook has failed multiple times, it will automatically be deactivated.
+    // bool active
+    test('to test the property `active`', () async {
+      // TODO
+    });
+
+
+  });
+
+}

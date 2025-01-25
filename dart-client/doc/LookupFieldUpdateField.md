@@ -1,0 +1,35 @@
+# openapi.model.LookupFieldUpdateField
+
+## Load the model package
+```dart
+import 'package:openapi/api.dart';
+```
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**name** | **String** |  | [optional] 
+**type** | [**Type6ebEnum**](Type6ebEnum.md) |  | [optional] 
+**description** | **String** | Field description | [optional] 
+**error** | **String** |  | [readonly] 
+**dateShowTzinfo** | **bool** | Indicates if the time zone should be shown. | [optional] 
+**dateFormat** | [**DateFormatEnum**](DateFormatEnum.md) |  | [optional] 
+**numberSeparator** | [**CountFieldCreateFieldNumberSeparator**](CountFieldCreateFieldNumberSeparator.md) |  | [optional] 
+**arrayFormulaType** | [**ArrayFormulaTypeEnum**](ArrayFormulaTypeEnum.md) |  | [optional] 
+**durationFormat** | [**DurationFormatEnum**](DurationFormatEnum.md) |  | [optional] 
+**nullable** | **bool** |  | [readonly] 
+**dateTimeFormat** | [**DateTimeFormatEnum**](DateTimeFormatEnum.md) |  | [optional] 
+**dateForceTimezone** | **String** | Force a timezone for the field overriding user profile settings. | [optional] 
+**numberDecimalPlaces** | [**NumberDecimalPlacesEnum**](NumberDecimalPlacesEnum.md) |  | [optional] 
+**numberPrefix** | **String** | The prefix to use for the field. | [optional] 
+**dateIncludeTime** | **bool** | Indicates if the field also includes a time. | [optional] 
+**numberSuffix** | **String** | The suffix to use for the field. | [optional] 
+**throughFieldId** | **int** | The id of the link row field to lookup values for. Will override the `through_field_name` parameter if both are provided, however only one is required. | [optional] 
+**throughFieldName** | **String** | The name of the link row field to lookup values for. | [optional] 
+**targetFieldId** | **int** | The id of the field in the table linked to by the through_field to lookup. Will override the `target_field_id` parameter if both are provided, however only one is required. | [optional] 
+**targetFieldName** | **String** | The name of the field in the table linked to by the through_field to lookup. | [optional] 
+**formulaType** | [**FormulaTypeEnum**](FormulaTypeEnum.md) |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
