@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models.dart';
 import '../exceptions.dart';
 import '../interfaces/table_operations.dart';
+import '../builders/base_builders.dart';
 
 /// Mixin that implements table operations for Baserow
 mixin TableOperationsMixin implements TableOperations {
@@ -15,6 +16,11 @@ mixin TableOperationsMixin implements TableOperations {
   /// Function to make a POST request
   Future<dynamic> post(String path, Map<String, dynamic> data,
       [Map<String, String>? queryParams]);
+
+  /// Function to make a PATCH request
+  Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> data,
+      [Map<String, String>? queryParams]);
+
   @override
   Future<List<Table>> listTables(int databaseId) async {
     final response = await get('database/tables/database/$databaseId/');
@@ -75,5 +81,123 @@ mixin TableOperationsMixin implements TableOperations {
       },
     );
     return Table.fromJson(response as Map<String, dynamic>);
+  }
+
+  @override
+  Future<Table> ensureTable(
+    int databaseId,
+    TableBuilder builder, {
+    bool updateIfExists = true,
+  }) async {
+    // Validate the builder configuration
+    builder.build();
+
+    // Try to find existing table by name
+    final tables = await listTables(databaseId);
+    final existingTable =
+        tables.where((t) => t.name == builder.name).firstOrNull;
+
+    if (existingTable != null) {
+      if (!updateIfExists) {
+        return existingTable;
+      }
+
+      // Update existing table
+      final updatedTable = await patch(
+        'database/tables/${existingTable.id}/',
+        {'name': builder.name},
+      );
+      final table = Table.fromJson(updatedTable);
+
+      // Get existing fields to compare
+      final existingFields = await listFields(table.id);
+      final existingFieldsByName = {for (var f in existingFields) f.name: f};
+
+      // Ensure each field exists
+      for (final fieldBuilder in builder.fields) {
+        final existingField = existingFieldsByName[fieldBuilder.name];
+        final fieldConfig = fieldBuilder.build();
+
+        if (existingField == null) {
+          // Create new field
+          await post(
+            'database/fields/table/${table.id}/',
+            fieldConfig,
+          );
+        } else {
+          // Update existing field
+          await patch(
+            'database/fields/${existingField.id}/',
+            fieldConfig,
+          );
+        }
+      }
+
+      // Get existing views to compare
+      final existingViews = await get('database/views/table/${table.id}/');
+      final views = (existingViews as List)
+          .cast<Map<String, dynamic>>()
+          .map((v) => View.fromJson(v))
+          .toList();
+      final existingViewsByName = {for (var v in views) v.name: v};
+
+      // Ensure each view exists
+      for (final viewBuilder in builder.views) {
+        final existingView = existingViewsByName[viewBuilder.name];
+        final viewConfig = viewBuilder.build();
+
+        if (existingView == null) {
+          // Create new view
+          await post(
+            'database/views/table/${table.id}/',
+            viewConfig,
+          );
+        } else {
+          // Update existing view
+          await patch(
+            'database/views/${existingView.id}/',
+            viewConfig,
+          );
+        }
+      }
+
+      // Apply initial data if provided
+      if (builder.initialData != null) {
+        await post(
+          'database/rows/table/${table.id}/batch/',
+          {
+            'items': builder.initialData,
+          },
+        );
+      }
+
+      return getTableWithFields(table.id);
+    } else {
+      // Create new table with fields and views
+      final table = await createTable(
+        databaseId,
+        name: builder.name,
+        data: builder.initialData,
+        firstRowHeader: builder.firstRowHeader,
+      );
+
+      // Create fields
+      for (final fieldBuilder in builder.fields) {
+        await post(
+          'database/fields/table/${table.id}/',
+          fieldBuilder.build(),
+        );
+      }
+
+      // Create views
+      for (final viewBuilder in builder.views) {
+        await post(
+          'database/views/table/${table.id}/',
+          viewBuilder.build(),
+        );
+      }
+
+      return getTableWithFields(table.id);
+    }
   }
 }
