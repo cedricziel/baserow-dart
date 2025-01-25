@@ -1,0 +1,161 @@
+{
+  "get": {
+    "operationId": "get_adjacent_database_table_row",
+    "description": "Fetches the adjacent row to a given row_id in the table with the given table_id. If the previous flag is set it will return the previous row, otherwise it will return the next row. You can specifya view_id and it will apply the filters and sorts of the provided view.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "previous",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "A flag query parameter which if provided returns theprevious row to the specified row_id. If it's not setit will return the next row."
+      },
+      {
+        "in": "path",
+        "name": "row_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns the row adjacent the provided value.",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided, the adjacent row will be one that matchesthe search query."
+      },
+      {
+        "in": "query",
+        "name": "search_mode",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided, allows API consumers to determine what kind of search experience they wish to have. If the default `SearchModes.MODE_FT_WITH_COUNT` is used, then Postgres full-text search is used. If `SearchModes.MODE_COMPAT` is provided then the search term will be exactly searched for including whitespace on each cell. This is the Baserow legacy search behaviour."
+      },
+      {
+        "in": "path",
+        "name": "table_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns the row of the table related to the provided value.",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "user_field_names",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "A flag query parameter that, if provided with one of the following values: `y`, `yes`, `true`, `t`, `on`, `1`, or an empty value, will cause the returned JSON to use the user-specified field names instead of the internal Baserow field names (e.g., field_123)."
+      },
+      {
+        "in": "query",
+        "name": "view_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Applies the filters and sorts of the provided view."
+      }
+    ],
+    "tags": [
+      "Database table rows"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExampleRowResponseSerializerWithUserFieldNames.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "204": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_REQUEST_BODY_VALIDATION"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_TABLE_DOES_NOT_EXIST",
+                    "ERROR_ROW_DOES_NOT_EXIST",
+                    "ERROR_VIEW_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

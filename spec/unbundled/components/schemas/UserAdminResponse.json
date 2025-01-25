@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "description": "Serializes the safe user attributes to expose for a response back to the user.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "username": {
+      "type": "string",
+      "format": "email"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "workspaces": {
+      "type": "array",
+      "items": {
+        "$ref": "./UserAdminWorkspaces.json"
+      }
+    },
+    "last_login": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "date_joined": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "title": "Active",
+      "description": "Designates whether this user should be treated as active. Set this to false instead of deleting accounts."
+    },
+    "is_staff": {
+      "type": "boolean",
+      "title": "Staff status",
+      "description": "Designates whether this user is an admin and has access to all workspaces and Baserow's admin areas. "
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "username",
+    "workspaces"
+  ]
+}

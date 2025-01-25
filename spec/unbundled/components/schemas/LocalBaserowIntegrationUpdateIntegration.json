@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "context_data": {
+      "allOf": [
+        {
+          "$ref": "./LocalBaserowContextData.json"
+        }
+      ],
+      "readOnly": true
+    },
+    "authorized_user": {
+      "allOf": [
+        {
+          "$ref": "./SubjectUser.json"
+        }
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "authorized_user",
+    "context_data"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "description": "This serializer allow to set the type of a data_source and the data_source id\nbefore which we want to insert the new data_source.",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type40dEnum.json"
+        }
+      ],
+      "description": "The type of the service.\n\n* `local_baserow_get_row` - local_baserow_get_row\n* `local_baserow_list_rows` - local_baserow_list_rows\n* `local_baserow_aggregate_rows` - local_baserow_aggregate_rows\n* `local_baserow_upsert_row` - local_baserow_upsert_row\n* `local_baserow_delete_row` - local_baserow_delete_row"
+    },
+    "name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Human name for this data source."
+    },
+    "page_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Page this data source is linked to."
+    },
+    "before_id": {
+      "type": "integer",
+      "description": "If provided, creates the data_source before the data_source with the given id."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "integration_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow integration we want the data for."
+    },
+    "row_id": {
+      "type": "string",
+      "description": "A formula for defining the intended row."
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "description": "Mixin to a DRF serializer class to raise an exception if data with unknown fields\nis provided to the serializer.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true,
+      "description": "User defined name."
+    },
+    "email": {
+      "type": "string",
+      "readOnly": true,
+      "description": "User email."
+    },
+    "workspace": {
+      "type": "integer",
+      "description": "The workspace that the user has access to."
+    },
+    "permissions": {
+      "type": "string",
+      "description": "The permissions that the user has within the workspace.",
+      "maxLength": 32
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "The user that has access to the workspace.",
+      "readOnly": true
+    },
+    "to_be_deleted": {
+      "type": "boolean",
+      "description": "True if user account is pending deletion."
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "$ref": "./WorkspaceUserEnterpriseTeam.json"
+      },
+      "description": "Enterprise only: a list of team IDs and names, which this workspace user belongs to in this workspace."
+    },
+    "role_uid": {
+      "type": "string",
+      "nullable": true,
+      "description": "Enterprise or advanced only: the uid of the role that is assigned to this workspace user in this workspace."
+    },
+    "highest_role_uid": {
+      "type": "string",
+      "nullable": true,
+      "description": "Enterprise or advanced only: the highest role uid assigned to this user in this workspace on anything, including roles from teams."
+    }
+  },
+  "required": [
+    "created_on",
+    "email",
+    "id",
+    "name",
+    "to_be_deleted",
+    "user_id",
+    "workspace"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "get": {
+    "operationId": "get_trash_structure",
+    "description": "Responds with the workspaces and applications available for the requesting user to inspect the trash contents of.",
+    "tags": [
+      "Trash"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/TrashStructure.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

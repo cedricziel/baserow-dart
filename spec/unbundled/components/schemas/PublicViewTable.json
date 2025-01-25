@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "database_id": {
+      "type": "integer",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "database_id",
+    "id"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "Style overrides for this element.",
+  "properties": {
+    "image": {
+      "allOf": [
+        {
+          "$ref": "./ImageThemeConfigBlock.json"
+        }
+      ],
+      "description": "Styles overrides for image"
+    }
+  }
+}

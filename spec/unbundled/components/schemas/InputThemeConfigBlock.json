@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "label_font_family": {
+      "type": "string",
+      "description": "The font family of the label",
+      "maxLength": 250
+    },
+    "label_text_color": {
+      "type": "string",
+      "description": "The text color of the label",
+      "maxLength": 20
+    },
+    "label_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The font size of the label"
+    },
+    "input_font_family": {
+      "type": "string",
+      "description": "The font family of the input",
+      "maxLength": 250
+    },
+    "input_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768
+    },
+    "input_text_color": {
+      "type": "string",
+      "description": "The text color of the input",
+      "maxLength": 20
+    },
+    "input_background_color": {
+      "type": "string",
+      "description": "The background color of the input",
+      "maxLength": 20
+    },
+    "input_border_color": {
+      "type": "string",
+      "description": "The color of the input border",
+      "maxLength": 20
+    },
+    "input_border_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input border size"
+    },
+    "input_border_radius": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input border radius"
+    },
+    "input_vertical_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input vertical padding"
+    },
+    "input_horizontal_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Input horizontal padding"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "description": "Basic builder workflow action serializer",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "element_id": {
+      "type": "integer",
+      "nullable": true,
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the workflow action"
+    },
+    "event": {
+      "type": "string",
+      "description": "The event that triggers the execution",
+      "maxLength": 60
+    },
+    "navigation_type": {
+      "allOf": [
+        {
+          "$ref": "./NavigationTypeEnum.json"
+        }
+      ],
+      "description": "The navigation type.\n\n* `page` - Page\n* `custom` - Custom"
+    },
+    "navigate_to_page_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "('Destination page id for this link. If null then we use the navigate_to_url property instead.',)"
+    },
+    "navigate_to_url": {
+      "type": "string",
+      "default": "",
+      "description": "If no page is selected, this indicate the destination of the link."
+    },
+    "page_parameters": {
+      "type": "array",
+      "items": {
+        "$ref": "./PageParameterValue.json"
+      },
+      "description": "The parameters for each parameters of the selected page if any."
+    },
+    "target": {
+      "allOf": [
+        {
+          "$ref": "./TargetEnum.json"
+        }
+      ],
+      "description": "The target of the link when we click on it.\n\n* `self` - Self\n* `blank` - Blank"
+    }
+  },
+  "required": [
+    "element_id",
+    "event",
+    "id",
+    "order",
+    "type"
+  ]
+}

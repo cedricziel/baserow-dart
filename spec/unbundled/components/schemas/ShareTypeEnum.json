@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "all",
+    "only",
+    "except"
+  ],
+  "type": "string",
+  "description": "* `all` - All\n* `only` - Only\n* `except` - Except"
+}

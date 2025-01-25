@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "openai": {
+      "$ref": "./OpenAISettings.json"
+    },
+    "anthropic": {
+      "$ref": "./AnthropicSettings.json"
+    },
+    "mistral": {
+      "$ref": "./MistralSettings.json"
+    },
+    "ollama": {
+      "$ref": "./OllamaSettings.json"
+    },
+    "openrouter": {
+      "$ref": "./OpenRouterSettings.json"
+    }
+  }
+}

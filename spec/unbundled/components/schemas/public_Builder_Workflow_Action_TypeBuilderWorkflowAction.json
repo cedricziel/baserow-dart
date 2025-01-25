@@ -1,0 +1,37 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./PublicNone.json"
+    },
+    {
+      "$ref": "./PublicNone.json"
+    },
+    {
+      "$ref": "./PublicNone.json"
+    },
+    {
+      "$ref": "./PublicNone.json"
+    },
+    {
+      "$ref": "./PublicNone.json"
+    },
+    {
+      "$ref": "./PublicNone.json"
+    },
+    {
+      "$ref": "./PublicNone.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "public_notification": "./PublicNone.json",
+      "public_open_page": "./PublicNone.json",
+      "public_create_row": "./PublicNone.json",
+      "public_update_row": "./PublicNone.json",
+      "public_delete_row": "./PublicNone.json",
+      "public_logout": "./PublicNone.json",
+      "public_refresh_data_source": "./PublicNone.json"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "./CreateRoleAssignment.json"
+      }
+    }
+  },
+  "required": [
+    "items"
+  ]
+}

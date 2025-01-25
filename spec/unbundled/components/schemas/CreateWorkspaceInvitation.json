@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address of the user that the invitation is meant for. Only a user with that email address can accept it.",
+      "maxLength": 254
+    },
+    "permissions": {
+      "type": "string",
+      "description": "The permissions that the user is going to get within the workspace after accepting the invitation.",
+      "maxLength": 32
+    },
+    "message": {
+      "type": "string",
+      "description": "An optional message that the invitor can provide. This will be visible to the receiver of the invitation.",
+      "maxLength": 250
+    },
+    "base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The base URL where the user can publicly accept his invitation.The accept token is going to be appended to the base_url (base_url '/token')."
+    }
+  },
+  "required": [
+    "base_url",
+    "email"
+  ]
+}

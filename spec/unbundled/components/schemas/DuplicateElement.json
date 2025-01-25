@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "elements": {
+      "type": "array",
+      "items": {
+        "$ref": "./Element.json"
+      },
+      "readOnly": true,
+      "description": "The duplicated elements."
+    },
+    "workflow_actions": {
+      "type": "array",
+      "items": {
+        "$ref": "./BuilderWorkflowAction.json"
+      },
+      "readOnly": true,
+      "description": "The duplicated workflow actions"
+    }
+  },
+  "required": [
+    "elements",
+    "workflow_actions"
+  ]
+}

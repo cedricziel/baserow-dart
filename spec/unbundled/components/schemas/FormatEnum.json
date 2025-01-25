@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "plain",
+    "markdown"
+  ],
+  "type": "string",
+  "description": "* `plain` - Plain\n* `markdown` - Markdown"
+}

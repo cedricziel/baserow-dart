@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "username": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+    },
+    "first_name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "readOnly": true,
+      "title": "Email address"
+    }
+  },
+  "required": [
+    "email",
+    "first_name",
+    "id",
+    "username"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "database",
+    "builder"
+  ],
+  "type": "string",
+  "description": "* `database` - database\n* `builder` - builder"
+}

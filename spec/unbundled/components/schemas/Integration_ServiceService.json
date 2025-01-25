@@ -1,0 +1,29 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./LocalBaserowGetRowService.json"
+    },
+    {
+      "$ref": "./LocalBaserowListRowsService.json"
+    },
+    {
+      "$ref": "./LocalBaserowAggregateRowsService.json"
+    },
+    {
+      "$ref": "./LocalBaserowUpsertRowService.json"
+    },
+    {
+      "$ref": "./LocalBaserowDeleteRowService.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "local_baserow_get_row": "./LocalBaserowGetRowService.json",
+      "local_baserow_list_rows": "./LocalBaserowListRowsService.json",
+      "local_baserow_aggregate_rows": "./LocalBaserowAggregateRowsService.json",
+      "local_baserow_upsert_row": "./LocalBaserowUpsertRowService.json",
+      "local_baserow_delete_row": "./LocalBaserowDeleteRowService.json"
+    }
+  }
+}

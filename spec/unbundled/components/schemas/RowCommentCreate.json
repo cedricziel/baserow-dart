@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "description": "The rich text comment content."
+    }
+  },
+  "required": [
+    "message"
+  ]
+}

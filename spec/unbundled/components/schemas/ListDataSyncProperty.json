@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "unique_primary": {
+      "type": "boolean"
+    },
+    "key": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "field_type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "initially_selected": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "field_type",
+    "initially_selected",
+    "key",
+    "name",
+    "unique_primary"
+  ]
+}

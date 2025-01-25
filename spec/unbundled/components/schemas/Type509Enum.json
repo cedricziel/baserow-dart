@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "custom",
+    "sub_domain"
+  ],
+  "type": "string",
+  "description": "* `custom` - custom\n* `sub_domain` - sub_domain"
+}

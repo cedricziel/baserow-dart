@@ -1,0 +1,21 @@
+{
+  "get": {
+    "operationId": "get_settings",
+    "description": "Responds with all the admin configured settings.",
+    "tags": [
+      "Settings"
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Settings.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

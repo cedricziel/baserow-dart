@@ -1,0 +1,12 @@
+{
+  "enum": [
+    "grid",
+    "gallery",
+    "form",
+    "kanban",
+    "calendar",
+    "timeline"
+  ],
+  "type": "string",
+  "description": "* `grid` - grid\n* `gallery` - gallery\n* `form` - form\n* `kanban` - kanban\n* `calendar` - calendar\n* `timeline` - timeline"
+}

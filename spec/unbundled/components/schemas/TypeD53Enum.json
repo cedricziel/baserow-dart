@@ -1,0 +1,24 @@
+{
+  "enum": [
+    "heading",
+    "text",
+    "link",
+    "image",
+    "input_text",
+    "column",
+    "button",
+    "table",
+    "repeat",
+    "record_selector",
+    "form_container",
+    "choice",
+    "checkbox",
+    "iframe",
+    "datetime_picker",
+    "header",
+    "footer",
+    "auth_form"
+  ],
+  "type": "string",
+  "description": "* `heading` - heading\n* `text` - text\n* `link` - link\n* `image` - image\n* `input_text` - input_text\n* `column` - column\n* `button` - button\n* `table` - table\n* `repeat` - repeat\n* `record_selector` - record_selector\n* `form_container` - form_container\n* `choice` - choice\n* `checkbox` - checkbox\n* `iframe` - iframe\n* `datetime_picker` - datetime_picker\n* `header` - header\n* `footer` - footer\n* `auth_form` - auth_form"
+}

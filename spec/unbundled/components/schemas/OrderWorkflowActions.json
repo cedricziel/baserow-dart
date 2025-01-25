@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "workflow_action_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "The ids of the workflow actions in the order they are supposed to be set in"
+    },
+    "element_id": {
+      "type": "integer",
+      "description": "The element the workflow actions belong to"
+    }
+  },
+  "required": [
+    "workflow_action_ids"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "The total amount of results."
+    },
+    "next": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL to the next page."
+    },
+    "previous": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL to the previous page."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "./LinkRowValue.json"
+      }
+    }
+  },
+  "required": [
+    "count",
+    "next",
+    "previous",
+    "results"
+  ]
+}

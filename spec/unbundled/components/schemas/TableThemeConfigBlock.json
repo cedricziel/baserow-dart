@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "properties": {
+    "table_border_color": {
+      "type": "string",
+      "description": "The color of the table border",
+      "maxLength": 20
+    },
+    "table_border_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table border size"
+    },
+    "table_border_radius": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table border radius"
+    },
+    "table_header_background_color": {
+      "type": "string",
+      "description": "The background color of the table header cells",
+      "maxLength": 20
+    },
+    "table_header_text_color": {
+      "type": "string",
+      "description": "The text color of the table header cells",
+      "maxLength": 20
+    },
+    "table_header_font_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The font size of the header cells"
+    },
+    "table_header_font_family": {
+      "type": "string",
+      "description": "The font family of the table header cells",
+      "maxLength": 250
+    },
+    "table_header_text_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "table_cell_background_color": {
+      "type": "string",
+      "description": "The background color of the table cells",
+      "maxLength": 20
+    },
+    "table_cell_alternate_background_color": {
+      "type": "string",
+      "description": "The alternate background color of the table cells",
+      "maxLength": 20
+    },
+    "table_cell_alignment": {
+      "$ref": "./TableCellAlignmentEnum.json"
+    },
+    "table_cell_vertical_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table cell vertical padding"
+    },
+    "table_cell_horizontal_padding": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table cell horizontal padding"
+    },
+    "table_vertical_separator_color": {
+      "type": "string",
+      "description": "The color of the table vertical separator",
+      "maxLength": 20
+    },
+    "table_vertical_separator_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table vertical separator size"
+    },
+    "table_horizontal_separator_color": {
+      "type": "string",
+      "description": "The color of the table horizontal separator",
+      "maxLength": 20
+    },
+    "table_horizontal_separator_size": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "Table horizontal separator size"
+    }
+  }
+}

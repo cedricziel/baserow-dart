@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true
+    },
+    "thumbnails": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true
+    },
+    "visible_name": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer"
+    },
+    "mime_type": {
+      "type": "string"
+    },
+    "is_image": {
+      "type": "boolean"
+    },
+    "image_width": {
+      "type": "integer"
+    },
+    "image_height": {
+      "type": "integer"
+    },
+    "uploaded_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "image_height",
+    "image_width",
+    "is_image",
+    "mime_type",
+    "name",
+    "size",
+    "thumbnails",
+    "uploaded_at",
+    "url",
+    "visible_name"
+  ]
+}

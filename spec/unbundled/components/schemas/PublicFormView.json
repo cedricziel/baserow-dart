@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title that is displayed at the beginning of the form."
+    },
+    "description": {
+      "type": "string",
+      "description": "The description that is displayed at the beginning of the form."
+    },
+    "mode": {
+      "allOf": [
+        {
+          "$ref": "./Mode51eEnum.json"
+        }
+      ],
+      "description": "Configurable mode of the form.\n\n* `form` - form\n* `survey` - survey"
+    },
+    "cover_image": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The user file cover image that is displayed at the top of the form."
+    },
+    "logo_image": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The user file logo image that is displayed at the top of the form."
+    },
+    "submit_text": {
+      "type": "string",
+      "description": "The text displayed on the submit button."
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "./PublicFormViewFieldOptions.json"
+      }
+    },
+    "show_logo": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "fields"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "description": "Mixin to a DRF serializer class to raise an exception if data with unknown fields\nis provided to the serializer.",
+  "properties": {
+    "root": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "If set to true then actions registered in the root scope will be included when undoing or redoing."
+    },
+    "workspace": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true,
+      "description": "If set to a workspaces id then any actions directly related to that workspace will be be included when undoing or redoing."
+    },
+    "application": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true,
+      "description": "If set to an applications id then any actions directly related to that application will be be included when undoing or redoing."
+    },
+    "table": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true,
+      "description": "If set to a table id then any actions directly related to that table will be be included when undoing or redoing."
+    },
+    "view": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true,
+      "description": "If set to an view id then any actions directly related to that view will be be included when undoing or redoing."
+    },
+    "teams_in_workspace": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true,
+      "description": "If set to a workspace id then any actions directly related to that workspace will be be included when undoing or redoing."
+    }
+  }
+}

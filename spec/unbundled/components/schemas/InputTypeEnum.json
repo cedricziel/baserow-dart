@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "text",
+    "password"
+  ],
+  "type": "string",
+  "description": "* `text` - Text\n* `password` - Password"
+}

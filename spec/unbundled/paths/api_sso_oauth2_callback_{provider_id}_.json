@@ -1,0 +1,33 @@
+{
+  "get": {
+    "operationId": "oauth_provider_login_callback",
+    "description": "Processes callback from OAuth2 provider and logs the user in if successful.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "code",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the provider for which to process the callback."
+      },
+      {
+        "in": "path",
+        "name": "provider_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the provider for which to process the callback.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Auth"
+    ],
+    "responses": {
+      "302": {
+        "description": "No response body"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "permissions": {
+      "type": "string",
+      "description": "The permissions that the user has within the workspace.",
+      "maxLength": 32
+    }
+  }
+}

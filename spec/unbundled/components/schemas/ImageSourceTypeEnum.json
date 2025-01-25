@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "upload",
+    "url"
+  ],
+  "type": "string",
+  "description": "* `upload` - Upload\n* `url` - Url"
+}

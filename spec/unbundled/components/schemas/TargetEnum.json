@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "self",
+    "blank"
+  ],
+  "type": "string",
+  "description": "* `self` - Self\n* `blank` - Blank"
+}

@@ -1,0 +1,17 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DatabaseBaseApplicationUpdatePolymorphic.json"
+    },
+    {
+      "$ref": "./BuilderBaseApplicationUpdatePolymorphic.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "database": "./DatabaseBaseApplicationUpdatePolymorphic.json",
+      "builder": "./BuilderBaseApplicationUpdatePolymorphic.json"
+    }
+  }
+}

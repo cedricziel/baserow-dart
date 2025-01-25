@@ -1,0 +1,102 @@
+{
+  "get": {
+    "operationId": "audit_log_users",
+    "description": "List all users that have performed an action in the audit log.\n\nThis is a **enterprise** feature.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines which page should be returned."
+      },
+      {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string"
+        },
+        "description": "If provided only users with email that match the query will be returned."
+      },
+      {
+        "in": "query",
+        "name": "size",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Defines how many users should be returned per page."
+      },
+      {
+        "in": "query",
+        "name": "workspace_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Return users belonging to the given workspace_id."
+      }
+    ],
+    "tags": [
+      "Audit log"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PaginationSerializerAuditLogUser.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_PAGE_SIZE_LIMIT",
+                    "ERROR_INVALID_PAGE",
+                    "ERROR_INVALID_SORT_DIRECTION",
+                    "ERROR_INVALID_SORT_ATTRIBUTE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  }
+}

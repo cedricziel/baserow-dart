@@ -1,0 +1,188 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Indicates if the field is a primary field. If `true` the field cannot be deleted and the value should represent the whole row."
+    },
+    "read_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the field is a read only field. If true, it's not possible to update the cell value."
+    },
+    "immutable_type": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field type is immutable. If true, then it won't be possible to change the field type via the API."
+    },
+    "immutable_properties": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field properties are immutable. If true, then it won't be possible to change the properties and the type via the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "error": {
+      "type": "string",
+      "readOnly": true
+    },
+    "date_show_tzinfo": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "Indicates if the time zone should be shown."
+    },
+    "select_options": {
+      "type": "array",
+      "items": {
+        "$ref": "./SelectOption.json"
+      },
+      "readOnly": true,
+      "nullable": true
+    },
+    "date_format": {
+      "nullable": true,
+      "description": "EU (20/02/2020), US (02/20/2020) or ISO (2020-02-20)\n\n* `EU` - European (D/M/Y)\n* `US` - US (M/D/Y)\n* `ISO` - ISO (Y-M-D)",
+      "oneOf": [
+        {
+          "$ref": "./DateFormatEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "number_separator": {
+      "description": "The thousand and decimal separator to use for the field.\n\n* `` - No formatting\n* `SPACE_COMMA` - Space, comma\n* `SPACE_PERIOD` - Space, period\n* `COMMA_PERIOD` - Comma, period\n* `PERIOD_COMMA` - Period, comma",
+      "oneOf": [
+        {
+          "$ref": "./NumberSeparatorEnum.json"
+        },
+        {
+          "$ref": "./BlankEnum.json"
+        }
+      ]
+    },
+    "array_formula_type": {
+      "nullable": true,
+      "oneOf": [
+        {
+          "$ref": "./ArrayFormulaTypeEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "duration_format": {
+      "nullable": true,
+      "description": "The format of the duration.\n\n* `h:mm` - hours:minutes\n* `h:mm:ss` - hours:minutes:seconds\n* `h:mm:ss.s` - hours:minutes:seconds:deciseconds\n* `h:mm:ss.ss` - hours:minutes:seconds:centiseconds\n* `h:mm:ss.sss` - hours:minutes:seconds:milliseconds\n* `d h` - days:hours\n* `d h:mm` - days:hours:minutes\n* `d h:mm:ss` - days:hours:minutes:seconds\n* `d h mm` - days:hours:minutes:with_spaces\n* `d h mm ss` - days:hours:minutes:seconds:with_spaces",
+      "oneOf": [
+        {
+          "$ref": "./DurationFormatEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "nullable": {
+      "type": "boolean",
+      "readOnly": true
+    },
+    "date_time_format": {
+      "nullable": true,
+      "description": "24 (14:30) or 12 (02:30 PM)\n\n* `24` - 24 hour\n* `12` - 12 hour",
+      "oneOf": [
+        {
+          "$ref": "./DateTimeFormatEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "date_force_timezone": {
+      "type": "string",
+      "nullable": true,
+      "description": "Force a timezone for the field overriding user profile settings.",
+      "maxLength": 255
+    },
+    "number_decimal_places": {
+      "nullable": true,
+      "description": "The amount of digits allowed after the point.\n\n* `0` - 1\n* `1` - 1.0\n* `2` - 1.00\n* `3` - 1.000\n* `4` - 1.0000\n* `5` - 1.00000\n* `6` - 1.000000\n* `7` - 1.0000000\n* `8` - 1.00000000\n* `9` - 1.000000000\n* `10` - 1.0000000000",
+      "minimum": -2147483648,
+      "maximum": 2147483647,
+      "oneOf": [
+        {
+          "$ref": "./NumberDecimalPlacesEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "number_prefix": {
+      "type": "string",
+      "description": "The prefix to use for the field.",
+      "maxLength": 10
+    },
+    "date_include_time": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "Indicates if the field also includes a time."
+    },
+    "number_suffix": {
+      "type": "string",
+      "description": "The suffix to use for the field.",
+      "maxLength": 10
+    },
+    "formula": {
+      "type": "string"
+    },
+    "formula_type": {
+      "$ref": "./FormulaTypeEnum.json"
+    }
+  },
+  "required": [
+    "error",
+    "formula",
+    "id",
+    "immutable_properties",
+    "immutable_type",
+    "name",
+    "nullable",
+    "order",
+    "read_only",
+    "select_options",
+    "table_id",
+    "type"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ical_url": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "ical_url"
+  ]
+}

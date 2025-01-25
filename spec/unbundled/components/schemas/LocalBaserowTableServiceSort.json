@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "field": {
+      "type": "integer",
+      "description": "The database Field, in the LocalBaserowTableService service, which we would like to sort upon."
+    },
+    "order": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "order_by": {
+      "allOf": [
+        {
+          "$ref": "./OrderByEnum.json"
+        }
+      ],
+      "description": "Indicates the sort order direction. ASC (Ascending) is from A to Z and DESC (Descending) is from Z to A.\n\n* `ASC` - Ascending\n* `DESC` - Descending"
+    }
+  },
+  "required": [
+    "field",
+    "id",
+    "order"
+  ]
+}

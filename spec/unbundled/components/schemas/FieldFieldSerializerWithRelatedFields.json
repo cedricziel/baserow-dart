@@ -1,0 +1,117 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./TextFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./LongTextFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./URLFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./EmailFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./NumberFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./RatingFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./BooleanFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./DateFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./LastModifiedFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./LastModifiedByFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./CreatedOnFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./CreatedByFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./DurationFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./LinkRowFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./FileFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./SingleSelectFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./MultipleSelectFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./PhoneNumberFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./FormulaFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./CountFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./RollupFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./LookupFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./MultipleCollaboratorsFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./UUIDFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./AutonumberFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./PasswordFieldFieldSerializerWithRelatedFields.json"
+    },
+    {
+      "$ref": "./AIFieldFieldSerializerWithRelatedFields.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "text": "./TextFieldFieldSerializerWithRelatedFields.json",
+      "long_text": "./LongTextFieldFieldSerializerWithRelatedFields.json",
+      "url": "./URLFieldFieldSerializerWithRelatedFields.json",
+      "email": "./EmailFieldFieldSerializerWithRelatedFields.json",
+      "number": "./NumberFieldFieldSerializerWithRelatedFields.json",
+      "rating": "./RatingFieldFieldSerializerWithRelatedFields.json",
+      "boolean": "./BooleanFieldFieldSerializerWithRelatedFields.json",
+      "date": "./DateFieldFieldSerializerWithRelatedFields.json",
+      "last_modified": "./LastModifiedFieldFieldSerializerWithRelatedFields.json",
+      "last_modified_by": "./LastModifiedByFieldFieldSerializerWithRelatedFields.json",
+      "created_on": "./CreatedOnFieldFieldSerializerWithRelatedFields.json",
+      "created_by": "./CreatedByFieldFieldSerializerWithRelatedFields.json",
+      "duration": "./DurationFieldFieldSerializerWithRelatedFields.json",
+      "link_row": "./LinkRowFieldFieldSerializerWithRelatedFields.json",
+      "file": "./FileFieldFieldSerializerWithRelatedFields.json",
+      "single_select": "./SingleSelectFieldFieldSerializerWithRelatedFields.json",
+      "multiple_select": "./MultipleSelectFieldFieldSerializerWithRelatedFields.json",
+      "phone_number": "./PhoneNumberFieldFieldSerializerWithRelatedFields.json",
+      "formula": "./FormulaFieldFieldSerializerWithRelatedFields.json",
+      "count": "./CountFieldFieldSerializerWithRelatedFields.json",
+      "rollup": "./RollupFieldFieldSerializerWithRelatedFields.json",
+      "lookup": "./LookupFieldFieldSerializerWithRelatedFields.json",
+      "multiple_collaborators": "./MultipleCollaboratorsFieldFieldSerializerWithRelatedFields.json",
+      "uuid": "./UUIDFieldFieldSerializerWithRelatedFields.json",
+      "autonumber": "./AutonumberFieldFieldSerializerWithRelatedFields.json",
+      "password": "./PasswordFieldFieldSerializerWithRelatedFields.json",
+      "ai": "./AIFieldFieldSerializerWithRelatedFields.json"
+    }
+  }
+}

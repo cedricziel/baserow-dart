@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "ASC",
+    "DESC"
+  ],
+  "type": "string",
+  "description": "* `ASC` - Ascending\n* `DESC` - Descending"
+}

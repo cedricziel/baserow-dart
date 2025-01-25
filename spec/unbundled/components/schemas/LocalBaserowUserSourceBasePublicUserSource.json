@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "description": "Basic user source serializer mostly for returned values.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "uid": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Unique id for this user source."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the user_source."
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$",
+      "readOnly": true,
+      "description": "Lowest first."
+    },
+    "auth_providers": {
+      "type": "array",
+      "items": {
+        "$ref": "./App_Auth_ProviderAppAuthProvider.json"
+      },
+      "description": "Auth providers related to this user source."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "email_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field to use as email for the user account."
+    },
+    "name_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user name."
+    },
+    "role_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field that contains the user role."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "order",
+    "type",
+    "uid"
+  ]
+}

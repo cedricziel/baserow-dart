@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "readOnly": true,
+      "description": "If provided, then this value will be visible above the field input."
+    },
+    "description": {
+      "type": "string",
+      "description": "If provided, then this value be will be shown under the field name."
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Indicates whether the field is required for the visitor to fill out."
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The order that the field has in the form. Lower value is first."
+    },
+    "field": {
+      "allOf": [
+        {
+          "$ref": "./PublicFormViewField.json"
+        }
+      ],
+      "readOnly": true,
+      "description": "The properties of the related field. These can be used to construct the correct input. Additional properties could be added depending on the field type."
+    },
+    "show_when_matching_conditions": {
+      "type": "boolean",
+      "description": "Indicates whether this field is visible when the conditions are met."
+    },
+    "condition_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all (AND) or any (OR) of the conditions should match before shown.\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "./FormViewFieldOptionsCondition.json"
+      }
+    },
+    "condition_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "./FormViewFieldOptionsConditionGroup.json"
+      }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "$ref": "./FormViewFieldOptionsConditionGroup.json"
+      }
+    },
+    "field_component": {
+      "type": "string",
+      "description": "Indicates which field input component is used in the form. The value is only used in the frontend, and can differ per field.",
+      "maxLength": 32
+    }
+  },
+  "required": [
+    "field",
+    "name"
+  ]
+}

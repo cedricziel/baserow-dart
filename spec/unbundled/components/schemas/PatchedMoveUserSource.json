@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "description": "Serializer used when moving a user source.",
+  "properties": {
+    "before_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "If provided, the user_source is moved before the user_source with this Id. Otherwise the user_source is placed at the end of the page."
+    }
+  }
+}

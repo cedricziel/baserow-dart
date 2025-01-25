@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "field_options": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "./GridViewFieldOptions.json"
+      },
+      "description": "An object containing the field id as key and the properties related to view as value."
+    },
+    "row_metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "./RowMetadata.json"
+      },
+      "description": "An object keyed by row id with a value being an object containing additional metadata about that row. A row might not have metadata and will not be present as a key if so."
+    },
+    "count": {
+      "type": "integer",
+      "description": "The total amount of results."
+    },
+    "next": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL to the next page."
+    },
+    "previous": {
+      "type": "string",
+      "format": "uri",
+      "nullable": true,
+      "description": "URL to the previous page."
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "./ExampleRowResponse.json"
+      }
+    }
+  },
+  "required": [
+    "count",
+    "next",
+    "previous",
+    "results"
+  ]
+}

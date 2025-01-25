@@ -1,0 +1,65 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DuplicateApplicationJobCreateJob.json"
+    },
+    {
+      "$ref": "./InstallTemplateJobCreateJob.json"
+    },
+    {
+      "$ref": "./CreateSnapshotJobCreateJob.json"
+    },
+    {
+      "$ref": "./RestoreSnapshotJobCreateJob.json"
+    },
+    {
+      "$ref": "./ExportApplicationsJobCreateJob.json"
+    },
+    {
+      "$ref": "./ImportApplicationsJobCreateJob.json"
+    },
+    {
+      "$ref": "./AirtableImportJobCreateJob.json"
+    },
+    {
+      "$ref": "./FileImportJobCreateJob.json"
+    },
+    {
+      "$ref": "./DuplicateTableJobCreateJob.json"
+    },
+    {
+      "$ref": "./DuplicateFieldJobCreateJob.json"
+    },
+    {
+      "$ref": "./SyncDataSyncTableJobCreateJob.json"
+    },
+    {
+      "$ref": "./DuplicatePageJobCreateJob.json"
+    },
+    {
+      "$ref": "./PublishDomainJobCreateJob.json"
+    },
+    {
+      "$ref": "./AuditLogExportJobCreateJob.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "duplicate_application": "./DuplicateApplicationJobCreateJob.json",
+      "install_template": "./InstallTemplateJobCreateJob.json",
+      "create_snapshot": "./CreateSnapshotJobCreateJob.json",
+      "restore_snapshot": "./RestoreSnapshotJobCreateJob.json",
+      "export_applications": "./ExportApplicationsJobCreateJob.json",
+      "import_applications": "./ImportApplicationsJobCreateJob.json",
+      "airtable": "./AirtableImportJobCreateJob.json",
+      "file_import": "./FileImportJobCreateJob.json",
+      "duplicate_table": "./DuplicateTableJobCreateJob.json",
+      "duplicate_field": "./DuplicateFieldJobCreateJob.json",
+      "sync_data_sync_table": "./SyncDataSyncTableJobCreateJob.json",
+      "duplicate_page": "./DuplicatePageJobCreateJob.json",
+      "publish_domain": "./PublishDomainJobCreateJob.json",
+      "audit_log_export": "./AuditLogExportJobCreateJob.json"
+    }
+  }
+}

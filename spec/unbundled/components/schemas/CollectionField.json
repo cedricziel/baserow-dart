@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "description": "This serializer transform the flat properties object from/to a config dict property.\nThis allows us to see the field on the frontend side as a simple polymorphic\nobject.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "uid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the field.",
+      "maxLength": 225
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the field.",
+      "maxLength": 225
+    },
+    "styles": {
+      "nullable": true,
+      "description": "The theme overrides for this field"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "type"
+  ]
+}

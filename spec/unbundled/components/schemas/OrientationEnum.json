@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "vertical",
+    "horizontal"
+  ],
+  "type": "string",
+  "description": "* `vertical` - Vertical\n* `horizontal` - Horizontal"
+}

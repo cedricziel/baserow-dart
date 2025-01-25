@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "new_primary_field_id": {
+      "type": "integer",
+      "description": "The ID of the new primary field."
+    }
+  },
+  "required": [
+    "new_primary_field_id"
+  ]
+}

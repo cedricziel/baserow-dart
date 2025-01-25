@@ -1,0 +1,108 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./TypeBc4Enum.json"
+    },
+    "ownership_type": {
+      "allOf": [
+        {
+          "$ref": "./OwnershipTypeEnum.json"
+        }
+      ],
+      "default": "collaborative"
+    },
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all the rows should apply to all filters (AND) or to any filter (OR).\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "filters_disabled": {
+      "type": "boolean",
+      "description": "Allows users to see results unfiltered while still keeping the filters saved for the view."
+    },
+    "title": {
+      "type": "string",
+      "description": "The title that is displayed at the beginning of the form."
+    },
+    "description": {
+      "type": "string",
+      "description": "The description that is displayed at the beginning of the form."
+    },
+    "mode": {
+      "allOf": [
+        {
+          "$ref": "./Mode51eEnum.json"
+        }
+      ],
+      "description": "Configurable mode of the form.\n\n* `form` - form\n* `survey` - survey"
+    },
+    "cover_image": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The cover image that must be displayed at the top of the form."
+    },
+    "logo_image": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The logo image that must be displayed at the top of the form."
+    },
+    "submit_text": {
+      "type": "string",
+      "description": "The text displayed on the submit button."
+    },
+    "submit_action": {
+      "allOf": [
+        {
+          "$ref": "./SubmitActionEnum.json"
+        }
+      ],
+      "description": "The action that must be performed after the visitor has filled out the form.\n\n* `MESSAGE` - Message\n* `REDIRECT` - Redirect"
+    },
+    "submit_action_message": {
+      "type": "string",
+      "description": "If the `submit_action` is MESSAGE, then this message will be shown to the visitor after submitting the form."
+    },
+    "submit_action_redirect_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "If the `submit_action` is REDIRECT,then the visitors will be redirected to the this URL after submitting the form.",
+      "maxLength": 2000
+    },
+    "receive_notification_on_submit": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "A boolean indicating if the current user should be notified when the form is submitted."
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Indicates whether the view is publicly accessible to visitors."
+    },
+    "slug": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The unique slug that can be used to construct a public URL."
+    }
+  },
+  "required": [
+    "name",
+    "receive_notification_on_submit",
+    "slug",
+    "type"
+  ]
+}

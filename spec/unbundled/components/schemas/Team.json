@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "description": "Mixin to a DRF serializer class to raise an exception if data with unknown fields\nis provided to the serializer.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "A human friendly name for this team.",
+      "maxLength": 160
+    },
+    "default_role": {
+      "type": "string",
+      "nullable": true,
+      "description": "The uid of the role you want to assign to the team in the given workspace. You can omit this property if you want to remove the role."
+    },
+    "subjects": {
+      "type": "array",
+      "items": {
+        "$ref": "./TeamSubject.json"
+      },
+      "default": [],
+      "description": "An array of subject ID/type objects to be used during team create and update."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

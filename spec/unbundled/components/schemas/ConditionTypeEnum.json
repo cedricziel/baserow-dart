@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "AND",
+    "OR"
+  ],
+  "type": "string",
+  "description": "* `AND` - And\n* `OR` - Or"
+}

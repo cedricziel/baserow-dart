@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "description": "Style overrides for this element.",
+  "properties": {
+    "login_button": {
+      "allOf": [
+        {
+          "$ref": "./ButtonThemeConfigBlock.json"
+        }
+      ],
+      "description": "Styles overrides for login_button"
+    },
+    "input": {
+      "allOf": [
+        {
+          "$ref": "./InputThemeConfigBlock.json"
+        }
+      ],
+      "description": "Styles overrides for input"
+    }
+  }
+}

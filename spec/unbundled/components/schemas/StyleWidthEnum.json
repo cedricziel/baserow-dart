@@ -1,0 +1,11 @@
+{
+  "enum": [
+    "full",
+    "full-width",
+    "normal",
+    "medium",
+    "small"
+  ],
+  "type": "string",
+  "description": "* `full` - Full\n* `full-width` - Full Width\n* `normal` - Normal\n* `medium` - Medium\n* `small` - Small"
+}

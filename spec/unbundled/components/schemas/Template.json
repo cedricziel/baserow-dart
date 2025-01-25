@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 64
+    },
+    "slug": {
+      "type": "string",
+      "description": "The template slug that is used to match the template with the JSON file name.",
+      "maxLength": 50,
+      "pattern": "^[-a-zA-Z0-9_]+$"
+    },
+    "icon": {
+      "type": "string",
+      "description": "The icon class name that can be used for displaying purposes.",
+      "maxLength": 32
+    },
+    "keywords": {
+      "type": "string",
+      "description": "Keywords related to the template that can be used for search."
+    },
+    "workspace_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The group containing the applications related to the template. The read endpoints related to that group are publicly accessible for preview purposes.",
+      "readOnly": true
+    },
+    "is_default": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Indicates if the template must be selected by default. The web-frontend automatically selects the first `is_default` template that it can find."
+    }
+  },
+  "required": [
+    "icon",
+    "id",
+    "is_default",
+    "name",
+    "slug",
+    "workspace_id"
+  ]
+}

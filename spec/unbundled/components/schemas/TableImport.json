@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {},
+      "description": "A list of rows you want to add to the specified table. Each row is a list of values, one for each **writable** field. The field values must be ordered according to the field order in the table. All values must be compatible with the corresponding field type.\n\nEx: \n```json\n[\n  [\"row1_field1_value\", \"row1_field2_value\"],\n  [\"row2_field1_value\", \"row2_field2_value\"],\n]\n```\nfor adding two rows to a table with two writable fields.",
+      "minItems": 1
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

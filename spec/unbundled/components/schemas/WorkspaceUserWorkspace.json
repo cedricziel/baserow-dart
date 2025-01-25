@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "description": "This serializers includes relevant fields of the Workspace model, but also\nsome WorkspaceUser specific fields related to the workspace user relation.\n\nAdditionally, the list of users are included for each workspace.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "Workspace id."
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Workspace name."
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "./WorkspaceUser.json"
+      },
+      "readOnly": true,
+      "description": "List of all workspace users."
+    },
+    "order": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The requesting user's order within the workspace users."
+    },
+    "permissions": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The requesting user's permissions for the workspace."
+    },
+    "unread_notifications_count": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The number of unread notifications for the requesting user."
+    },
+    "generative_ai_models_enabled": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Generative AI models available in this workspace."
+    }
+  },
+  "required": [
+    "generative_ai_models_enabled",
+    "id",
+    "name",
+    "order",
+    "permissions",
+    "unread_notifications_count",
+    "users"
+  ]
+}

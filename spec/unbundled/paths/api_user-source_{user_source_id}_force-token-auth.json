@@ -1,0 +1,60 @@
+{
+  "post": {
+    "operationId": "user_source_force_token_auth",
+    "description": "Force authenticates an existing user based on their ID. If successful, an access token and a refresh token will be returned.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "user_source_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The user source to use to authenticate the user.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "User sources"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "type": "string",
+                  "description": "'access_token' can be used to authorize for other endpoints that require authorization. This token will be valid for 10 minutes."
+                },
+                "refresh_token": {
+                  "type": "string",
+                  "description": "'refresh_token' can be used to get a new valid 'access_token'. This token will be valid for 168 hours."
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "An active user with the provided ID could not be found."
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

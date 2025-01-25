@@ -1,0 +1,236 @@
+{
+  "type": "object",
+  "description": "Basic element serializer mostly for returned values.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "page_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the element."
+    },
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$",
+      "readOnly": true,
+      "description": "Lowest first."
+    },
+    "parent_element_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The parent element, if inside a container.",
+      "readOnly": true
+    },
+    "place_in_container": {
+      "type": "string",
+      "nullable": true,
+      "description": "The place in the container.",
+      "maxLength": 255
+    },
+    "visibility": {
+      "$ref": "./Visibility789Enum.json"
+    },
+    "styles": {
+      "$ref": "./InputConfigBlock.json"
+    },
+    "style_border_top_color": {
+      "type": "string",
+      "description": "Top border color.",
+      "maxLength": 20
+    },
+    "style_border_top_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the top border."
+    },
+    "style_padding_top": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the top border."
+    },
+    "style_margin_top": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the top border."
+    },
+    "style_border_bottom_color": {
+      "type": "string",
+      "description": "Bottom border color",
+      "maxLength": 20
+    },
+    "style_border_bottom_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the bottom border."
+    },
+    "style_padding_bottom": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the bottom border."
+    },
+    "style_margin_bottom": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the bottom border."
+    },
+    "style_border_left_color": {
+      "type": "string",
+      "description": "Left border color",
+      "maxLength": 20
+    },
+    "style_border_left_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the left border."
+    },
+    "style_padding_left": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the left border."
+    },
+    "style_margin_left": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the left border."
+    },
+    "style_border_right_color": {
+      "type": "string",
+      "description": "Right border color",
+      "maxLength": 20
+    },
+    "style_border_right_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the right border."
+    },
+    "style_padding_right": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the right border."
+    },
+    "style_margin_right": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the right border."
+    },
+    "style_background": {
+      "allOf": [
+        {
+          "$ref": "./StyleBackgroundEnum.json"
+        }
+      ],
+      "description": "What type of background the element should have.\n\n* `none` - None\n* `color` - Color\n* `image` - Image"
+    },
+    "style_background_color": {
+      "type": "string",
+      "description": "The background color if `style_background` is color.",
+      "maxLength": 20
+    },
+    "style_background_file": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The background image file"
+    },
+    "style_background_mode": {
+      "allOf": [
+        {
+          "$ref": "./StyleBackgroundModeEnum.json"
+        }
+      ],
+      "description": "The mode of the background image\n\n* `tile` - Tile\n* `fill` - Fill\n* `fit` - Fit"
+    },
+    "style_width": {
+      "allOf": [
+        {
+          "$ref": "./StyleWidthEnum.json"
+        }
+      ],
+      "description": "Indicates the width of the element.\n\n* `full` - Full\n* `full-width` - Full Width\n* `normal` - Normal\n* `medium` - Medium\n* `small` - Small"
+    },
+    "role_type": {
+      "$ref": "./RoleTypeEnum.json"
+    },
+    "roles": {
+      "description": "User roles associated with this element, used in conjunction with role_type."
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "The text label for this input"
+    },
+    "default_value": {
+      "type": "string",
+      "default": "",
+      "description": "This text input's default value."
+    },
+    "required": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this form element is a required field."
+    },
+    "validation_type": {
+      "allOf": [
+        {
+          "$ref": "./ValidationTypeEnum.json"
+        }
+      ],
+      "description": "Optionally set the validation type to use when applying form data.\n\n* `any` - Any\n* `email` - Email\n* `integer` - Integer"
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "",
+      "description": "The placeholder text which should be applied to the element."
+    },
+    "is_multiline": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this text input is multiline."
+    },
+    "rows": {
+      "type": "integer",
+      "maximum": 100,
+      "minimum": 1,
+      "default": 3,
+      "description": "Number of rows displayed by the rendered input element"
+    },
+    "input_type": {
+      "allOf": [
+        {
+          "$ref": "./InputTypeEnum.json"
+        }
+      ],
+      "default": "text",
+      "description": "The type of the input, not applicable for multiline inputs.\n\n* `text` - Text\n* `password` - Password"
+    }
+  },
+  "required": [
+    "id",
+    "order",
+    "page_id",
+    "parent_element_id",
+    "type"
+  ]
+}

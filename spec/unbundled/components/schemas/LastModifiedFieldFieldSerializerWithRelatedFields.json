@@ -1,0 +1,102 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Indicates if the field is a primary field. If `true` the field cannot be deleted and the value should represent the whole row."
+    },
+    "read_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the field is a read only field. If true, it's not possible to update the cell value."
+    },
+    "immutable_type": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field type is immutable. If true, then it won't be possible to change the field type via the API."
+    },
+    "immutable_properties": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field properties are immutable. If true, then it won't be possible to change the properties and the type via the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "related_fields": {
+      "type": "array",
+      "items": {
+        "$ref": "./Field.json"
+      },
+      "readOnly": true,
+      "description": "A list of related fields which also changed."
+    },
+    "date_format": {
+      "allOf": [
+        {
+          "$ref": "./DateFormatEnum.json"
+        }
+      ],
+      "description": "EU (20/02/2020), US (02/20/2020) or ISO (2020-02-20)\n\n* `EU` - European (D/M/Y)\n* `US` - US (M/D/Y)\n* `ISO` - ISO (Y-M-D)"
+    },
+    "date_include_time": {
+      "type": "boolean",
+      "description": "Indicates if the field also includes a time."
+    },
+    "date_time_format": {
+      "allOf": [
+        {
+          "$ref": "./DateTimeFormatEnum.json"
+        }
+      ],
+      "description": "24 (14:30) or 12 (02:30 PM)\n\n* `24` - 24 hour\n* `12` - 12 hour"
+    },
+    "date_show_tzinfo": {
+      "type": "boolean",
+      "description": "Indicates if the timezone should be shown."
+    },
+    "date_force_timezone": {
+      "type": "string",
+      "nullable": true,
+      "description": "Force a timezone for the field overriding user profile settings.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "id",
+    "immutable_properties",
+    "immutable_type",
+    "order",
+    "read_only",
+    "related_fields",
+    "table_id",
+    "type"
+  ]
+}

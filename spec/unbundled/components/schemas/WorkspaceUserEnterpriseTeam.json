@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "description": "A serializer for the `WorkspaceUserSerializer.teams` field.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The unique identifier for this team."
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The team name that this workspace user belongs to."
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ]
+}

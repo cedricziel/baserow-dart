@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "$ref": "./DataSyncSyncedProperty.json"
+      }
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the table was last synced."
+    },
+    "last_error": {
+      "type": "string",
+      "nullable": true
+    },
+    "ical_url": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "ical_url",
+    "id",
+    "synced_properties",
+    "type"
+  ]
+}

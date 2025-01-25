@@ -1,0 +1,21 @@
+{
+  "enum": [
+    "invalid",
+    "text",
+    "char",
+    "button",
+    "link",
+    "date_interval",
+    "duration",
+    "date",
+    "boolean",
+    "number",
+    "array",
+    "single_select",
+    "multiple_select",
+    "single_file",
+    "url"
+  ],
+  "type": "string",
+  "description": "* `invalid` - invalid\n* `text` - text\n* `char` - char\n* `button` - button\n* `link` - link\n* `date_interval` - date_interval\n* `duration` - duration\n* `date` - date\n* `boolean` - boolean\n* `number` - number\n* `array` - array\n* `single_select` - single_select\n* `multiple_select` - multiple_select\n* `single_file` - single_file\n* `url` - url"
+}

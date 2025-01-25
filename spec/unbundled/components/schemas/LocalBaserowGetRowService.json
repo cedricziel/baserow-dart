@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "description": "Basic service serializer mostly for returned values.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "integration_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow integration we want the data for."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the service."
+    },
+    "schema": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "The schema of the service."
+    },
+    "context_data": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "The context data of the service."
+    },
+    "context_data_schema": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "The schema context data of the service."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "view_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow view we want the data for."
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "$ref": "./LocalBaserowTableServiceFilter.json"
+      }
+    },
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all the rows should apply to all filters (AND) or to any filter (OR).\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "search_query": {
+      "type": "string",
+      "description": "Any search queries to apply to the service when it is dispatched."
+    },
+    "row_id": {
+      "type": "string",
+      "description": "A formula for defining the intended row."
+    }
+  },
+  "required": [
+    "context_data",
+    "context_data_schema",
+    "id",
+    "schema",
+    "type"
+  ]
+}

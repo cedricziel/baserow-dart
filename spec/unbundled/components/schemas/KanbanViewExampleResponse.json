@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "./KanbanViewExampleResponseStack.json"
+      },
+      "description": "Every select option related to the view's single select field can have its own entry like this."
+    },
+    "field_options": {
+      "type": "array",
+      "items": {
+        "$ref": "./KanbanViewFieldOptions.json"
+      }
+    },
+    "row_metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "./RowMetadata.json"
+      },
+      "description": "An object keyed by row id with a value being an object containing additional metadata about that row. A row might not have metadata and will not be present as a key if so."
+    }
+  },
+  "required": [
+    "field_options",
+    "rows"
+  ]
+}

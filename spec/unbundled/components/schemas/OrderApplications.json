@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "application_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Application ids in the desired order."
+    }
+  },
+  "required": [
+    "application_ids"
+  ]
+}

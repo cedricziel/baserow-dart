@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "action_type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "user": {
+      "type": "string",
+      "readOnly": true
+    },
+    "workspace": {
+      "type": "string",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "description": {
+      "type": "string",
+      "readOnly": true
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ip_address": {
+      "type": "string",
+      "readOnly": true,
+      "nullable": true
+    }
+  },
+  "required": [
+    "action_type",
+    "description",
+    "id",
+    "ip_address",
+    "timestamp",
+    "type",
+    "user",
+    "workspace"
+  ]
+}

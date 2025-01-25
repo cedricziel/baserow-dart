@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "before_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "If provided, the integration is moved before the integration with this Id. Otherwise the integration is placed at the end of the page."
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "description": "Basic app_auth_provider serializer mostly for returned values.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the app_auth_provider."
+    },
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "domain": {
+      "type": "string",
+      "nullable": true,
+      "description": "The email domain registered with this provider.",
+      "maxLength": 255
+    },
+    "metadata": {
+      "type": "string",
+      "description": "The SAML metadata XML provided by the IdP."
+    },
+    "is_verified": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Whether or not a user sign in correctly with this SAML provider."
+    },
+    "email_attr_key": {
+      "type": "string",
+      "description": "The key in the SAML response that contains the email address of the user."
+    },
+    "first_name_attr_key": {
+      "type": "string",
+      "description": "The key in the SAML response that contains the first name of the user."
+    },
+    "last_name_attr_key": {
+      "type": "string",
+      "description": "The key in the SAML response that contains the last name of the user. If this is not set, the first name attr will be used as full name."
+    }
+  },
+  "required": [
+    "id",
+    "is_verified",
+    "metadata",
+    "type"
+  ]
+}

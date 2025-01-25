@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "description": "Basic service serializer mostly for returned values.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "integration_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow integration we want the data for."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the service."
+    },
+    "schema": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "The schema of the service."
+    },
+    "context_data": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "The context data of the service."
+    },
+    "context_data_schema": {
+      "type": "object",
+      "additionalProperties": {},
+      "readOnly": true,
+      "description": "The schema context data of the service."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "field_mappings": {
+      "type": "array",
+      "items": {
+        "$ref": "./LocalBaserowTableServiceFieldMapping.json"
+      },
+      "description": "The field mapping associated with this service."
+    },
+    "row_id": {
+      "type": "string",
+      "description": "A formula for defining the intended row."
+    }
+  },
+  "required": [
+    "context_data",
+    "context_data_schema",
+    "id",
+    "schema",
+    "type"
+  ]
+}

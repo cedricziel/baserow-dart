@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Indicates if the field is a primary field. If `true` the field cannot be deleted and the value should represent the whole row."
+    },
+    "read_only": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Indicates whether the field is a read only field. If true, it's not possible to update the cell value."
+    },
+    "immutable_type": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field type is immutable. If true, then it won't be possible to change the field type via the API."
+    },
+    "immutable_properties": {
+      "type": "boolean",
+      "readOnly": true,
+      "nullable": true,
+      "description": "Indicates whether the field properties are immutable. If true, then it won't be possible to change the properties and the type via the API."
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "link_row_table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the linked table."
+    },
+    "link_row_related_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the related field.",
+      "readOnly": true
+    },
+    "link_row_table": {
+      "type": "integer",
+      "nullable": true,
+      "description": "(Deprecated) The id of the linked table."
+    },
+    "link_row_related_field": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "(Deprecated) The id of the related field."
+    },
+    "link_row_limit_selection_view_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The ID of the view in the related table where row selection must be limited to."
+    },
+    "link_row_table_primary_field": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The primary field of the table that is linked to."
+    }
+  },
+  "required": [
+    "id",
+    "immutable_properties",
+    "immutable_type",
+    "link_row_related_field",
+    "link_row_related_field_id",
+    "link_row_table_primary_field",
+    "name",
+    "order",
+    "read_only",
+    "table_id",
+    "type"
+  ]
+}

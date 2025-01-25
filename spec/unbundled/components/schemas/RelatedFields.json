@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "related_fields": {
+      "type": "array",
+      "items": {
+        "$ref": "./Field.json"
+      },
+      "readOnly": true,
+      "description": "A list of related fields which also changed."
+    }
+  },
+  "required": [
+    "related_fields"
+  ]
+}

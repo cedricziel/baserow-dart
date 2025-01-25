@@ -1,0 +1,29 @@
+{
+  "get": {
+    "operationId": "dashboard",
+    "description": "Lists all the relevant user information that for example could be shown on a dashboard. It will contain all the pending workspace invitations for that user.",
+    "tags": [
+      "User"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Dashboard.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

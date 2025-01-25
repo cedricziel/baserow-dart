@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "description": "This serializer is used for displaying the invitation to the user that doesn't\nhave access to the workspace yet, so not for invitation management purposes.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "invited_by": {
+      "type": "string",
+      "readOnly": true
+    },
+    "workspace": {
+      "type": "string",
+      "readOnly": true
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address of the user that the invitation is meant for. Only a user with that email address can accept it.",
+      "maxLength": 254
+    },
+    "message": {
+      "type": "string",
+      "readOnly": true,
+      "description": "An optional message that the invitor can provide. This will be visible to the receiver of the invitation."
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "email_exists": {
+      "type": "boolean",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "created_on",
+    "email",
+    "email_exists",
+    "id",
+    "invited_by",
+    "message",
+    "workspace"
+  ]
+}

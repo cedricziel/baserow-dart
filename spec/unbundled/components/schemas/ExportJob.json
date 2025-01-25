@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "description": "When mixed in to a model serializer for an ExportJob this will add an url field\nwith the actual usable url of the export job's file (if it has one).",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table": {
+      "type": "integer",
+      "nullable": true
+    },
+    "view": {
+      "type": "integer",
+      "nullable": true
+    },
+    "exporter_type": {
+      "type": "string"
+    },
+    "state": {
+      "$ref": "./StateEnum.json"
+    },
+    "status": {
+      "type": "string",
+      "readOnly": true,
+      "description": "DEPRECATED: Use state instead"
+    },
+    "exported_file_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "progress_percentage": {
+      "type": "number",
+      "format": "double"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "created_at",
+    "exporter_type",
+    "id",
+    "state",
+    "status",
+    "url"
+  ]
+}

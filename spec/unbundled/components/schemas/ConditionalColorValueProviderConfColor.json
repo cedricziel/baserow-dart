@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for this condition."
+    },
+    "color": {
+      "type": "string",
+      "description": "The color the decorator should take if the defined conditions apply."
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "$ref": "./ConditionalColorValueProviderConfColorFilter.json"
+      },
+      "description": "A list of conditions that the row must meet to get the selected color. This list of conditions can be empty, in that case, this color will always match the row values."
+    },
+    "filter_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "./ConditionalColorValueProviderConfColorFilterGroup.json"
+      },
+      "description": "A list of filter groups that the row must meet to get the selected color. "
+    },
+    "operator": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "default": "AND",
+      "description": "The boolean operator used to group all conditions.\n\n* `AND` - And\n* `OR` - Or"
+    }
+  },
+  "required": [
+    "color",
+    "filters",
+    "id"
+  ]
+}

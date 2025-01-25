@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "text_default": {
+      "type": "string",
+      "description": "If set, this value is going to be added every time a new row created.",
+      "maxLength": 255
+    }
+  }
+}

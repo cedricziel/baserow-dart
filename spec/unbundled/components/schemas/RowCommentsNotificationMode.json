@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "mode": {
+      "allOf": [
+        {
+          "$ref": "./Mode884Enum.json"
+        }
+      ],
+      "description": "The mode to use to receive notifications for new comments on a table row.\n\n* `all` - all\n* `mentions` - mentions"
+    }
+  },
+  "required": [
+    "mode"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "workspaces": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Workspace ids in the desired order."
+    }
+  },
+  "required": [
+    "workspaces"
+  ]
+}

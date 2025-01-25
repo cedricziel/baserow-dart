@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "table_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "table": {
+      "$ref": "./TableWithoutDataSync.json"
+    },
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all the rows should apply to all filters (AND) or to any filter (OR).\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "$ref": "./ViewFilter.json"
+      }
+    },
+    "filter_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "./ViewFilterGroup.json"
+      }
+    },
+    "sortings": {
+      "type": "array",
+      "items": {
+        "$ref": "./ViewSort.json"
+      }
+    },
+    "group_bys": {
+      "type": "array",
+      "items": {
+        "$ref": "./ViewGroupBy.json"
+      }
+    },
+    "decorations": {
+      "type": "array",
+      "items": {
+        "$ref": "./ViewDecoration.json"
+      }
+    },
+    "filters_disabled": {
+      "type": "boolean",
+      "description": "Allows users to see results unfiltered while still keeping the filters saved for the view."
+    },
+    "public_view_has_password": {
+      "type": "boolean",
+      "description": "Indicates whether the public view is password protected or not.\n\n:return: True if the public view is password protected, False otherwise.",
+      "readOnly": true
+    },
+    "show_logo": {
+      "type": "boolean"
+    },
+    "ownership_type": {
+      "type": "string"
+    },
+    "owned_by_id": {
+      "type": "integer"
+    },
+    "row_identifier_type": {
+      "$ref": "./RowIdentifierTypeEnum.json"
+    },
+    "row_height_size": {
+      "$ref": "./RowHeightSizeEnum.json"
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Indicates whether the view is publicly accessible to visitors."
+    },
+    "slug": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The unique slug that can be used to construct a public URL."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "order",
+    "ownership_type",
+    "public_view_has_password",
+    "slug",
+    "table",
+    "table_id",
+    "type"
+  ]
+}

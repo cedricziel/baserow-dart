@@ -1,0 +1,77 @@
+{
+  "get": {
+    "operationId": "list_public_builder_page_data_sources",
+    "description": "Lists all the data_sources of the page related to the provided parameter if the builder is public.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "page_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Returns only the data_sources of the page related to the provided Id if the related builder is public.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Builder data sources"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "../components/schemas/Integration_ServicePublicDataSource.json"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_PAGE_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "enum": [
+    "auth.User",
+    "anonymous",
+    "user_source.user",
+    "core.Token",
+    "baserow_enterprise.Team"
+  ],
+  "type": "string",
+  "description": "* `auth.User` - auth.User\n* `anonymous` - anonymous\n* `user_source.user` - user_source.user\n* `core.Token` - core.Token\n* `baserow_enterprise.Team` - baserow_enterprise.Team"
+}

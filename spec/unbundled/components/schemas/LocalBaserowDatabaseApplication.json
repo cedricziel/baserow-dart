@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "workspace": {
+      "allOf": [
+        {
+          "$ref": "./Workspace.json"
+        }
+      ],
+      "description": "The workspace that the application belongs to."
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "$ref": "./TableSerializerWithFields.json"
+      },
+      "description": "This field is specific to the `database` application and contains an array of tables that are in the database."
+    },
+    "views": {
+      "type": "array",
+      "items": {
+        "$ref": "./LocalBaserowView.json"
+      },
+      "description": "This field is specific to the `database` application and contains an array of views that are in the tables."
+    }
+  },
+  "required": [
+    "created_on",
+    "id",
+    "name",
+    "order",
+    "tables",
+    "type",
+    "views",
+    "workspace"
+  ]
+}

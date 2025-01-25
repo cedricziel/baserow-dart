@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "description": "Serializer used for impersonation.",
+  "properties": {
+    "user": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "user"
+  ]
+}

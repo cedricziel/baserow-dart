@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "path": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "path_params": {
+      "type": "array",
+      "items": {
+        "$ref": "./PathParam.json"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "path"
+  ]
+}

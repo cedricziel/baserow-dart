@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "An id of a select field of the table. The value provider return the color of the selected option for each row."
+    }
+  },
+  "required": [
+    "field_id"
+  ]
+}

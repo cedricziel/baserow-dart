@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the related field."
+    },
+    "domain": {
+      "type": "string",
+      "description": "The email domain registered with this provider."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the provider is enabled or not."
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base URL of the authorization server",
+      "maxLength": 200
+    },
+    "client_id": {
+      "type": "string",
+      "description": "App ID, or consumer key",
+      "maxLength": 191
+    },
+    "secret": {
+      "type": "string",
+      "description": "API secret, client secret, or consumer secret",
+      "maxLength": 191
+    }
+  },
+  "required": [
+    "base_url",
+    "client_id",
+    "domain",
+    "id",
+    "name",
+    "secret",
+    "type"
+  ]
+}

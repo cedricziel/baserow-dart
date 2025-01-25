@@ -1,0 +1,11 @@
+{
+  "enum": [
+    "POST",
+    "GET",
+    "PUT",
+    "PATCH",
+    "DELETE"
+  ],
+  "type": "string",
+  "description": "* `POST` - Post\n* `GET` - Get\n* `PUT` - Put\n* `PATCH` - Patch\n* `DELETE` - Delete"
+}

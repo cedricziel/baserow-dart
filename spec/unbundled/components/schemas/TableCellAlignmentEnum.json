@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "left",
+    "center",
+    "right"
+  ],
+  "type": "string",
+  "description": "* `left` - Left\n* `center` - Center\n* `right` - Right"
+}

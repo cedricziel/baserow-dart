@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "workspace_invitations": {
+      "type": "array",
+      "items": {
+        "$ref": "./UserWorkspaceInvitation.json"
+      }
+    }
+  },
+  "required": [
+    "workspace_invitations"
+  ]
+}

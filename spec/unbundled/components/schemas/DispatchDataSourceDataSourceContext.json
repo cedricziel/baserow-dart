@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "element": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Optionally provide an `element` to the data source. Currently only used in element-level filtering, sorting and searching if the element is a collection element."
+    }
+  }
+}

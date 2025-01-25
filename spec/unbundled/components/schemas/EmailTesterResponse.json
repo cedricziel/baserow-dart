@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "succeeded": {
+      "type": "boolean",
+      "description": "Whether or not the test email was sent successfully."
+    },
+    "error_stack": {
+      "type": "string",
+      "nullable": true,
+      "description": "The full stack trace and error message if the test email failed."
+    },
+    "error_type": {
+      "type": "string",
+      "nullable": true,
+      "description": "The type of error that occurred if the test email failed."
+    },
+    "error": {
+      "type": "string",
+      "nullable": true,
+      "description": "A short message describing the error that occured if the test email failed"
+    }
+  },
+  "required": [
+    "succeeded"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "./PublicField.json"
+      },
+      "readOnly": true
+    },
+    "view": {
+      "allOf": [
+        {
+          "$ref": "./PublicView.json"
+        }
+      ],
+      "readOnly": true
+    }
+  },
+  "required": [
+    "fields",
+    "view"
+  ]
+}

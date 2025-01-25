@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "maxItems": 200,
+      "minItems": 1
+    }
+  },
+  "required": [
+    "items"
+  ]
+}

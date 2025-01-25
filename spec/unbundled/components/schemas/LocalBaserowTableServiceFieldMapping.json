@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "field_id": {
+      "type": "integer",
+      "description": "The primary key of the associated database table field."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Indicates whether the field mapping is enabled or not."
+    },
+    "value": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "enabled",
+    "field_id",
+    "value"
+  ]
+}

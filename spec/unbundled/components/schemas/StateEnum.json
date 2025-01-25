@@ -1,0 +1,12 @@
+{
+  "enum": [
+    "pending",
+    "exporting",
+    "cancelled",
+    "finished",
+    "failed",
+    "expired"
+  ],
+  "type": "string",
+  "description": "* `pending` - pending\n* `exporting` - exporting\n* `cancelled` - cancelled\n* `finished` - finished\n* `failed` - failed\n* `expired` - expired"
+}

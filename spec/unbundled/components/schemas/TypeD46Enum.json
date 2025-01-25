@@ -1,0 +1,13 @@
+{
+  "enum": [
+    "ical_calendar",
+    "postgresql",
+    "local_baserow_table",
+    "jira_issues",
+    "github_issues",
+    "gitlab_issues",
+    "hubspot_contacts"
+  ],
+  "type": "string",
+  "description": "* `ical_calendar` - ical_calendar\n* `postgresql` - postgresql\n* `local_baserow_table` - local_baserow_table\n* `jira_issues` - jira_issues\n* `github_issues` - github_issues\n* `gitlab_issues` - gitlab_issues\n* `hubspot_contacts` - hubspot_contacts"
+}

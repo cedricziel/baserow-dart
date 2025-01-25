@@ -1,0 +1,167 @@
+{
+  "get": {
+    "operationId": "get_database_table_grid_view_field_aggregation",
+    "description": "Computes the aggregation of all the values for a specified field from the selected grid view. You must select the aggregation type by setting the `type` GET parameter. If filters are configured for the selected view, the aggregation is calculated only on filtered rows. You need to have read permissions on the view to request an aggregation.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "field_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The field id you want to aggregate",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "include",
+        "schema": {
+          "type": "string"
+        },
+        "description": "if `include` is set to `total`, the total row count will be returned with the result."
+      },
+      {
+        "in": "query",
+        "name": "type",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The aggregation type you want. Available aggregation types: empty_count, not_empty_count, unique_count, min, max, sum, average, median, decile, variance, std_dev"
+      },
+      {
+        "in": "path",
+        "name": "view_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Select the view you want the aggregation for.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table grid view"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "description": "The aggregation result for the specified field.",
+                      "example": 5
+                    },
+                    {
+                      "type": "string",
+                      "description": "The aggregation result for the specified field."
+                    },
+                    {
+                      "type": "array",
+                      "items": {},
+                      "description": "The aggregation result for the specified field."
+                    },
+                    {
+                      "type": "object",
+                      "description": "The aggregation result for the specified field."
+                    }
+                  ]
+                },
+                "total": {
+                  "type": "integer",
+                  "description": "The total value count. Only returned if `include=total` is specified as GET parameter.",
+                  "example": 7
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_USER_NOT_IN_GROUP",
+                    "ERROR_AGGREGATION_TYPE_DOES_NOT_EXIST",
+                    "ERROR_FIELD_NOT_IN_TABLE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_FIELD_DOES_NOT_EXIST",
+                    "ERROR_GRID_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "license": {
+      "type": "string",
+      "description": "The license that you want to register."
+    }
+  },
+  "required": [
+    "license"
+  ]
+}

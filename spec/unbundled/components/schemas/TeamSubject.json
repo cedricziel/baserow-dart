@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "description": "Mixin to a DRF serializer class to raise an exception if data with unknown fields\nis provided to the serializer.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "subject_id": {
+      "type": "integer",
+      "description": "The subject's unique identifier."
+    },
+    "subject_user_email": {
+      "type": "string",
+      "format": "email",
+      "description": "The user subject's email address."
+    },
+    "subject_type": {
+      "allOf": [
+        {
+          "$ref": "./SubjectType0b2Enum.json"
+        }
+      ],
+      "description": "The type of subject that is being invited.\n\n* `auth.User` - auth.User"
+    }
+  },
+  "required": [
+    "id",
+    "subject_type"
+  ]
+}

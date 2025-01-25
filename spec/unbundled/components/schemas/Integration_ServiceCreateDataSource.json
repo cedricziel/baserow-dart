@@ -1,0 +1,29 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./LocalBaserowGetRowCreateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowListRowsCreateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowAggregateRowsCreateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowUpsertRowCreateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowDeleteRowCreateDataSource.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "local_baserow_get_row": "./LocalBaserowGetRowCreateDataSource.json",
+      "local_baserow_list_rows": "./LocalBaserowListRowsCreateDataSource.json",
+      "local_baserow_aggregate_rows": "./LocalBaserowAggregateRowsCreateDataSource.json",
+      "local_baserow_upsert_row": "./LocalBaserowUpsertRowCreateDataSource.json",
+      "local_baserow_delete_row": "./LocalBaserowDeleteRowCreateDataSource.json"
+    }
+  }
+}

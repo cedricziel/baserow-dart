@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "A human friendly name for this team.",
+      "maxLength": 160
+    },
+    "workspace": {
+      "type": "integer",
+      "description": "The workspace that this team belongs to."
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "updated_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "default_role": {
+      "type": "string",
+      "description": "The uid of the role this team has in its workspace."
+    },
+    "subject_count": {
+      "type": "integer",
+      "description": "The amount of subjects (e.g. users) that are currently assigned to this team."
+    },
+    "subject_sample": {
+      "type": "array",
+      "items": {
+        "$ref": "./TeamSampleSubject.json"
+      },
+      "description": "A sample, by default 10, of the most recent subjects to join this team."
+    }
+  },
+  "required": [
+    "created_on",
+    "id",
+    "name",
+    "subject_count",
+    "updated_on",
+    "workspace"
+  ]
+}

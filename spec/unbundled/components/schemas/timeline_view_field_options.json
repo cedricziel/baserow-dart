@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "field_options": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "./TimelineViewFieldOptions.json"
+      },
+      "description": "An object containing the field id as key and the properties related to view as value."
+    }
+  },
+  "required": [
+    "field_options"
+  ]
+}

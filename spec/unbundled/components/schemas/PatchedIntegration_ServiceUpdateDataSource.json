@@ -1,0 +1,19 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./LocalBaserowGetRowUpdateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowListRowsUpdateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowAggregateRowsUpdateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowUpsertRowUpdateDataSource.json"
+    },
+    {
+      "$ref": "./LocalBaserowDeleteRowUpdateDataSource.json"
+    }
+  ]
+}

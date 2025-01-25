@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "auto",
+    "full"
+  ],
+  "type": "string",
+  "description": "* `auto` - Auto\n* `full` - Full"
+}

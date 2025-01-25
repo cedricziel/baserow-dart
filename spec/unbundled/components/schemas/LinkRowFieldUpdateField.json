@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "link_row_table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the linked table."
+    },
+    "link_row_table": {
+      "type": "integer",
+      "nullable": true,
+      "description": "(Deprecated) The id of the linked table."
+    },
+    "has_related_field": {
+      "type": "boolean"
+    },
+    "link_row_limit_selection_view_id": {
+      "type": "integer",
+      "nullable": true,
+      "default": -1,
+      "description": "The ID of the view in the related table where row selection must be limited to."
+    }
+  }
+}

@@ -1,0 +1,806 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Baserow API spec",
+    "version": "1.30.1",
+    "description": "For more information about our REST API, please visit [this page](https://baserow.io/docs/apis%2Frest-api).\n\nFor more information about our deprecation policy, please visit [this page](https://baserow.io/docs/apis%2Fdeprecations).",
+    "contact": {
+      "url": "https://baserow.io/contact"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://gitlab.com/baserow/baserow/-/blob/master/LICENSE"
+    }
+  },
+  "paths": {
+    "/api/_health/celery-queue/": {
+      "$ref": "paths/api__health_celery-queue_.json"
+    },
+    "/api/_health/email/": {
+      "$ref": "paths/api__health_email_.json"
+    },
+    "/api/_health/full/": {
+      "$ref": "paths/api__health_full_.json"
+    },
+    "/api/admin/audit-log/": {
+      "$ref": "paths/api_admin_audit-log_.json"
+    },
+    "/api/admin/audit-log/action-types/": {
+      "$ref": "paths/api_admin_audit-log_action-types_.json"
+    },
+    "/api/admin/audit-log/export/": {
+      "$ref": "paths/api_admin_audit-log_export_.json"
+    },
+    "/api/admin/audit-log/users/": {
+      "$ref": "paths/api_admin_audit-log_users_.json"
+    },
+    "/api/admin/audit-log/workspaces/": {
+      "$ref": "paths/api_admin_audit-log_workspaces_.json"
+    },
+    "/api/admin/auth-provider/": {
+      "$ref": "paths/api_admin_auth-provider_.json"
+    },
+    "/api/admin/auth-provider/{auth_provider_id}/": {
+      "$ref": "paths/api_admin_auth-provider_{auth_provider_id}_.json"
+    },
+    "/api/admin/dashboard/": {
+      "$ref": "paths/api_admin_dashboard_.json"
+    },
+    "/api/admin/users/": {
+      "$ref": "paths/api_admin_users_.json"
+    },
+    "/api/admin/users/{user_id}/": {
+      "$ref": "paths/api_admin_users_{user_id}_.json"
+    },
+    "/api/admin/users/impersonate/": {
+      "$ref": "paths/api_admin_users_impersonate_.json"
+    },
+    "/api/admin/workspaces/": {
+      "$ref": "paths/api_admin_workspaces_.json"
+    },
+    "/api/admin/workspaces/{workspace_id}/": {
+      "$ref": "paths/api_admin_workspaces_{workspace_id}_.json"
+    },
+    "/api/application/{application_id}/integrations/": {
+      "$ref": "paths/api_application_{application_id}_integrations_.json"
+    },
+    "/api/application/{application_id}/list-user-source-users/": {
+      "$ref": "paths/api_application_{application_id}_list-user-source-users_.json"
+    },
+    "/api/application/{application_id}/user-sources/": {
+      "$ref": "paths/api_application_{application_id}_user-sources_.json"
+    },
+    "/api/application/{application_id}/user-sources/roles/": {
+      "$ref": "paths/api_application_{application_id}_user-sources_roles_.json"
+    },
+    "/api/applications/": {
+      "$ref": "paths/api_applications_.json"
+    },
+    "/api/applications/{application_id}/": {
+      "$ref": "paths/api_applications_{application_id}_.json"
+    },
+    "/api/applications/{application_id}/duplicate/async/": {
+      "$ref": "paths/api_applications_{application_id}_duplicate_async_.json"
+    },
+    "/api/applications/workspace/{workspace_id}/": {
+      "$ref": "paths/api_applications_workspace_{workspace_id}_.json"
+    },
+    "/api/applications/workspace/{workspace_id}/order/": {
+      "$ref": "paths/api_applications_workspace_{workspace_id}_order_.json"
+    },
+    "/api/audit-log/": {
+      "$ref": "paths/api_audit-log_.json"
+    },
+    "/api/audit-log/action-types/": {
+      "$ref": "paths/api_audit-log_action-types_.json"
+    },
+    "/api/audit-log/export/": {
+      "$ref": "paths/api_audit-log_export_.json"
+    },
+    "/api/audit-log/users/": {
+      "$ref": "paths/api_audit-log_users_.json"
+    },
+    "/api/audit-log/workspaces/": {
+      "$ref": "paths/api_audit-log_workspaces_.json"
+    },
+    "/api/auth-provider/login-options/": {
+      "$ref": "paths/api_auth-provider_login-options_.json"
+    },
+    "/api/builder/{builder_id}/domains/": {
+      "$ref": "paths/api_builder_{builder_id}_domains_.json"
+    },
+    "/api/builder/{builder_id}/domains/order/": {
+      "$ref": "paths/api_builder_{builder_id}_domains_order_.json"
+    },
+    "/api/builder/{builder_id}/pages/": {
+      "$ref": "paths/api_builder_{builder_id}_pages_.json"
+    },
+    "/api/builder/{builder_id}/pages/order/": {
+      "$ref": "paths/api_builder_{builder_id}_pages_order_.json"
+    },
+    "/api/builder/{builder_id}/theme/": {
+      "$ref": "paths/api_builder_{builder_id}_theme_.json"
+    },
+    "/api/builder/data-source/{data_source_id}/": {
+      "$ref": "paths/api_builder_data-source_{data_source_id}_.json"
+    },
+    "/api/builder/data-source/{data_source_id}/dispatch/": {
+      "$ref": "paths/api_builder_data-source_{data_source_id}_dispatch_.json"
+    },
+    "/api/builder/data-source/{data_source_id}/record-names/": {
+      "$ref": "paths/api_builder_data-source_{data_source_id}_record-names_.json"
+    },
+    "/api/builder/data_source/{data_source_id}/move/": {
+      "$ref": "paths/api_builder_data_source_{data_source_id}_move_.json"
+    },
+    "/api/builder/domains/{domain_id}/": {
+      "$ref": "paths/api_builder_domains_{domain_id}_.json"
+    },
+    "/api/builder/domains/{domain_id}/publish/async/": {
+      "$ref": "paths/api_builder_domains_{domain_id}_publish_async_.json"
+    },
+    "/api/builder/domains/ask-public-domain-exists/": {
+      "$ref": "paths/api_builder_domains_ask-public-domain-exists_.json"
+    },
+    "/api/builder/domains/published/by_id/{builder_id}/": {
+      "$ref": "paths/api_builder_domains_published_by_id_{builder_id}_.json"
+    },
+    "/api/builder/domains/published/by_name/{domain_name}/": {
+      "$ref": "paths/api_builder_domains_published_by_name_{domain_name}_.json"
+    },
+    "/api/builder/domains/published/data-source/{data_source_id}/dispatch/": {
+      "$ref": "paths/api_builder_domains_published_data-source_{data_source_id}_dispatch_.json"
+    },
+    "/api/builder/domains/published/page/{page_id}/data_sources/": {
+      "$ref": "paths/api_builder_domains_published_page_{page_id}_data_sources_.json"
+    },
+    "/api/builder/domains/published/page/{page_id}/dispatch-data-sources/": {
+      "$ref": "paths/api_builder_domains_published_page_{page_id}_dispatch-data-sources_.json"
+    },
+    "/api/builder/domains/published/page/{page_id}/elements/": {
+      "$ref": "paths/api_builder_domains_published_page_{page_id}_elements_.json"
+    },
+    "/api/builder/domains/published/page/{page_id}/workflow_actions/": {
+      "$ref": "paths/api_builder_domains_published_page_{page_id}_workflow_actions_.json"
+    },
+    "/api/builder/element/{element_id}/": {
+      "$ref": "paths/api_builder_element_{element_id}_.json"
+    },
+    "/api/builder/element/{element_id}/duplicate/": {
+      "$ref": "paths/api_builder_element_{element_id}_duplicate_.json"
+    },
+    "/api/builder/element/{element_id}/move/": {
+      "$ref": "paths/api_builder_element_{element_id}_move_.json"
+    },
+    "/api/builder/page/{page_id}/data-sources/": {
+      "$ref": "paths/api_builder_page_{page_id}_data-sources_.json"
+    },
+    "/api/builder/page/{page_id}/dispatch-data-sources/": {
+      "$ref": "paths/api_builder_page_{page_id}_dispatch-data-sources_.json"
+    },
+    "/api/builder/page/{page_id}/elements/": {
+      "$ref": "paths/api_builder_page_{page_id}_elements_.json"
+    },
+    "/api/builder/page/{page_id}/workflow_actions/": {
+      "$ref": "paths/api_builder_page_{page_id}_workflow_actions_.json"
+    },
+    "/api/builder/page/{page_id}/workflow_actions/order/": {
+      "$ref": "paths/api_builder_page_{page_id}_workflow_actions_order_.json"
+    },
+    "/api/builder/pages/{page_id}/": {
+      "$ref": "paths/api_builder_pages_{page_id}_.json"
+    },
+    "/api/builder/pages/{page_id}/duplicate/async/": {
+      "$ref": "paths/api_builder_pages_{page_id}_duplicate_async_.json"
+    },
+    "/api/builder/workflow_action/{workflow_action_id}/": {
+      "$ref": "paths/api_builder_workflow_action_{workflow_action_id}_.json"
+    },
+    "/api/builder/workflow_action/{workflow_action_id}/dispatch/": {
+      "$ref": "paths/api_builder_workflow_action_{workflow_action_id}_dispatch_.json"
+    },
+    "/api/database/data-sync/{data_sync_id}/": {
+      "$ref": "paths/api_database_data-sync_{data_sync_id}_.json"
+    },
+    "/api/database/data-sync/{data_sync_id}/properties/": {
+      "$ref": "paths/api_database_data-sync_{data_sync_id}_properties_.json"
+    },
+    "/api/database/data-sync/{data_sync_id}/sync/async/": {
+      "$ref": "paths/api_database_data-sync_{data_sync_id}_sync_async_.json"
+    },
+    "/api/database/data-sync/database/{database_id}/": {
+      "$ref": "paths/api_database_data-sync_database_{database_id}_.json"
+    },
+    "/api/database/data-sync/properties/": {
+      "$ref": "paths/api_database_data-sync_properties_.json"
+    },
+    "/api/database/export/{job_id}/": {
+      "$ref": "paths/api_database_export_{job_id}_.json"
+    },
+    "/api/database/export/table/{table_id}/": {
+      "$ref": "paths/api_database_export_table_{table_id}_.json"
+    },
+    "/api/database/fields/{field_id}/": {
+      "$ref": "paths/api_database_fields_{field_id}_.json"
+    },
+    "/api/database/fields/{field_id}/duplicate/async/": {
+      "$ref": "paths/api_database_fields_{field_id}_duplicate_async_.json"
+    },
+    "/api/database/fields/{field_id}/generate-ai-field-values/": {
+      "$ref": "paths/api_database_fields_{field_id}_generate-ai-field-values_.json"
+    },
+    "/api/database/fields/{field_id}/unique_row_values/": {
+      "$ref": "paths/api_database_fields_{field_id}_unique_row_values_.json"
+    },
+    "/api/database/fields/table/{table_id}/": {
+      "$ref": "paths/api_database_fields_table_{table_id}_.json"
+    },
+    "/api/database/fields/table/{table_id}/change-primary-field/": {
+      "$ref": "paths/api_database_fields_table_{table_id}_change-primary-field_.json"
+    },
+    "/api/database/fields/table/{table_id}/generate-ai-formula/": {
+      "$ref": "paths/api_database_fields_table_{table_id}_generate-ai-formula_.json"
+    },
+    "/api/database/formula/{table_id}/type/": {
+      "$ref": "paths/api_database_formula_{table_id}_type_.json"
+    },
+    "/api/database/rows/names/": {
+      "$ref": "paths/api_database_rows_names_.json"
+    },
+    "/api/database/rows/table/{table_id}/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_.json"
+    },
+    "/api/database/rows/table/{table_id}/{row_id}/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_{row_id}_.json"
+    },
+    "/api/database/rows/table/{table_id}/{row_id}/adjacent/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_{row_id}_adjacent_.json"
+    },
+    "/api/database/rows/table/{table_id}/{row_id}/history/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_{row_id}_history_.json"
+    },
+    "/api/database/rows/table/{table_id}/{row_id}/move/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_{row_id}_move_.json"
+    },
+    "/api/database/rows/table/{table_id}/batch/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_batch_.json"
+    },
+    "/api/database/rows/table/{table_id}/batch-delete/": {
+      "$ref": "paths/api_database_rows_table_{table_id}_batch-delete_.json"
+    },
+    "/api/database/tables/{table_id}/": {
+      "$ref": "paths/api_database_tables_{table_id}_.json"
+    },
+    "/api/database/tables/{table_id}/duplicate/async/": {
+      "$ref": "paths/api_database_tables_{table_id}_duplicate_async_.json"
+    },
+    "/api/database/tables/{table_id}/import/async/": {
+      "$ref": "paths/api_database_tables_{table_id}_import_async_.json"
+    },
+    "/api/database/tables/database/{database_id}/": {
+      "$ref": "paths/api_database_tables_database_{database_id}_.json"
+    },
+    "/api/database/tables/database/{database_id}/async/": {
+      "$ref": "paths/api_database_tables_database_{database_id}_async_.json"
+    },
+    "/api/database/tables/database/{database_id}/order/": {
+      "$ref": "paths/api_database_tables_database_{database_id}_order_.json"
+    },
+    "/api/database/tokens/": {
+      "$ref": "paths/api_database_tokens_.json"
+    },
+    "/api/database/tokens/{token_id}/": {
+      "$ref": "paths/api_database_tokens_{token_id}_.json"
+    },
+    "/api/database/tokens/check/": {
+      "$ref": "paths/api_database_tokens_check_.json"
+    },
+    "/api/database/view/{view_id}/premium": {
+      "$ref": "paths/api_database_view_{view_id}_premium.json"
+    },
+    "/api/database/views/{slug}/link-row-field-lookup/{field_id}/": {
+      "$ref": "paths/api_database_views_{slug}_link-row-field-lookup_{field_id}_.json"
+    },
+    "/api/database/views/{slug}/public/auth/": {
+      "$ref": "paths/api_database_views_{slug}_public_auth_.json"
+    },
+    "/api/database/views/{slug}/public/info/": {
+      "$ref": "paths/api_database_views_{slug}_public_info_.json"
+    },
+    "/api/database/views/{view_id}/": {
+      "$ref": "paths/api_database_views_{view_id}_.json"
+    },
+    "/api/database/views/{view_id}/decorations/": {
+      "$ref": "paths/api_database_views_{view_id}_decorations_.json"
+    },
+    "/api/database/views/{view_id}/duplicate/": {
+      "$ref": "paths/api_database_views_{view_id}_duplicate_.json"
+    },
+    "/api/database/views/{view_id}/field-options/": {
+      "$ref": "paths/api_database_views_{view_id}_field-options_.json"
+    },
+    "/api/database/views/{view_id}/filter-groups/": {
+      "$ref": "paths/api_database_views_{view_id}_filter-groups_.json"
+    },
+    "/api/database/views/{view_id}/filters/": {
+      "$ref": "paths/api_database_views_{view_id}_filters_.json"
+    },
+    "/api/database/views/{view_id}/group_bys/": {
+      "$ref": "paths/api_database_views_{view_id}_group_bys_.json"
+    },
+    "/api/database/views/{view_id}/rotate-slug/": {
+      "$ref": "paths/api_database_views_{view_id}_rotate-slug_.json"
+    },
+    "/api/database/views/{view_id}/sortings/": {
+      "$ref": "paths/api_database_views_{view_id}_sortings_.json"
+    },
+    "/api/database/views/calendar/{ical_slug}.ics": {
+      "$ref": "paths/api_database_views_calendar_{ical_slug}.ics.json"
+    },
+    "/api/database/views/calendar/{slug}/public/rows/": {
+      "$ref": "paths/api_database_views_calendar_{slug}_public_rows_.json"
+    },
+    "/api/database/views/calendar/{view_id}/": {
+      "$ref": "paths/api_database_views_calendar_{view_id}_.json"
+    },
+    "/api/database/views/calendar/{view_id}/ical_slug_rotate/": {
+      "$ref": "paths/api_database_views_calendar_{view_id}_ical_slug_rotate_.json"
+    },
+    "/api/database/views/decoration/{view_decoration_id}/": {
+      "$ref": "paths/api_database_views_decoration_{view_decoration_id}_.json"
+    },
+    "/api/database/views/filter-group/{filter_group_id}/": {
+      "$ref": "paths/api_database_views_filter-group_{filter_group_id}_.json"
+    },
+    "/api/database/views/filter/{view_filter_id}/": {
+      "$ref": "paths/api_database_views_filter_{view_filter_id}_.json"
+    },
+    "/api/database/views/form/{slug}/submit/": {
+      "$ref": "paths/api_database_views_form_{slug}_submit_.json"
+    },
+    "/api/database/views/form/{slug}/upload-file/": {
+      "$ref": "paths/api_database_views_form_{slug}_upload-file_.json"
+    },
+    "/api/database/views/gallery/{slug}/public/rows/": {
+      "$ref": "paths/api_database_views_gallery_{slug}_public_rows_.json"
+    },
+    "/api/database/views/gallery/{view_id}/": {
+      "$ref": "paths/api_database_views_gallery_{view_id}_.json"
+    },
+    "/api/database/views/grid/{slug}/public/aggregations/": {
+      "$ref": "paths/api_database_views_grid_{slug}_public_aggregations_.json"
+    },
+    "/api/database/views/grid/{slug}/public/rows/": {
+      "$ref": "paths/api_database_views_grid_{slug}_public_rows_.json"
+    },
+    "/api/database/views/grid/{view_id}/": {
+      "$ref": "paths/api_database_views_grid_{view_id}_.json"
+    },
+    "/api/database/views/grid/{view_id}/aggregation/{field_id}/": {
+      "$ref": "paths/api_database_views_grid_{view_id}_aggregation_{field_id}_.json"
+    },
+    "/api/database/views/grid/{view_id}/aggregations/": {
+      "$ref": "paths/api_database_views_grid_{view_id}_aggregations_.json"
+    },
+    "/api/database/views/group_by/{view_group_by_id}/": {
+      "$ref": "paths/api_database_views_group_by_{view_group_by_id}_.json"
+    },
+    "/api/database/views/kanban/{slug}/public/rows/": {
+      "$ref": "paths/api_database_views_kanban_{slug}_public_rows_.json"
+    },
+    "/api/database/views/kanban/{view_id}/": {
+      "$ref": "paths/api_database_views_kanban_{view_id}_.json"
+    },
+    "/api/database/views/sort/{view_sort_id}/": {
+      "$ref": "paths/api_database_views_sort_{view_sort_id}_.json"
+    },
+    "/api/database/views/table/{table_id}/": {
+      "$ref": "paths/api_database_views_table_{table_id}_.json"
+    },
+    "/api/database/views/table/{table_id}/order/": {
+      "$ref": "paths/api_database_views_table_{table_id}_order_.json"
+    },
+    "/api/database/views/timeline/{slug}/public/rows/": {
+      "$ref": "paths/api_database_views_timeline_{slug}_public_rows_.json"
+    },
+    "/api/database/views/timeline/{view_id}/": {
+      "$ref": "paths/api_database_views_timeline_{view_id}_.json"
+    },
+    "/api/database/webhooks/{webhook_id}/": {
+      "$ref": "paths/api_database_webhooks_{webhook_id}_.json"
+    },
+    "/api/database/webhooks/table/{table_id}/": {
+      "$ref": "paths/api_database_webhooks_table_{table_id}_.json"
+    },
+    "/api/database/webhooks/table/{table_id}/test-call/": {
+      "$ref": "paths/api_database_webhooks_table_{table_id}_test-call_.json"
+    },
+    "/api/files/{signed_data}": {
+      "$ref": "paths/api_files_{signed_data}.json"
+    },
+    "/api/integration/{integration_id}/": {
+      "$ref": "paths/api_integration_{integration_id}_.json"
+    },
+    "/api/integration/{integration_id}/move/": {
+      "$ref": "paths/api_integration_{integration_id}_move_.json"
+    },
+    "/api/jobs/": {
+      "$ref": "paths/api_jobs_.json"
+    },
+    "/api/jobs/{job_id}/": {
+      "$ref": "paths/api_jobs_{job_id}_.json"
+    },
+    "/api/jobs/{job_id}/cancel/": {
+      "$ref": "paths/api_jobs_{job_id}_cancel_.json"
+    },
+    "/api/licenses/": {
+      "$ref": "paths/api_licenses_.json"
+    },
+    "/api/licenses/{id}/": {
+      "$ref": "paths/api_licenses_{id}_.json"
+    },
+    "/api/licenses/{id}/{user_id}/": {
+      "$ref": "paths/api_licenses_{id}_{user_id}_.json"
+    },
+    "/api/licenses/{id}/check/": {
+      "$ref": "paths/api_licenses_{id}_check_.json"
+    },
+    "/api/licenses/{id}/fill-seats/": {
+      "$ref": "paths/api_licenses_{id}_fill-seats_.json"
+    },
+    "/api/licenses/{id}/lookup-users/": {
+      "$ref": "paths/api_licenses_{id}_lookup-users_.json"
+    },
+    "/api/licenses/{id}/remove-all-users/": {
+      "$ref": "paths/api_licenses_{id}_remove-all-users_.json"
+    },
+    "/api/notifications/{workspace_id}/": {
+      "$ref": "paths/api_notifications_{workspace_id}_.json"
+    },
+    "/api/notifications/{workspace_id}/{notification_id}/": {
+      "$ref": "paths/api_notifications_{workspace_id}_{notification_id}_.json"
+    },
+    "/api/notifications/{workspace_id}/mark-all-as-read/": {
+      "$ref": "paths/api_notifications_{workspace_id}_mark-all-as-read_.json"
+    },
+    "/api/role/{workspace_id}/": {
+      "$ref": "paths/api_role_{workspace_id}_.json"
+    },
+    "/api/role/{workspace_id}/batch/": {
+      "$ref": "paths/api_role_{workspace_id}_batch_.json"
+    },
+    "/api/row_comments/{table_id}/{row_id}/": {
+      "$ref": "paths/api_row_comments_{table_id}_{row_id}_.json"
+    },
+    "/api/row_comments/{table_id}/{row_id}/notification-mode/": {
+      "$ref": "paths/api_row_comments_{table_id}_{row_id}_notification-mode_.json"
+    },
+    "/api/row_comments/{table_id}/comment/{comment_id}/": {
+      "$ref": "paths/api_row_comments_{table_id}_comment_{comment_id}_.json"
+    },
+    "/api/settings/": {
+      "$ref": "paths/api_settings_.json"
+    },
+    "/api/settings/instance-id/": {
+      "$ref": "paths/api_settings_instance-id_.json"
+    },
+    "/api/settings/update/": {
+      "$ref": "paths/api_settings_update_.json"
+    },
+    "/api/snapshots/{snapshot_id}/": {
+      "$ref": "paths/api_snapshots_{snapshot_id}_.json"
+    },
+    "/api/snapshots/{snapshot_id}/restore/": {
+      "$ref": "paths/api_snapshots_{snapshot_id}_restore_.json"
+    },
+    "/api/snapshots/application/{application_id}/": {
+      "$ref": "paths/api_snapshots_application_{application_id}_.json"
+    },
+    "/api/sso/oauth2/callback/{provider_id}/": {
+      "$ref": "paths/api_sso_oauth2_callback_{provider_id}_.json"
+    },
+    "/api/sso/oauth2/login/{provider_id}/": {
+      "$ref": "paths/api_sso_oauth2_login_{provider_id}_.json"
+    },
+    "/api/sso/saml/acs/": {
+      "$ref": "paths/api_sso_saml_acs_.json"
+    },
+    "/api/sso/saml/login/": {
+      "$ref": "paths/api_sso_saml_login_.json"
+    },
+    "/api/sso/saml/login-url/": {
+      "$ref": "paths/api_sso_saml_login-url_.json"
+    },
+    "/api/teams/{team_id}/": {
+      "$ref": "paths/api_teams_{team_id}_.json"
+    },
+    "/api/teams/{team_id}/subjects/": {
+      "$ref": "paths/api_teams_{team_id}_subjects_.json"
+    },
+    "/api/teams/{team_id}/subjects/{subject_id}/": {
+      "$ref": "paths/api_teams_{team_id}_subjects_{subject_id}_.json"
+    },
+    "/api/teams/workspace/{workspace_id}/": {
+      "$ref": "paths/api_teams_workspace_{workspace_id}_.json"
+    },
+    "/api/templates/": {
+      "$ref": "paths/api_templates_.json"
+    },
+    "/api/templates/install/{workspace_id}/{template_id}/": {
+      "$ref": "paths/api_templates_install_{workspace_id}_{template_id}_.json"
+    },
+    "/api/templates/install/{workspace_id}/{template_id}/async/": {
+      "$ref": "paths/api_templates_install_{workspace_id}_{template_id}_async_.json"
+    },
+    "/api/trash/": {
+      "$ref": "paths/api_trash_.json"
+    },
+    "/api/trash/restore/": {
+      "$ref": "paths/api_trash_restore_.json"
+    },
+    "/api/trash/workspace/{workspace_id}/": {
+      "$ref": "paths/api_trash_workspace_{workspace_id}_.json"
+    },
+    "/api/user/": {
+      "$ref": "paths/api_user_.json"
+    },
+    "/api/user-files/upload-file/": {
+      "$ref": "paths/api_user-files_upload-file_.json"
+    },
+    "/api/user-files/upload-via-url/": {
+      "$ref": "paths/api_user-files_upload-via-url_.json"
+    },
+    "/api/user-source-auth-refresh/": {
+      "$ref": "paths/api_user-source-auth-refresh_.json"
+    },
+    "/api/user-source-token-blacklist/": {
+      "$ref": "paths/api_user-source-token-blacklist_.json"
+    },
+    "/api/user-source/{user_source_id}/": {
+      "$ref": "paths/api_user-source_{user_source_id}_.json"
+    },
+    "/api/user-source/{user_source_id}/force-token-auth": {
+      "$ref": "paths/api_user-source_{user_source_id}_force-token-auth.json"
+    },
+    "/api/user-source/{user_source_id}/move/": {
+      "$ref": "paths/api_user-source_{user_source_id}_move_.json"
+    },
+    "/api/user-source/{user_source_id}/token-auth": {
+      "$ref": "paths/api_user-source_{user_source_id}_token-auth.json"
+    },
+    "/api/user-source/{user_source_uid}/sso/saml/acs/": {
+      "$ref": "paths/api_user-source_{user_source_uid}_sso_saml_acs_.json"
+    },
+    "/api/user-source/{user_source_uid}/sso/saml/login/": {
+      "$ref": "paths/api_user-source_{user_source_uid}_sso_saml_login_.json"
+    },
+    "/api/user/account/": {
+      "$ref": "paths/api_user_account_.json"
+    },
+    "/api/user/change-password/": {
+      "$ref": "paths/api_user_change-password_.json"
+    },
+    "/api/user/dashboard/": {
+      "$ref": "paths/api_user_dashboard_.json"
+    },
+    "/api/user/redo/": {
+      "$ref": "paths/api_user_redo_.json"
+    },
+    "/api/user/reset-password/": {
+      "$ref": "paths/api_user_reset-password_.json"
+    },
+    "/api/user/schedule-account-deletion/": {
+      "$ref": "paths/api_user_schedule-account-deletion_.json"
+    },
+    "/api/user/send-reset-password-email/": {
+      "$ref": "paths/api_user_send-reset-password-email_.json"
+    },
+    "/api/user/send-verify-email/": {
+      "$ref": "paths/api_user_send-verify-email_.json"
+    },
+    "/api/user/token-auth/": {
+      "$ref": "paths/api_user_token-auth_.json"
+    },
+    "/api/user/token-blacklist/": {
+      "$ref": "paths/api_user_token-blacklist_.json"
+    },
+    "/api/user/token-refresh/": {
+      "$ref": "paths/api_user_token-refresh_.json"
+    },
+    "/api/user/token-verify/": {
+      "$ref": "paths/api_user_token-verify_.json"
+    },
+    "/api/user/undo/": {
+      "$ref": "paths/api_user_undo_.json"
+    },
+    "/api/user/verify-email/": {
+      "$ref": "paths/api_user_verify-email_.json"
+    },
+    "/api/workspaces/": {
+      "$ref": "paths/api_workspaces_.json"
+    },
+    "/api/workspaces/{workspace_id}/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_.json"
+    },
+    "/api/workspaces/{workspace_id}/export/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_export_.json"
+    },
+    "/api/workspaces/{workspace_id}/export/async/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_export_async_.json"
+    },
+    "/api/workspaces/{workspace_id}/import/{resource_id}/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_import_{resource_id}_.json"
+    },
+    "/api/workspaces/{workspace_id}/import/async/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_import_async_.json"
+    },
+    "/api/workspaces/{workspace_id}/import/upload-file/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_import_upload-file_.json"
+    },
+    "/api/workspaces/{workspace_id}/leave/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_leave_.json"
+    },
+    "/api/workspaces/{workspace_id}/permissions/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_permissions_.json"
+    },
+    "/api/workspaces/{workspace_id}/settings/generative-ai/": {
+      "$ref": "paths/api_workspaces_{workspace_id}_settings_generative-ai_.json"
+    },
+    "/api/workspaces/create-initial-workspace/": {
+      "$ref": "paths/api_workspaces_create-initial-workspace_.json"
+    },
+    "/api/workspaces/invitations/{workspace_invitation_id}/": {
+      "$ref": "paths/api_workspaces_invitations_{workspace_invitation_id}_.json"
+    },
+    "/api/workspaces/invitations/{workspace_invitation_id}/accept/": {
+      "$ref": "paths/api_workspaces_invitations_{workspace_invitation_id}_accept_.json"
+    },
+    "/api/workspaces/invitations/{workspace_invitation_id}/reject/": {
+      "$ref": "paths/api_workspaces_invitations_{workspace_invitation_id}_reject_.json"
+    },
+    "/api/workspaces/invitations/token/{token}/": {
+      "$ref": "paths/api_workspaces_invitations_token_{token}_.json"
+    },
+    "/api/workspaces/invitations/workspace/{workspace_id}/": {
+      "$ref": "paths/api_workspaces_invitations_workspace_{workspace_id}_.json"
+    },
+    "/api/workspaces/order/": {
+      "$ref": "paths/api_workspaces_order_.json"
+    },
+    "/api/workspaces/users/{workspace_user_id}/": {
+      "$ref": "paths/api_workspaces_users_{workspace_user_id}_.json"
+    },
+    "/api/workspaces/users/workspace/{workspace_id}/": {
+      "$ref": "paths/api_workspaces_users_workspace_{workspace_id}_.json"
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Database token": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Token your_token"
+      },
+      "JWT": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT your_token"
+      },
+      "UserSource JWT": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT your_token"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Settings"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "User files"
+    },
+    {
+      "name": "Workspaces"
+    },
+    {
+      "name": "Workspace invitations"
+    },
+    {
+      "name": "Templates"
+    },
+    {
+      "name": "Trash"
+    },
+    {
+      "name": "Applications"
+    },
+    {
+      "name": "Snapshots"
+    },
+    {
+      "name": "Jobs"
+    },
+    {
+      "name": "Integrations"
+    },
+    {
+      "name": "User sources"
+    },
+    {
+      "name": "Database tables"
+    },
+    {
+      "name": "Database table fields"
+    },
+    {
+      "name": "Database table views"
+    },
+    {
+      "name": "Database table view filters"
+    },
+    {
+      "name": "Database table view sortings"
+    },
+    {
+      "name": "Database table view decorations"
+    },
+    {
+      "name": "Database table view groupings"
+    },
+    {
+      "name": "Database table grid view"
+    },
+    {
+      "name": "Database table gallery view"
+    },
+    {
+      "name": "Database table form view"
+    },
+    {
+      "name": "Database table kanban view"
+    },
+    {
+      "name": "Database table calendar view"
+    },
+    {
+      "name": "Database table rows"
+    },
+    {
+      "name": "Database table export"
+    },
+    {
+      "name": "Database table webhooks"
+    },
+    {
+      "name": "Database tokens"
+    },
+    {
+      "name": "Builder pages"
+    },
+    {
+      "name": "Builder elements"
+    },
+    {
+      "name": "Builder domains"
+    },
+    {
+      "name": "Builder public"
+    },
+    {
+      "name": "Builder data sources"
+    },
+    {
+      "name": "Builder workflow actions"
+    },
+    {
+      "name": "Builder theme"
+    },
+    {
+      "name": "Admin"
+    }
+  ]
+}

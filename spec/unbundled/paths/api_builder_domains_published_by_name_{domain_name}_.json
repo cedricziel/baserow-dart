@@ -1,0 +1,74 @@
+{
+  "get": {
+    "operationId": "get_public_builder_by_domain_name",
+    "description": "Returns the public serialized version of the builder for the given domain name and its pages .",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "domain_name",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Returns the builder published for the given domain name.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Builder public"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/PublicBuilder.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_BUILDER_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

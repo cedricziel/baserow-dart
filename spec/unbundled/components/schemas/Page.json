@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "description": "👉 Mind to update the\nbaserow.contrib.builder.api.domains.serializer.PublicPageSerializer\nwhen you update this one.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "path": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "path_params": {
+      "type": "array",
+      "items": {
+        "$ref": "./PathParam.json"
+      }
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Lowest first."
+    },
+    "builder_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "shared": {
+      "type": "boolean",
+      "readOnly": true
+    },
+    "visibility": {
+      "allOf": [
+        {
+          "$ref": "./VisibilityC5fEnum.json"
+        }
+      ],
+      "readOnly": true,
+      "description": "Controls the page's visibility. When set to 'logged-in', the builder's login_page must also be set.\n\n* `all` - All\n* `logged-in` - Logged In"
+    },
+    "role_type": {
+      "allOf": [
+        {
+          "$ref": "./RoleTypeEnum.json"
+        }
+      ],
+      "readOnly": true,
+      "description": "Role type is used in conjunction with roles to control access to this page.\n\n* `allow_all` - Allow All\n* `allow_all_except` - Allow All Except\n* `disallow_all_except` - Disallow All Except"
+    },
+    "roles": {
+      "readOnly": true,
+      "description": "List of user roles that are associated with this page. Used in conjunction with role_type."
+    }
+  },
+  "required": [
+    "builder_id",
+    "id",
+    "name",
+    "order",
+    "path",
+    "role_type",
+    "roles",
+    "shared",
+    "visibility"
+  ]
+}

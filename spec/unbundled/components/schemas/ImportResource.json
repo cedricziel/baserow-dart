@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "The size of the resource in bytes."
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ]
+}

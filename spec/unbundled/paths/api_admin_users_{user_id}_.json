@@ -1,0 +1,168 @@
+{
+  "patch": {
+    "operationId": "admin_edit_user",
+    "description": "Updates specified user attributes and returns the updated user if the requesting user is staff. You cannot update yourself to no longer be an admin or active.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the user to edit",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedUserAdminUpdate.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedUserAdminUpdate.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedUserAdminUpdate.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/UserAdminResponse.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_REQUEST_BODY_VALIDATION",
+                    "USER_ADMIN_CANNOT_DEACTIVATE_SELF",
+                    "USER_ADMIN_UNKNOWN_USER",
+                    "USER_ADMIN_ALREADY_EXISTS",
+                    "ERROR_FEATURE_NOT_AVAILABLE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  },
+  "delete": {
+    "operationId": "admin_delete_user",
+    "description": "Deletes the specified user, if the requesting user has admin permissions. You cannot delete yourself.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "user_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the user to delete",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "No response body"
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "USER_ADMIN_CANNOT_DELETE_SELF",
+                    "USER_ADMIN_UNKNOWN_USER",
+                    "ERROR_FEATURE_NOT_AVAILABLE"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "description": "No response body"
+      }
+    }
+  }
+}

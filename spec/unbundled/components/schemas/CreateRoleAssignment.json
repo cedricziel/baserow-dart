@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "description": "The create role assignment serializer.",
+  "properties": {
+    "subject_id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The subject ID. A subject is an actor that can do operations."
+    },
+    "subject_type": {
+      "allOf": [
+        {
+          "$ref": "./SubjectType398Enum.json"
+        }
+      ],
+      "description": "The subject type.\n\n* `auth.User` - auth.User\n* `anonymous` - anonymous\n* `user_source.user` - user_source.user\n* `core.Token` - core.Token\n* `baserow_enterprise.Team` - baserow_enterprise.Team"
+    },
+    "role": {
+      "type": "string",
+      "nullable": true,
+      "description": "The uid of the role you want to assign to the user or team in the given workspace. You can omit this property if you want to remove the role."
+    },
+    "scope_id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The ID of the scope object. The scope object limit the role assignment to this scope and all its descendants."
+    },
+    "scope_type": {
+      "allOf": [
+        {
+          "$ref": "./ScopeTypeEnum.json"
+        }
+      ],
+      "description": "The scope object type.\n\n* `core` - core\n* `application` - application\n* `workspace` - workspace\n* `workspace_invitation` - workspace_invitation\n* `snapshot` - snapshot\n* `workspace_user` - workspace_user\n* `integration` - integration\n* `user_source` - user_source\n* `database` - database\n* `database_table` - database_table\n* `database_field` - database_field\n* `database_view` - database_view\n* `database_view_decoration` - database_view_decoration\n* `database_view_sort` - database_view_sort\n* `database_view_group` - database_view_group\n* `database_view_filter` - database_view_filter\n* `database_view_filter_group` - database_view_filter_group\n* `token` - token\n* `builder` - builder\n* `builder_page` - builder_page\n* `builder_element` - builder_element\n* `builder_domain` - builder_domain\n* `builder_data_source` - builder_data_source\n* `builder_workflow_action` - builder_workflow_action\n* `team` - team\n* `team_subject` - team_subject\n* `license` - license"
+    }
+  },
+  "required": [
+    "role",
+    "scope_id",
+    "scope_type",
+    "subject_id",
+    "subject_type"
+  ]
+}

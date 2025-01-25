@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all the rows should apply to all filters (AND) or to any filter (OR) in the group to be shown.\n\n* `AND` - And\n* `OR` - Or"
+    }
+  }
+}

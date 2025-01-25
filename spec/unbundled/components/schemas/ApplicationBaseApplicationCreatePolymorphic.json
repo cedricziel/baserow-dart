@@ -1,0 +1,17 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./DatabaseBaseApplicationCreatePolymorphic.json"
+    },
+    {
+      "$ref": "./BuilderBaseApplicationCreatePolymorphic.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "database": "./DatabaseBaseApplicationCreatePolymorphic.json",
+      "builder": "./BuilderBaseApplicationCreatePolymorphic.json"
+    }
+  }
+}

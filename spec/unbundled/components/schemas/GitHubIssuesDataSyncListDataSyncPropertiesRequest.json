@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./TypeD46Enum.json"
+        }
+      ],
+      "description": "The type of the data sync to get the properties from.\n\n* `ical_calendar` - ical_calendar\n* `postgresql` - postgresql\n* `local_baserow_table` - local_baserow_table\n* `jira_issues` - jira_issues\n* `github_issues` - github_issues\n* `gitlab_issues` - gitlab_issues\n* `hubspot_contacts` - hubspot_contacts"
+    },
+    "github_issues_owner": {
+      "type": "string",
+      "description": "The owner of the repository on GitHub.",
+      "maxLength": 255
+    },
+    "github_issues_repo": {
+      "type": "string",
+      "description": "The name of the repository on GitHub.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "github_issues_owner",
+    "github_issues_repo",
+    "type"
+  ]
+}

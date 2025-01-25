@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "description": "Serializes a request body for updating a given user. Do not use for returning user\ndata as the password will be returned also.",
+  "properties": {
+    "username": {
+      "type": "string",
+      "format": "email"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "is_active": {
+      "type": "boolean",
+      "title": "Active",
+      "description": "Designates whether this user should be treated as active. Set this to false instead of deleting accounts."
+    },
+    "is_staff": {
+      "type": "boolean",
+      "title": "Staff status",
+      "description": "Designates whether this user is an admin and has access to all workspaces and Baserow's admin areas. "
+    },
+    "password": {
+      "type": "string"
+    }
+  }
+}

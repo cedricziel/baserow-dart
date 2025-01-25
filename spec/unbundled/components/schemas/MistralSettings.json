@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The models that are enabled for this AI type."
+    },
+    "api_key": {
+      "type": "string",
+      "description": "The Mistral API key that is used to authenticate with the Mistral API."
+    }
+  }
+}

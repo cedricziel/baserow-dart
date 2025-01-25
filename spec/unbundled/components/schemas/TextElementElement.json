@@ -1,0 +1,201 @@
+{
+  "type": "object",
+  "description": "Basic element serializer mostly for returned values.\n\n👉 Mind to update the\nbaserow.contrib.builder.api.domains.serializer.PublicElementSerializer\nwhen you update this one.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "page_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the element."
+    },
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$",
+      "readOnly": true,
+      "description": "Lowest first."
+    },
+    "parent_element_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The parent element, if inside a container.",
+      "readOnly": true
+    },
+    "place_in_container": {
+      "type": "string",
+      "nullable": true,
+      "description": "The place in the container.",
+      "maxLength": 255
+    },
+    "visibility": {
+      "$ref": "./Visibility789Enum.json"
+    },
+    "styles": {
+      "$ref": "./TypographyConfigBlock.json"
+    },
+    "style_border_top_color": {
+      "type": "string",
+      "description": "Top border color.",
+      "maxLength": 20
+    },
+    "style_border_top_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the top border."
+    },
+    "style_padding_top": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the top border."
+    },
+    "style_margin_top": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the top border."
+    },
+    "style_border_bottom_color": {
+      "type": "string",
+      "description": "Bottom border color",
+      "maxLength": 20
+    },
+    "style_border_bottom_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the bottom border."
+    },
+    "style_padding_bottom": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the bottom border."
+    },
+    "style_margin_bottom": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the bottom border."
+    },
+    "style_border_left_color": {
+      "type": "string",
+      "description": "Left border color",
+      "maxLength": 20
+    },
+    "style_border_left_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the left border."
+    },
+    "style_padding_left": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the left border."
+    },
+    "style_margin_left": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the left border."
+    },
+    "style_border_right_color": {
+      "type": "string",
+      "description": "Right border color",
+      "maxLength": 20
+    },
+    "style_border_right_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the right border."
+    },
+    "style_padding_right": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the right border."
+    },
+    "style_margin_right": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the right border."
+    },
+    "style_background": {
+      "allOf": [
+        {
+          "$ref": "./StyleBackgroundEnum.json"
+        }
+      ],
+      "description": "What type of background the element should have.\n\n* `none` - None\n* `color` - Color\n* `image` - Image"
+    },
+    "style_background_color": {
+      "type": "string",
+      "description": "The background color if `style_background` is color.",
+      "maxLength": 20
+    },
+    "style_background_file": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The background image file"
+    },
+    "style_background_mode": {
+      "allOf": [
+        {
+          "$ref": "./StyleBackgroundModeEnum.json"
+        }
+      ],
+      "description": "The mode of the background image\n\n* `tile` - Tile\n* `fill` - Fill\n* `fit` - Fit"
+    },
+    "style_width": {
+      "allOf": [
+        {
+          "$ref": "./StyleWidthEnum.json"
+        }
+      ],
+      "description": "Indicates the width of the element.\n\n* `full` - Full\n* `full-width` - Full Width\n* `normal` - Normal\n* `medium` - Medium\n* `small` - Small"
+    },
+    "role_type": {
+      "$ref": "./RoleTypeEnum.json"
+    },
+    "roles": {
+      "description": "User roles associated with this element, used in conjunction with role_type."
+    },
+    "value": {
+      "type": "string",
+      "default": "",
+      "description": "The value of the element. Must be a formula."
+    },
+    "format": {
+      "allOf": [
+        {
+          "$ref": "./FormatEnum.json"
+        }
+      ],
+      "default": "plain",
+      "description": "The format of the text\n\n* `plain` - Plain\n* `markdown` - Markdown"
+    }
+  },
+  "required": [
+    "id",
+    "order",
+    "page_id",
+    "parent_element_id",
+    "type"
+  ]
+}

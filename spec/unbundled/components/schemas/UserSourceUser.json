@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "description": "A serializer used to serialize a UserSourceUser object.",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "username": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "user_source_id": {
+      "type": "integer"
+    },
+    "role": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "email",
+    "id",
+    "role",
+    "user_source_id",
+    "username"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "post": {
+    "operationId": "token_auth",
+    "description": "Authenticates an existing user based on their email and their password. If successful, an access token and a refresh token will be returned.",
+    "tags": [
+      "User"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/TokenObtainPairWithUser.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/TokenObtainPairWithUser.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/TokenObtainPairWithUser.json"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "description": "An object containing information related to the user.",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "description": "The first name of related user."
+                    },
+                    "username": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "The username of the related user. This is always an email address."
+                    },
+                    "language": {
+                      "type": "string",
+                      "description": "An ISO 639 language code (with optional variant) selected by the user. Ex: en-GB."
+                    }
+                  }
+                },
+                "token": {
+                  "type": "string",
+                  "deprecated": true,
+                  "description": "Deprecated. Use the `access_token` instead."
+                },
+                "access_token": {
+                  "type": "string",
+                  "description": "'access_token' can be used to authorize for other endpoints that require authorization. This token will be valid for 10 minutes."
+                },
+                "refresh_token": {
+                  "type": "string",
+                  "description": "'refresh_token' can be used to get a new valid 'access_token'. This token will be valid for 168 hours."
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_INVALID_CREDENTIALS",
+                    "ERROR_DEACTIVATED_USER",
+                    "ERROR_AUTH_PROVIDER_DISABLED",
+                    "ERROR_EMAIL_VERIFICATION_REQUIRED"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

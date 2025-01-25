@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "properties": {
+    "total_users": {
+      "type": "integer"
+    },
+    "total_workspaces": {
+      "type": "integer"
+    },
+    "total_applications": {
+      "type": "integer"
+    },
+    "new_users_last_24_hours": {
+      "type": "integer"
+    },
+    "new_users_last_7_days": {
+      "type": "integer"
+    },
+    "new_users_last_30_days": {
+      "type": "integer"
+    },
+    "previous_new_users_last_24_hours": {
+      "type": "integer"
+    },
+    "previous_new_users_last_7_days": {
+      "type": "integer"
+    },
+    "previous_new_users_last_30_days": {
+      "type": "integer"
+    },
+    "active_users_last_24_hours": {
+      "type": "integer"
+    },
+    "active_users_last_7_days": {
+      "type": "integer"
+    },
+    "active_users_last_30_days": {
+      "type": "integer"
+    },
+    "previous_active_users_last_24_hours": {
+      "type": "integer"
+    },
+    "previous_active_users_last_7_days": {
+      "type": "integer"
+    },
+    "previous_active_users_last_30_days": {
+      "type": "integer"
+    },
+    "new_users_per_day": {
+      "type": "array",
+      "items": {
+        "$ref": "./AdminDashboardPerDay.json"
+      }
+    },
+    "active_users_per_day": {
+      "type": "array",
+      "items": {
+        "$ref": "./AdminDashboardPerDay.json"
+      }
+    }
+  },
+  "required": [
+    "active_users_last_24_hours",
+    "active_users_last_30_days",
+    "active_users_last_7_days",
+    "active_users_per_day",
+    "new_users_last_24_hours",
+    "new_users_last_30_days",
+    "new_users_last_7_days",
+    "new_users_per_day",
+    "previous_active_users_last_24_hours",
+    "previous_active_users_last_30_days",
+    "previous_active_users_last_7_days",
+    "previous_new_users_last_24_hours",
+    "previous_new_users_last_30_days",
+    "previous_new_users_last_7_days",
+    "total_applications",
+    "total_users",
+    "total_workspaces"
+  ]
+}

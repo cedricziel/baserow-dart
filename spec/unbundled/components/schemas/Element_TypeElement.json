@@ -1,0 +1,81 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./HeadingElementElement.json"
+    },
+    {
+      "$ref": "./TextElementElement.json"
+    },
+    {
+      "$ref": "./LinkElementElement.json"
+    },
+    {
+      "$ref": "./ImageElementElement.json"
+    },
+    {
+      "$ref": "./InputTextElementElement.json"
+    },
+    {
+      "$ref": "./ColumnElementElement.json"
+    },
+    {
+      "$ref": "./ButtonElementElement.json"
+    },
+    {
+      "$ref": "./TableElementElement.json"
+    },
+    {
+      "$ref": "./RepeatElementElement.json"
+    },
+    {
+      "$ref": "./RecordSelectorElementElement.json"
+    },
+    {
+      "$ref": "./FormContainerElementElement.json"
+    },
+    {
+      "$ref": "./ChoiceElementElement.json"
+    },
+    {
+      "$ref": "./CheckboxElementElement.json"
+    },
+    {
+      "$ref": "./IFrameElementElement.json"
+    },
+    {
+      "$ref": "./DateTimePickerElementElement.json"
+    },
+    {
+      "$ref": "./HeaderElementElement.json"
+    },
+    {
+      "$ref": "./FooterElementElement.json"
+    },
+    {
+      "$ref": "./AuthFormElementElement.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "type",
+    "mapping": {
+      "heading": "./HeadingElementElement.json",
+      "text": "./TextElementElement.json",
+      "link": "./LinkElementElement.json",
+      "image": "./ImageElementElement.json",
+      "input_text": "./InputTextElementElement.json",
+      "column": "./ColumnElementElement.json",
+      "button": "./ButtonElementElement.json",
+      "table": "./TableElementElement.json",
+      "repeat": "./RepeatElementElement.json",
+      "record_selector": "./RecordSelectorElementElement.json",
+      "form_container": "./FormContainerElementElement.json",
+      "choice": "./ChoiceElementElement.json",
+      "checkbox": "./CheckboxElementElement.json",
+      "iframe": "./IFrameElementElement.json",
+      "datetime_picker": "./DateTimePickerElementElement.json",
+      "header": "./HeaderElementElement.json",
+      "footer": "./FooterElementElement.json",
+      "auth_form": "./AuthFormElementElement.json"
+    }
+  }
+}

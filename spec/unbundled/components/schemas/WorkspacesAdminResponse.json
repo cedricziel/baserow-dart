@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 165
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "./WorkspaceAdminUsers.json"
+      }
+    },
+    "application_count": {
+      "type": "integer"
+    },
+    "row_count": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "storage_usage": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true
+    },
+    "seats_taken": {
+      "type": "integer"
+    },
+    "free_users": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "application_count",
+    "created_on",
+    "free_users",
+    "id",
+    "name",
+    "row_count",
+    "seats_taken",
+    "users"
+  ]
+}

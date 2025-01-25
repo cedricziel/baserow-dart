@@ -1,0 +1,152 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "error": {
+      "type": "string",
+      "readOnly": true
+    },
+    "date_show_tzinfo": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "Indicates if the time zone should be shown."
+    },
+    "date_format": {
+      "nullable": true,
+      "description": "EU (20/02/2020), US (02/20/2020) or ISO (2020-02-20)\n\n* `EU` - European (D/M/Y)\n* `US` - US (M/D/Y)\n* `ISO` - ISO (Y-M-D)",
+      "oneOf": [
+        {
+          "$ref": "./DateFormatEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "number_separator": {
+      "description": "The thousand and decimal separator to use for the field.\n\n* `` - No formatting\n* `SPACE_COMMA` - Space, comma\n* `SPACE_PERIOD` - Space, period\n* `COMMA_PERIOD` - Comma, period\n* `PERIOD_COMMA` - Period, comma",
+      "oneOf": [
+        {
+          "$ref": "./NumberSeparatorEnum.json"
+        },
+        {
+          "$ref": "./BlankEnum.json"
+        }
+      ]
+    },
+    "array_formula_type": {
+      "nullable": true,
+      "oneOf": [
+        {
+          "$ref": "./ArrayFormulaTypeEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "duration_format": {
+      "nullable": true,
+      "description": "The format of the duration.\n\n* `h:mm` - hours:minutes\n* `h:mm:ss` - hours:minutes:seconds\n* `h:mm:ss.s` - hours:minutes:seconds:deciseconds\n* `h:mm:ss.ss` - hours:minutes:seconds:centiseconds\n* `h:mm:ss.sss` - hours:minutes:seconds:milliseconds\n* `d h` - days:hours\n* `d h:mm` - days:hours:minutes\n* `d h:mm:ss` - days:hours:minutes:seconds\n* `d h mm` - days:hours:minutes:with_spaces\n* `d h mm ss` - days:hours:minutes:seconds:with_spaces",
+      "oneOf": [
+        {
+          "$ref": "./DurationFormatEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "nullable": {
+      "type": "boolean",
+      "readOnly": true
+    },
+    "date_time_format": {
+      "nullable": true,
+      "description": "24 (14:30) or 12 (02:30 PM)\n\n* `24` - 24 hour\n* `12` - 12 hour",
+      "oneOf": [
+        {
+          "$ref": "./DateTimeFormatEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "date_force_timezone": {
+      "type": "string",
+      "nullable": true,
+      "description": "Force a timezone for the field overriding user profile settings.",
+      "maxLength": 255
+    },
+    "number_decimal_places": {
+      "nullable": true,
+      "description": "The amount of digits allowed after the point.\n\n* `0` - 1\n* `1` - 1.0\n* `2` - 1.00\n* `3` - 1.000\n* `4` - 1.0000\n* `5` - 1.00000\n* `6` - 1.000000\n* `7` - 1.0000000\n* `8` - 1.00000000\n* `9` - 1.000000000\n* `10` - 1.0000000000",
+      "minimum": -2147483648,
+      "maximum": 2147483647,
+      "oneOf": [
+        {
+          "$ref": "./NumberDecimalPlacesEnum.json"
+        },
+        {
+          "$ref": "./NullEnum.json"
+        }
+      ]
+    },
+    "number_prefix": {
+      "type": "string",
+      "description": "The prefix to use for the field.",
+      "maxLength": 10
+    },
+    "date_include_time": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "Indicates if the field also includes a time."
+    },
+    "number_suffix": {
+      "type": "string",
+      "description": "The suffix to use for the field.",
+      "maxLength": 10
+    },
+    "through_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the link row field to lookup values for. Will override the `through_field_name` parameter if both are provided, however only one is required."
+    },
+    "through_field_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the link row field to lookup values for."
+    },
+    "target_field_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the field in the table linked to by the through_field to lookup. Will override the `target_field_id` parameter if both are provided, however only one is required."
+    },
+    "target_field_name": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the field in the table linked to by the through_field to lookup."
+    },
+    "formula_type": {
+      "$ref": "./FormulaTypeEnum.json"
+    }
+  },
+  "required": [
+    "error",
+    "name",
+    "nullable",
+    "type"
+  ]
+}

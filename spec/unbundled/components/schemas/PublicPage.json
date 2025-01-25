@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "description": "A public version of the page serializer with less data to prevent data leaks.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "path": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "path_params": {
+      "type": "array",
+      "items": {
+        "$ref": "./PathParam.json"
+      }
+    },
+    "shared": {
+      "type": "boolean"
+    },
+    "visibility": {
+      "allOf": [
+        {
+          "$ref": "./VisibilityC5fEnum.json"
+        }
+      ],
+      "description": "Controls the page's visibility. When set to 'logged-in', the builder's login_page must also be set.\n\n* `all` - All\n* `logged-in` - Logged In"
+    },
+    "role_type": {
+      "allOf": [
+        {
+          "$ref": "./RoleTypeEnum.json"
+        }
+      ],
+      "description": "Role type is used in conjunction with roles to control access to this page.\n\n* `allow_all` - Allow All\n* `allow_all_except` - Allow All Except\n* `disallow_all_except` - Disallow All Except"
+    },
+    "roles": {
+      "description": "List of user roles that are associated with this page. Used in conjunction with role_type."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "path"
+  ]
+}

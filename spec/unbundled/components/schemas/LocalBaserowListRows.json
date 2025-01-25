@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "filters": {
+      "type": "array",
+      "items": {
+        "$ref": "./LocalBaserowTableServiceFilter.json"
+      }
+    },
+    "sortings": {
+      "type": "array",
+      "items": {
+        "$ref": "./LocalBaserowTableServiceSort.json"
+      }
+    },
+    "search_query": {
+      "type": "string",
+      "description": "Any search queries to apply to the service when it is dispatched."
+    },
+    "table_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow table we want the data for."
+    },
+    "integration_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow integration we want the data for."
+    },
+    "view_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The id of the Baserow view we want the data for."
+    }
+  }
+}

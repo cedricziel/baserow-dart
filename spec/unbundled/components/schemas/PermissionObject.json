@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The permission manager name."
+    },
+    "permissions": {
+      "description": "The content of the permission object for this permission manager."
+    }
+  },
+  "required": [
+    "name",
+    "permissions"
+  ]
+}

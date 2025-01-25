@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the parameter.",
+      "maxLength": 255
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./PathParamTypeEnum.json"
+        }
+      ],
+      "description": "The type of the parameter.\n\n* `text` - text\n* `numeric` - numeric"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

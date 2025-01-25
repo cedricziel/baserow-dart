@@ -1,0 +1,25 @@
+{
+  "oneOf": [
+    {
+      "$ref": "./CsvExporterOptions.json"
+    },
+    {
+      "$ref": "./BaseExporterOptions.json"
+    },
+    {
+      "$ref": "./BaseExporterOptions.json"
+    },
+    {
+      "$ref": "./ExcelExporterOptions.json"
+    }
+  ],
+  "discriminator": {
+    "propertyName": "exporter_type",
+    "mapping": {
+      "csv": "./CsvExporterOptions.json",
+      "json": "./BaseExporterOptions.json",
+      "xml": "./BaseExporterOptions.json",
+      "excel": "./ExcelExporterOptions.json"
+    }
+  }
+}

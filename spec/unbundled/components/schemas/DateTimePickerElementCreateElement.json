@@ -1,0 +1,219 @@
+{
+  "type": "object",
+  "description": "This serializer allow to set the type of an element and the element id before which\nwe want to insert the new element.",
+  "properties": {
+    "order": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,20}(?:\\.\\d{0,20})?$",
+      "readOnly": true,
+      "description": "Lowest first."
+    },
+    "before_id": {
+      "type": "integer",
+      "description": "If provided, creates the element before the element with the given id."
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./TypeD53Enum.json"
+        }
+      ],
+      "description": "The type of the element.\n\n* `heading` - heading\n* `text` - text\n* `link` - link\n* `image` - image\n* `input_text` - input_text\n* `column` - column\n* `button` - button\n* `table` - table\n* `repeat` - repeat\n* `record_selector` - record_selector\n* `form_container` - form_container\n* `choice` - choice\n* `checkbox` - checkbox\n* `iframe` - iframe\n* `datetime_picker` - datetime_picker\n* `header` - header\n* `footer` - footer\n* `auth_form` - auth_form"
+    },
+    "parent_element_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "If provided, creates the element as a child of the element with the given id."
+    },
+    "place_in_container": {
+      "type": "string",
+      "nullable": true,
+      "description": "The place in the container.",
+      "maxLength": 255
+    },
+    "visibility": {
+      "allOf": [
+        {
+          "$ref": "./Visibility789Enum.json"
+        }
+      ],
+      "default": "all"
+    },
+    "styles": {
+      "description": "The theme overrides for this element"
+    },
+    "style_border_top_color": {
+      "type": "string",
+      "description": "Top border color.",
+      "maxLength": 20
+    },
+    "style_border_top_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the top border."
+    },
+    "style_padding_top": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the top border."
+    },
+    "style_margin_top": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the top border."
+    },
+    "style_border_bottom_color": {
+      "type": "string",
+      "description": "Bottom border color",
+      "maxLength": 20
+    },
+    "style_border_bottom_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the bottom border."
+    },
+    "style_padding_bottom": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the bottom border."
+    },
+    "style_margin_bottom": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the bottom border."
+    },
+    "style_border_left_color": {
+      "type": "string",
+      "description": "Left border color",
+      "maxLength": 20
+    },
+    "style_border_left_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the left border."
+    },
+    "style_padding_left": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the left border."
+    },
+    "style_margin_left": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the left border."
+    },
+    "style_border_right_color": {
+      "type": "string",
+      "description": "Right border color",
+      "maxLength": 20
+    },
+    "style_border_right_size": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Pixel height of the right border."
+    },
+    "style_padding_right": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Padding size of the right border."
+    },
+    "style_margin_right": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "Margin size of the right border."
+    },
+    "style_background": {
+      "allOf": [
+        {
+          "$ref": "./StyleBackgroundEnum.json"
+        }
+      ],
+      "description": "What type of background the element should have.\n\n* `none` - None\n* `color` - Color\n* `image` - Image"
+    },
+    "style_background_color": {
+      "type": "string",
+      "description": "The background color if `style_background` is color.",
+      "maxLength": 20
+    },
+    "style_background_file": {
+      "allOf": [
+        {
+          "$ref": "./UserFile.json"
+        }
+      ],
+      "nullable": true,
+      "description": "The background image file"
+    },
+    "style_background_mode": {
+      "allOf": [
+        {
+          "$ref": "./StyleBackgroundModeEnum.json"
+        }
+      ],
+      "description": "The mode of the background image\n\n* `tile` - Tile\n* `fill` - Fill\n* `fit` - Fit"
+    },
+    "style_width": {
+      "allOf": [
+        {
+          "$ref": "./StyleWidthEnum.json"
+        }
+      ],
+      "description": "Indicates the width of the element.\n\n* `full` - Full\n* `full-width` - Full Width\n* `normal` - Normal\n* `medium` - Medium\n* `small` - Small"
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "The text label for this date time picker"
+    },
+    "required": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this form element is a required field."
+    },
+    "default_value": {
+      "type": "string",
+      "default": "",
+      "description": "This date time picker input's default value."
+    },
+    "date_format": {
+      "allOf": [
+        {
+          "$ref": "./DateFormatEnum.json"
+        }
+      ],
+      "default": "EU",
+      "description": "EU (25/04/2024), US (04/25/2024) or ISO (2024-04-25)\n\n* `EU` - European (D/M/Y)\n* `US` - US (M/D/Y)\n* `ISO` - ISO (Y-M-D)"
+    },
+    "include_time": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to include time in the representation of the date"
+    },
+    "time_format": {
+      "allOf": [
+        {
+          "$ref": "./TimeFormatEnum.json"
+        }
+      ],
+      "default": "24",
+      "description": "24 (14:00) or 12 (02:30) PM\n\n* `24` - 24 hour\n* `12` - 12 hour"
+    }
+  },
+  "required": [
+    "order",
+    "type"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "permissions": {
+      "type": "string",
+      "description": "The permissions that the user is going to get within the workspace after accepting the invitation.",
+      "maxLength": 32
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "failing_rows": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Error messages for this field."
+        },
+        "description": "An object containing error messages by fields. The key is the field name and the value is an array of error messages for this field. These messages are localized for the user who has created the job when the translation is available."
+      },
+      "description": "An object containing field in error by rows. The keys are the row indexes from original file and values are objects of errors by fields."
+    }
+  },
+  "required": [
+    "failing_rows"
+  ]
+}

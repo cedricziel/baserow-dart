@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "field_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "key": {
+      "type": "string",
+      "description": "The matching `key` of the `DataSyncProperty`.",
+      "maxLength": 255
+    },
+    "unique_primary": {
+      "type": "boolean",
+      "description": "Indicates whether the data sync property is used for unique identification when syncing."
+    }
+  },
+  "required": [
+    "field_id",
+    "key"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "username": {
+      "type": "string",
+      "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+      "pattern": "^[\\w.@+-]+$",
+      "maxLength": 150
+    },
+    "first_name": {
+      "type": "string",
+      "maxLength": 150
+    }
+  },
+  "required": [
+    "id",
+    "username"
+  ]
+}

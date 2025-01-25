@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./TypeBc4Enum.json"
+    },
+    "ownership_type": {
+      "allOf": [
+        {
+          "$ref": "./OwnershipTypeEnum.json"
+        }
+      ],
+      "default": "collaborative"
+    },
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all the rows should apply to all filters (AND) or to any filter (OR).\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "filters_disabled": {
+      "type": "boolean",
+      "description": "Allows users to see results unfiltered while still keeping the filters saved for the view."
+    },
+    "date_field": {
+      "type": "integer",
+      "nullable": true
+    },
+    "ical_feed_url": {
+      "type": "string",
+      "readOnly": true,
+      "description": "Read-only field with ICal feed endpoint. Note: this url will not be active if ical_public value is set to False."
+    },
+    "ical_public": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "A flag to show if ical feed is exposed. Set this field to True when modifying this resource to enable ICal feed url."
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Indicates whether the view is publicly accessible to visitors."
+    },
+    "slug": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The unique slug that can be used to construct a public URL."
+    }
+  },
+  "required": [
+    "ical_feed_url",
+    "name",
+    "slug",
+    "type"
+  ]
+}

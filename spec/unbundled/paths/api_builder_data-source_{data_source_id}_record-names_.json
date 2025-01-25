@@ -1,0 +1,125 @@
+{
+  "get": {
+    "operationId": "get_record_names_builder_page_data_source",
+    "description": "Find the record names associated with a given list of record ids.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "data_source_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the data_source to find the record names.",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "record_ids",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A comma separated list of the record ids to search for.",
+        "explode": false
+      }
+    ],
+    "tags": [
+      "Builder data sources"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      },
+      {}
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "description": "Record name"
+              },
+              "description": "A dictionary mapping record ids to their names.",
+              "example": {
+                "1": "Record name 1",
+                "2": "Record name 2"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_DATA_SOURCE_IMPROPERLY_CONFIGURED"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_DATA_SOURCE_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

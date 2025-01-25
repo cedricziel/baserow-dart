@@ -1,0 +1,41 @@
+{
+  "get": {
+    "operationId": "oauth_provider_login_redirect",
+    "description": "Redirects to the OAuth2 provider's authentication URL based on the provided auth provider's id.",
+    "parameters": [
+      {
+        "in": "query",
+        "name": "original",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The relative part of URL that the user wanted to access."
+      },
+      {
+        "in": "path",
+        "name": "provider_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The id of the provider for redirect.",
+        "required": true
+      },
+      {
+        "in": "query",
+        "name": "workspace_invitation_token",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The invitation token sent to the user to join a specific workspace."
+      }
+    ],
+    "tags": [
+      "Auth"
+    ],
+    "responses": {
+      "302": {
+        "description": "No response body"
+      }
+    }
+  }
+}

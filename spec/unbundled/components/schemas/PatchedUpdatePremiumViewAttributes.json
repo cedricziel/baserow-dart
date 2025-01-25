@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "properties": {
+    "show_logo": {
+      "type": "boolean"
+    }
+  }
+}

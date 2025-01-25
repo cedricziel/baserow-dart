@@ -1,0 +1,33 @@
+{
+  "enum": [
+    "text",
+    "long_text",
+    "url",
+    "email",
+    "number",
+    "rating",
+    "boolean",
+    "date",
+    "last_modified",
+    "last_modified_by",
+    "created_on",
+    "created_by",
+    "duration",
+    "link_row",
+    "file",
+    "single_select",
+    "multiple_select",
+    "phone_number",
+    "formula",
+    "count",
+    "rollup",
+    "lookup",
+    "multiple_collaborators",
+    "uuid",
+    "autonumber",
+    "password",
+    "ai"
+  ],
+  "type": "string",
+  "description": "* `text` - text\n* `long_text` - long_text\n* `url` - url\n* `email` - email\n* `number` - number\n* `rating` - rating\n* `boolean` - boolean\n* `date` - date\n* `last_modified` - last_modified\n* `last_modified_by` - last_modified_by\n* `created_on` - created_on\n* `created_by` - created_by\n* `duration` - duration\n* `link_row` - link_row\n* `file` - file\n* `single_select` - single_select\n* `multiple_select` - multiple_select\n* `phone_number` - phone_number\n* `formula` - formula\n* `count` - count\n* `rollup` - rollup\n* `lookup` - lookup\n* `multiple_collaborators` - multiple_collaborators\n* `uuid` - uuid\n* `autonumber` - autonumber\n* `password` - password\n* `ai` - ai"
+}

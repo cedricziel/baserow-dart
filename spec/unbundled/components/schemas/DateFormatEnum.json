@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "EU",
+    "US",
+    "ISO"
+  ],
+  "type": "string",
+  "description": "* `EU` - European (D/M/Y)\n* `US` - US (M/D/Y)\n* `ISO` - ISO (Y-M-D)"
+}

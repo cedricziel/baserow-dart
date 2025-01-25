@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./Type6ebEnum.json"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "description": "Field description"
+    },
+    "long_text_enable_rich_text": {
+      "type": "boolean",
+      "nullable": true,
+      "description": "Enable rich text formatting for the field."
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

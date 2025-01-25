@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "allow_all",
+    "allow_all_except",
+    "disallow_all_except"
+  ],
+  "type": "string",
+  "description": "* `allow_all` - Allow All\n* `allow_all_except` - Allow All Except\n* `disallow_all_except` - Disallow All Except"
+}

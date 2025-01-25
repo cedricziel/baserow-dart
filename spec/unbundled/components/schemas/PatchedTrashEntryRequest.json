@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "description": "Mixin to a DRF serializer class to raise an exception if data with unknown fields\nis provided to the serializer.",
+  "properties": {
+    "trash_item_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "parent_trash_item_id": {
+      "type": "integer",
+      "minimum": 0,
+      "nullable": true
+    },
+    "trash_item_type": {
+      "$ref": "./TrashItemTypeEnum.json"
+    }
+  }
+}

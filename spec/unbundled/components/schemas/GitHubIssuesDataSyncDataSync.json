@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "$ref": "./DataSyncSyncedProperty.json"
+      }
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the table was last synced."
+    },
+    "last_error": {
+      "type": "string",
+      "nullable": true
+    },
+    "github_issues_owner": {
+      "type": "string",
+      "description": "The owner of the repository on GitHub.",
+      "maxLength": 255
+    },
+    "github_issues_repo": {
+      "type": "string",
+      "description": "The name of the repository on GitHub.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "github_issues_owner",
+    "github_issues_repo",
+    "id",
+    "synced_properties",
+    "type"
+  ]
+}

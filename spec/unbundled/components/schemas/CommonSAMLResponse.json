@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "SAMLResponse": {
+      "type": "string",
+      "description": "The encoded SAML response from the IdP."
+    },
+    "RelayState": {
+      "type": "string",
+      "description": "The frontend URL where redirect the authenticated user."
+    }
+  },
+  "required": [
+    "RelayState",
+    "SAMLResponse"
+  ]
+}

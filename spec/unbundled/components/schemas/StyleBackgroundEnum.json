@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "none",
+    "color",
+    "image"
+  ],
+  "type": "string",
+  "description": "* `none` - None\n* `color` - Color\n* `image` - Image"
+}

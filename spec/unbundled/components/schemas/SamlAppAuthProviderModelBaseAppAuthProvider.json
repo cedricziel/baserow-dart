@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "description": "This serializer allow to set the type of an app_auth_provider and the\napp_auth_provider id before which we want to insert the new app_auth_provider.",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type622Enum.json"
+        }
+      ],
+      "description": "The type of the app_auth_provider.\n\n* `local_baserow_password` - local_baserow_password\n* `saml` - saml"
+    },
+    "user_source_id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "domain": {
+      "type": "string",
+      "nullable": true,
+      "description": "The email domain registered with this provider."
+    },
+    "metadata": {
+      "type": "string",
+      "description": "The SAML metadata XML provided by the IdP."
+    },
+    "is_verified": {
+      "type": "boolean",
+      "readOnly": true,
+      "description": "Whether or not a user sign in correctly with this SAML provider."
+    },
+    "email_attr_key": {
+      "type": "string",
+      "description": "The key in the SAML response that contains the email address of the user."
+    },
+    "first_name_attr_key": {
+      "type": "string",
+      "description": "The key in the SAML response that contains the first name of the user."
+    },
+    "last_name_attr_key": {
+      "type": "string",
+      "description": "The key in the SAML response that contains the last name of the user. If this is not set, the first name attr will be used as full name."
+    }
+  },
+  "required": [
+    "is_verified",
+    "metadata",
+    "type",
+    "user_source_id"
+  ]
+}

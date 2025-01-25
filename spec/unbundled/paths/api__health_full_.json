@@ -1,0 +1,29 @@
+{
+  "get": {
+    "operationId": "full_health_check",
+    "description": "Runs a full health check testing as many services and systems as possible. These health checks can be expensive operations such as writing files to storage etc.",
+    "tags": [
+      "Health"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/FullHealthCheck.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

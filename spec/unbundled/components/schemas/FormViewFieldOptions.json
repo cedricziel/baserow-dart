@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "By default, the name of the related field will be shown to the visitor. Optionally another name can be used by setting this name.",
+      "maxLength": 255
+    },
+    "description": {
+      "type": "string",
+      "description": "If provided, then this value be will be shown under the field name."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Indicates whether the field is included in the form."
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Indicates whether the field is required for the visitor to fill out."
+    },
+    "show_when_matching_conditions": {
+      "type": "boolean",
+      "description": "Indicates whether this field is visible when the conditions are met."
+    },
+    "condition_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all (AND) or any (OR) of the conditions should match before shown.\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": -32768,
+      "description": "The order that the field has in the form. Lower value is first."
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "./FormViewFieldOptionsCondition.json"
+      }
+    },
+    "condition_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "./FormViewFieldOptionsConditionGroup.json"
+      }
+    },
+    "field_component": {
+      "type": "string",
+      "description": "Indicates which field input component is used in the form. The value is only used in the frontend, and can differ per field.",
+      "maxLength": 32
+    },
+    "include_all_select_options": {
+      "type": "boolean",
+      "description": "Indicates whether all fields must be included. Only works if the related field type can have select options."
+    },
+    "allowed_select_options": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    }
+  }
+}

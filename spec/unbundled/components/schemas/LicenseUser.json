@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "first_name": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email address",
+      "maxLength": 254
+    }
+  },
+  "required": [
+    "id"
+  ]
+}

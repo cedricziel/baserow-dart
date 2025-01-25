@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "type": {
+      "$ref": "./TypeBc4Enum.json"
+    },
+    "ownership_type": {
+      "allOf": [
+        {
+          "$ref": "./OwnershipTypeEnum.json"
+        }
+      ],
+      "default": "collaborative"
+    },
+    "filter_type": {
+      "allOf": [
+        {
+          "$ref": "./ConditionTypeEnum.json"
+        }
+      ],
+      "description": "Indicates whether all the rows should apply to all filters (AND) or to any filter (OR).\n\n* `AND` - And\n* `OR` - Or"
+    },
+    "filters_disabled": {
+      "type": "boolean",
+      "description": "Allows users to see results unfiltered while still keeping the filters saved for the view."
+    },
+    "single_select_field": {
+      "type": "integer",
+      "nullable": true
+    },
+    "card_cover_image_field": {
+      "type": "integer",
+      "nullable": true,
+      "description": "References a file field of which the first image must be shown as card cover image."
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Indicates whether the view is publicly accessible to visitors."
+    },
+    "slug": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The unique slug that can be used to construct a public URL."
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "type"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./TypeD46Enum.json"
+        }
+      ],
+      "description": "The type of the data sync to get the properties from.\n\n* `ical_calendar` - ical_calendar\n* `postgresql` - postgresql\n* `local_baserow_table` - local_baserow_table\n* `jira_issues` - jira_issues\n* `github_issues` - github_issues\n* `gitlab_issues` - gitlab_issues\n* `hubspot_contacts` - hubspot_contacts"
+    },
+    "jira_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The base URL of your Jira instance (e.g., https://your-domain.atlassian.net).",
+      "maxLength": 2000
+    },
+    "jira_project_key": {
+      "type": "string",
+      "description": "The project key of the Jira project (e.g., PROJ).",
+      "maxLength": 255
+    },
+    "jira_username": {
+      "type": "string",
+      "description": "The username of the Jira account used to authenticate.",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "jira_url",
+    "jira_username",
+    "type"
+  ]
+}

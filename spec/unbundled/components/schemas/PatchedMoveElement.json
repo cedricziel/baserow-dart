@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "before_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "If provided, the element is moved before the element with this Id. Otherwise the element is placed at the end of the page."
+    },
+    "parent_element_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "If provided, the element is moved as a child of the element with the given id."
+    },
+    "place_in_container": {
+      "type": "string",
+      "nullable": true,
+      "description": "The place in the container."
+    }
+  }
+}

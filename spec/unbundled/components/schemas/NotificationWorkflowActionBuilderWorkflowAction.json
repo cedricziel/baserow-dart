@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "description": "Basic builder workflow action serializer",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "order": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0
+    },
+    "element_id": {
+      "type": "integer",
+      "nullable": true,
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true,
+      "description": "The type of the workflow action"
+    },
+    "event": {
+      "type": "string",
+      "description": "The event that triggers the execution",
+      "maxLength": 60
+    },
+    "title": {
+      "type": "string",
+      "default": "",
+      "description": "The title of the notification. Must be an formula."
+    },
+    "description": {
+      "type": "string",
+      "default": "",
+      "description": "The description of the notification. Must be an formula."
+    }
+  },
+  "required": [
+    "element_id",
+    "event",
+    "id",
+    "order",
+    "type"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "action_type": {
+      "type": "string",
+      "nullable": true,
+      "description": "If an action was undone/redone/skipped due to an error this field will contain the type of the action that was undone/redone."
+    },
+    "action_scope": {
+      "type": "string",
+      "nullable": true,
+      "description": "If an action was undone/redone/skipped due to an error this field will contain the scope of the action that was undone/redone."
+    }
+  }
+}

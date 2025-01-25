@@ -1,0 +1,73 @@
+{
+  "get": {
+    "operationId": "get_export_job",
+    "description": "Returns information such as export progress and state or the url of the exported file for the specified export job, only if the requesting user has access.",
+    "parameters": [
+      {
+        "in": "path",
+        "name": "job_id",
+        "schema": {
+          "type": "integer"
+        },
+        "description": "The job id to lookup information about.",
+        "required": true
+      }
+    ],
+    "tags": [
+      "Database table export"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/ExportJob.json"
+            }
+          }
+        },
+        "description": ""
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Machine readable error indicating what went wrong.",
+                  "enum": [
+                    "ERROR_EXPORT_JOB_DOES_NOT_EXIST"
+                  ]
+                },
+                "detail": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "format": "string",
+                      "description": "Human readable details about what went wrong."
+                    },
+                    {
+                      "type": "object",
+                      "format": "object",
+                      "description": "Machine readable object about what went wrong."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

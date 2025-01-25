@@ -1,0 +1,10 @@
+{
+  "enum": [
+    "day",
+    "week",
+    "month",
+    "year"
+  ],
+  "type": "string",
+  "description": "* `day` - Day\n* `week` - Week\n* `month` - Month\n* `year` - Year"
+}

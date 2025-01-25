@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "field": {
+      "type": "integer",
+      "description": "The field that must be sorted on."
+    },
+    "order": {
+      "allOf": [
+        {
+          "$ref": "./OrderEnum.json"
+        }
+      ],
+      "description": "Indicates the sort order direction. ASC (Ascending) is from A to Z and DESC (Descending) is from Z to A.\n\n* `ASC` - Ascending\n* `DESC` - Descending"
+    }
+  }
+}

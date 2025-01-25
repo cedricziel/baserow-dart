@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "description": "The response of the list user source users endpoint.",
+  "properties": {
+    "users_per_user_sources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "./UserSourceUser.json"
+        }
+      },
+      "description": "An object keyed by the id of the user source and the value being the list of users for this user source."
+    }
+  },
+  "required": [
+    "users_per_user_sources"
+  ]
+}

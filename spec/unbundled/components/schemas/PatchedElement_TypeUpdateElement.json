@@ -1,0 +1,58 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./HeadingElementUpdateElement.json"
+    },
+    {
+      "$ref": "./TextElementUpdateElement.json"
+    },
+    {
+      "$ref": "./LinkElementUpdateElement.json"
+    },
+    {
+      "$ref": "./ImageElementUpdateElement.json"
+    },
+    {
+      "$ref": "./InputTextElementUpdateElement.json"
+    },
+    {
+      "$ref": "./ColumnElementUpdateElement.json"
+    },
+    {
+      "$ref": "./ButtonElementUpdateElement.json"
+    },
+    {
+      "$ref": "./TableElementUpdateElement.json"
+    },
+    {
+      "$ref": "./RepeatElementUpdateElement.json"
+    },
+    {
+      "$ref": "./RecordSelectorElementUpdateElement.json"
+    },
+    {
+      "$ref": "./FormContainerElementUpdateElement.json"
+    },
+    {
+      "$ref": "./ChoiceElementUpdateElement.json"
+    },
+    {
+      "$ref": "./CheckboxElementUpdateElement.json"
+    },
+    {
+      "$ref": "./IFrameElementUpdateElement.json"
+    },
+    {
+      "$ref": "./DateTimePickerElementUpdateElement.json"
+    },
+    {
+      "$ref": "./HeaderElementUpdateElement.json"
+    },
+    {
+      "$ref": "./FooterElementUpdateElement.json"
+    },
+    {
+      "$ref": "./AuthFormElementUpdateElement.json"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "manual",
+    "formulas"
+  ],
+  "type": "string",
+  "description": "* `manual` - Manual\n* `formulas` - Formulas"
+}

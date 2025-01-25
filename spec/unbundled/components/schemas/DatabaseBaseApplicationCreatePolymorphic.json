@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "type": {
+      "$ref": "./Type8b0Enum.json"
+    },
+    "init_with_data": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ]
+}

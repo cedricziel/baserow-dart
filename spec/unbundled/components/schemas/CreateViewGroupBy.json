@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "field": {
+      "type": "integer",
+      "description": "The field that must be grouped by."
+    },
+    "order": {
+      "allOf": [
+        {
+          "$ref": "./OrderEnum.json"
+        }
+      ],
+      "default": "ASC",
+      "description": "Indicates the sort order direction. ASC (Ascending) is from A to Z and DESC (Descending) is from Z to A.\n\n* `ASC` - Ascending\n* `DESC` - Descending"
+    },
+    "width": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "default": 200,
+      "description": "The pixel width of the group by in the related view."
+    }
+  },
+  "required": [
+    "field"
+  ]
+}

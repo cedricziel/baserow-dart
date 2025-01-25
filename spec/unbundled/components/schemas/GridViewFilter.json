@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "field_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Only the fields related to the provided ids are added to the response. If None are provided all fields will be returned."
+    },
+    "row_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Only rows related to the provided ids are added to the response."
+    }
+  },
+  "required": [
+    "row_ids"
+  ]
+}

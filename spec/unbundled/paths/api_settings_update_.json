@@ -1,0 +1,48 @@
+{
+  "patch": {
+    "operationId": "update_settings",
+    "description": "Updates the admin configured settings if the user has admin permissions.",
+    "tags": [
+      "Settings"
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedSettings.json"
+          }
+        },
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedSettings.json"
+          }
+        },
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "../components/schemas/PatchedSettings.json"
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/Settings.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

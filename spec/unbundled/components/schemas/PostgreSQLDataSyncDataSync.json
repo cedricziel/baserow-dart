@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "type": {
+      "type": "string",
+      "readOnly": true
+    },
+    "synced_properties": {
+      "type": "array",
+      "items": {
+        "$ref": "./DataSyncSyncedProperty.json"
+      }
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the table was last synced."
+    },
+    "last_error": {
+      "type": "string",
+      "nullable": true
+    },
+    "postgresql_host": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_username": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_port": {
+      "type": "integer",
+      "maximum": 32767,
+      "minimum": 0
+    },
+    "postgresql_database": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_schema": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_table": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "postgresql_sslmode": {
+      "$ref": "./PostgresqlSslmodeEnum.json"
+    }
+  },
+  "required": [
+    "id",
+    "postgresql_database",
+    "postgresql_host",
+    "postgresql_table",
+    "postgresql_username",
+    "synced_properties",
+    "type"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./grid_view_update.json"
+    },
+    {
+      "$ref": "./gallery_view_update.json"
+    },
+    {
+      "$ref": "./form_view_update.json"
+    },
+    {
+      "$ref": "./kanban_view_update.json"
+    },
+    {
+      "$ref": "./calendar_view_update.json"
+    },
+    {
+      "$ref": "./timeline_view_update.json"
+    }
+  ]
+}

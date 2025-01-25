@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "user_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The user who made the comment.",
+      "readOnly": true
+    },
+    "first_name": {
+      "type": "string",
+      "maxLength": 32
+    },
+    "table_id": {
+      "type": "integer",
+      "description": "The table the row this comment is for is found in. ",
+      "readOnly": true
+    },
+    "row_id": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": 0,
+      "description": "The id of the row the comment is for."
+    },
+    "message": {
+      "type": "string",
+      "readOnly": true
+    },
+    "created_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "updated_on": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "edited": {
+      "type": "string",
+      "readOnly": true
+    },
+    "trashed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "created_on",
+    "edited",
+    "id",
+    "message",
+    "row_id",
+    "table_id",
+    "updated_on",
+    "user_id"
+  ]
+}

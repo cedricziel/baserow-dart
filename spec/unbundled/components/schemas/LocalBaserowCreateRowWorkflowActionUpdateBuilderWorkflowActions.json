@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "allOf": [
+        {
+          "$ref": "./Type051Enum.json"
+        }
+      ],
+      "description": "The type of the workflow action\n\n* `notification` - notification\n* `open_page` - open_page\n* `create_row` - create_row\n* `update_row` - update_row\n* `delete_row` - delete_row\n* `logout` - logout\n* `refresh_data_source` - refresh_data_source"
+    },
+    "service": {
+      "allOf": [
+        {
+          "$ref": "./Integration_Service.json"
+        }
+      ],
+      "description": "The service which this workflow action is associated with."
+    }
+  }
+}

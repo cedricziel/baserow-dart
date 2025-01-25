@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "no_verification",
+    "recommended",
+    "enforced"
+  ],
+  "type": "string",
+  "description": "* `no_verification` - no_verification\n* `recommended` - recommended\n* `enforced` - enforced"
+}

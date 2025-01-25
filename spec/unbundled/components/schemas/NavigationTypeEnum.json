@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "page",
+    "custom"
+  ],
+  "type": "string",
+  "description": "* `page` - Page\n* `custom` - Custom"
+}

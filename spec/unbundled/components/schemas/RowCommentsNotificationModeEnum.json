@@ -1,0 +1,8 @@
+{
+  "enum": [
+    "all",
+    "mentions"
+  ],
+  "type": "string",
+  "description": "* `all` - all\n* `mentions` - mentions"
+}

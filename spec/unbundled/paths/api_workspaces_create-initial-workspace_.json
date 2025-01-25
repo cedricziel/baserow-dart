@@ -1,0 +1,29 @@
+{
+  "post": {
+    "operationId": "create_initial_workspace",
+    "description": "Creates an initial workspace. This is typically called after the user signs up and skips the onboarding in the frontend. It contains some example data.",
+    "tags": [
+      "Workspaces"
+    ],
+    "security": [
+      {
+        "UserSource JWT": []
+      },
+      {
+        "JWT": []
+      }
+    ],
+    "responses": {
+      "200": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../components/schemas/WorkspaceUserWorkspace.json"
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  }
+}

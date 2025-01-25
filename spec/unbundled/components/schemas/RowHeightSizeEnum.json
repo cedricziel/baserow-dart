@@ -1,0 +1,9 @@
+{
+  "enum": [
+    "small",
+    "medium",
+    "large"
+  ],
+  "type": "string",
+  "description": "* `small` - Small\n* `medium` - Medium\n* `large` - Large"
+}

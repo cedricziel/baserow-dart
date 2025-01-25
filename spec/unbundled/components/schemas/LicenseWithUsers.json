@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "license_id": {
+      "type": "string",
+      "description": "Unique identifier of the license."
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Indicates if the backend deems the license valid."
+    },
+    "last_check": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "valid_from": {
+      "type": "string",
+      "format": "date-time",
+      "description": "From which timestamp the license becomes active."
+    },
+    "valid_through": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Until which timestamp the license is active."
+    },
+    "free_users_count": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The amount of free users that are currently using the license."
+    },
+    "seats_taken": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The amount of users that are currently using the license."
+    },
+    "seats": {
+      "type": "integer",
+      "description": "The maximum amount of users that can use the license."
+    },
+    "product_code": {
+      "type": "string",
+      "description": "The product code that indicates what the license unlocks."
+    },
+    "issued_on": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date when the license was issued. It could be that a new license is issued with the same `license_id` because it was updated. In that case, the one that has been issued last should be used."
+    },
+    "issued_to_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Indicates to which email address the license has been issued."
+    },
+    "issued_to_name": {
+      "type": "string",
+      "description": "Indicates to whom the license has been issued."
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "./LicenseUser.json"
+      },
+      "readOnly": true
+    }
+  },
+  "required": [
+    "free_users_count",
+    "id",
+    "is_active",
+    "issued_on",
+    "issued_to_email",
+    "issued_to_name",
+    "license_id",
+    "product_code",
+    "seats",
+    "seats_taken",
+    "users",
+    "valid_from",
+    "valid_through"
+  ]
+}
