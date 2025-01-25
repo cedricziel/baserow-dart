@@ -21,4 +21,9 @@ jobs:
         id: release
         with:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          release-type: dart
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+        with:
+          working-directory: 'baserow'

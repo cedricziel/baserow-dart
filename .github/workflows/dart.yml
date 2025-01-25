@@ -15,17 +15,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        package:
+          - baserow
+
     steps:
       - uses: actions/checkout@v4
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: dart-lang/setup-dart@e630b99d28a3b71860378cafdc2a067c71107f94
+      - uses: dart-lang/setup-dart@v1.7.0
+        with:
+          working-director: ${{ matrix.package }}
 
       - name: Install dependencies
         run: dart pub get
+        working-directory: ${{ matrix.package }}
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       # - name: Verify formatting
@@ -34,9 +38,15 @@ jobs:
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: dart analyze
+        working-directory: ${{ matrix.package }}
 
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
       - name: Run tests
         run: dart test
+        working-directory: ${{ matrix.package }}
+
+      - name: Publish - dry run
+        run: dart pub publish --dry-run
+        working-directory: ${{ matrix.package }}

@@ -1,0 +1,7 @@
+{
+    "packages": {
+      "baserow": {
+        "release-type": "dart"
+      }
+    }
+  }
