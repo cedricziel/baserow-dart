@@ -1,4 +1,5 @@
 import '../models.dart';
+import '../builders/base_builders.dart';
 
 /// Interface for table related operations in Baserow
 abstract class TableOperations {
@@ -39,5 +40,26 @@ abstract class TableOperations {
     required String name,
     List<List<dynamic>>? data,
     bool firstRowHeader = false,
+  });
+
+  /// Ensures a table exists with the specified structure
+  ///
+  /// If a table with the given name exists:
+  /// - Updates the table if updateIfExists is true
+  /// - Returns the existing table if updateIfExists is false
+  ///
+  /// If the table doesn't exist:
+  /// - Creates a new table with the specified structure
+  ///
+  /// [databaseId] is the ID of the database to ensure the table in
+  /// [builder] is the TableBuilder containing the desired structure
+  /// [updateIfExists] Optional flag to update existing table (default: true)
+  ///
+  /// Returns the ensured table
+  /// Throws [BaserowException] if the operation fails or the user doesn't have access
+  Future<Table> ensureTable(
+    int databaseId,
+    TableBuilder builder, {
+    bool updateIfExists = true,
   });
 }
