@@ -6,7 +6,6 @@ class FieldBuilder {
   final String type;
   String? description;
   Map<String, dynamic>? options;
-  bool? required;
   bool primary = false;
 
   FieldBuilder(this.name, this.type) {
@@ -35,7 +34,6 @@ class FieldBuilder {
       'type': type,
       if (description != null) 'description': description,
       if (options != null) 'options': options,
-      if (required != null) 'required': required,
     };
   }
 }
@@ -133,13 +131,11 @@ class TableBuilder {
     String type, {
     String? description,
     Map<String, dynamic>? options,
-    bool? required,
   }) {
     _validateFieldName(name);
     final field = FieldBuilder(name, type)
       ..description = description
-      ..options = options
-      ..required = required;
+      ..options = options;
     fields.add(field);
     return this;
   }

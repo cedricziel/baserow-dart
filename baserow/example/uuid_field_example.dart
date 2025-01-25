@@ -3,7 +3,7 @@ import 'package:baserow/baserow.dart';
 void main() {
   // Create a new table builder with a UUID field
   final tableBuilder = TableBuilder('Users')
-    ..withUUIDField('ID', required: true)
+    ..withUUIDField('ID')
     ..withTextField('Name')
     ..withEmailField('Email');
 
