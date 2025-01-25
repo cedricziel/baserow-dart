@@ -1,4 +1,3 @@
----
 artifactId: baserow_api
 packageName: baserow_api
 pubLibrary: baserow_api
@@ -7,4 +6,5 @@ apis: "Database tables"
 validateSpec: false
 
 additionalProperties:
+globalProperties:
   apis: "Database tables"
