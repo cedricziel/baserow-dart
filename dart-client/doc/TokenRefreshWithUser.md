@@ -1,0 +1,17 @@
+# openapi.model.TokenRefreshWithUser
+
+## Load the model package
+```dart
+import 'package:openapi/api.dart';
+```
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**access** | **String** |  | [readonly] 
+**refreshToken** | **String** |  | [optional] 
+**token** | **String** | Deprecated. Use `refresh_token` instead. | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

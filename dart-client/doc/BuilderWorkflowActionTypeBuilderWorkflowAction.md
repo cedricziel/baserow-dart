@@ -1,0 +1,28 @@
+# openapi.model.BuilderWorkflowActionTypeBuilderWorkflowAction
+
+## Load the model package
+```dart
+import 'package:openapi/api.dart';
+```
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **int** |  | [readonly] 
+**order** | **int** |  | 
+**elementId** | **int** |  | [readonly] 
+**type** | **String** | The type of the workflow action | [readonly] 
+**event** | **String** | The event that triggers the execution | 
+**title** | **String** | The title of the notification. Must be an formula. | [optional] [default to '']
+**description** | **String** | The description of the notification. Must be an formula. | [optional] [default to '']
+**navigationType** | [**NavigationTypeEnum**](NavigationTypeEnum.md) | The navigation type.  * `page` - Page * `custom` - Custom | [optional] 
+**navigateToPageId** | **int** | ('Destination page id for this link. If null then we use the navigate_to_url property instead.',) | [optional] 
+**navigateToUrl** | **String** | If no page is selected, this indicate the destination of the link. | [optional] [default to '']
+**pageParameters** | [**List<PageParameterValue>**](PageParameterValue.md) | The parameters for each parameters of the selected page if any. | [optional] [default to const []]
+**target** | [**TargetEnum**](TargetEnum.md) | The target of the link when we click on it.  * `self` - Self * `blank` - Blank | [optional] 
+**service** | [**IntegrationServiceService**](IntegrationServiceService.md) | The service which this workflow action is associated with. | 
+**dataSourceId** | **int** | The ID of the Data Source to be refreshed. | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
