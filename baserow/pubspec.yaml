@@ -6,3 +6,19 @@ resolution: workspace
 
 environment:
   sdk: ^3.6.0
+
+dependencies:
+  http:
+  json_annotation:
+  jwt_decoder:
+  web_socket_channel:
+
+dev_dependencies:
+  async:
+  build_runner:
+  fake_async:
+  json_serializable:
+  lints:
+  mockito:
+  stream_channel:
+  test:
