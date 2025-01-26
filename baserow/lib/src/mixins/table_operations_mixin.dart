@@ -146,10 +146,14 @@ mixin TableOperationsMixin implements TableOperations {
 
       // Set primary field if specified
       if (primaryField != null) {
-        await post(
-          'database/fields/table/${table.id}/change-primary-field/',
-          {'new_primary_field_id': primaryField.id},
-        );
+        try {
+          await post(
+            'database/fields/table/${table.id}/change-primary-field/',
+            {'new_primary_field_id': primaryField.id},
+          );
+        } on FieldIsAlreadyPrimaryException {
+          // Field is already primary, which is what we wanted
+        }
       }
 
       // Get existing views to compare
@@ -219,10 +223,14 @@ mixin TableOperationsMixin implements TableOperations {
 
       // Set primary field if specified
       if (primaryField != null) {
-        await post(
-          'database/fields/table/${table.id}/change-primary-field/',
-          {'new_primary_field_id': primaryField.id},
-        );
+        try {
+          await post(
+            'database/fields/table/${table.id}/change-primary-field/',
+            {'new_primary_field_id': primaryField.id},
+          );
+        } on FieldIsAlreadyPrimaryException {
+          // Field is already primary, which is what we wanted
+        }
       }
 
       // Create views

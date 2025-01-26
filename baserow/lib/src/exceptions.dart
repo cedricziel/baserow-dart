@@ -19,3 +19,8 @@ class TokenRefreshException implements Exception {
   @override
   String toString() => 'TokenRefreshException: $message';
 }
+
+/// Exception thrown when attempting to set a field as primary when it's already primary
+class FieldIsAlreadyPrimaryException extends BaserowException {
+  FieldIsAlreadyPrimaryException(super.message, super.statusCode);
+}

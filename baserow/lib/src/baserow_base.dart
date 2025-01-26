@@ -126,22 +126,28 @@ class BaserowClient
     } else if (response.statusCode != 201 && response.statusCode != 200) {
       String errorMessage =
           'Failed to perform POST request: ${response.statusCode}';
+      Map<String, dynamic>? errorData;
       try {
-        final errorData = json.decode(response.body);
-        if (errorData is Map<String, dynamic>) {
-          // Try to get error from 'error' or 'detail' field
-          final error = errorData['error'] ?? errorData['detail'];
-          if (error != null && error is String) {
-            errorMessage = error;
-          } else if (errorData.values.isNotEmpty) {
-            // If no error/detail field, try to get first value as error
-            final firstValue = errorData.values.first;
-            if (firstValue is String) {
-              errorMessage = firstValue;
-            }
+        errorData = json.decode(response.body) as Map<String, dynamic>;
+        // Try to get error from 'error' or 'detail' field
+        final error = errorData['error'] ?? errorData['detail'];
+        if (error != null && error is String) {
+          errorMessage = error;
+          // Check for specific error codes
+          if (error == 'ERROR_FIELD_IS_ALREADY_PRIMARY') {
+            throw FieldIsAlreadyPrimaryException(error, response.statusCode);
+          }
+        } else if (errorData.values.isNotEmpty) {
+          // If no error/detail field, try to get first value as error
+          final firstValue = errorData.values.first;
+          if (firstValue is String) {
+            errorMessage = firstValue;
           }
         }
-      } catch (_) {
+      } catch (e) {
+        if (e is FieldIsAlreadyPrimaryException) {
+          rethrow;
+        }
         // Use default error message if parsing fails
       }
       throw BaserowException(errorMessage, response.statusCode);

@@ -341,5 +341,72 @@ void main() {
         body: '{"new_primary_field_id":2}',
       )).called(1);
     });
+
+    test('continues execution when field is already primary', () async {
+      // Mock list tables response
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tables/database/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response('[]', 200));
+
+      // Mock create table response
+      when(mockClient.post(
+        Uri.parse('http://localhost/api/database/tables/database/1/'),
+        headers: anyNamed('headers'),
+        body: anyNamed('body'),
+      )).thenAnswer((_) async => http.Response(
+          '{"id": 1, "name": "Users", "order": 1, "database_id": 1}', 200));
+
+      // Mock create field response
+      when(mockClient.post(
+        Uri.parse('http://localhost/api/database/fields/table/1/'),
+        headers: anyNamed('headers'),
+        body: anyNamed('body'),
+      )).thenAnswer((_) async => http.Response(
+          '{"id": 1, "name": "ID", "type": "uuid", "order": 1}', 200));
+
+      // Mock set primary field response to return error
+      when(mockClient.post(
+        Uri.parse(
+            'http://localhost/api/database/fields/table/1/change-primary-field/'),
+        headers: anyNamed('headers'),
+        body: anyNamed('body'),
+      )).thenAnswer((_) async => http.Response(
+          '{"error": "ERROR_FIELD_IS_ALREADY_PRIMARY", "detail": "Field is already primary"}',
+          400));
+
+      // Mock get table with fields response
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/tables/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+          '{"id": 1, "name": "Users", "order": 1, "database_id": 1}', 200));
+
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/fields/table/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+          '[{"id": 1, "name": "ID", "type": "uuid", "order": 1, "primary": true}]',
+          200));
+
+      // This should succeed despite the ERROR_FIELD_IS_ALREADY_PRIMARY error
+      final table = await client.ensureTable(
+        1,
+        TableBuilder('Users')..withUUIDField('ID', primary: true),
+      );
+
+      expect(table.name, equals('Users'));
+      expect(table.fields?.length, equals(1));
+      expect(table.fields?.first.name, equals('ID'));
+      expect(table.fields?.first.primary, isTrue);
+
+      // Verify the attempt to set primary field was made
+      verify(mockClient.post(
+        Uri.parse(
+            'http://localhost/api/database/fields/table/1/change-primary-field/'),
+        headers: anyNamed('headers'),
+        body: '{"new_primary_field_id":1}',
+      )).called(1);
+    });
   });
 }
