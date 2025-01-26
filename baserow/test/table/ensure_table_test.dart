@@ -55,6 +55,14 @@ void main() {
           '{"id": 1, "name": "Grid", "type": "grid", "ownership_type": "collaborative", "slug": "grid-1"}',
           200));
 
+      // Mock list views response
+      when(mockClient.get(
+        Uri.parse('http://localhost/api/database/views/table/1/'),
+        headers: anyNamed('headers'),
+      )).thenAnswer((_) async => http.Response(
+          '[{"id": 1, "name": "Grid", "type": "grid", "ownership_type": "collaborative", "slug": "grid-1"}]',
+          200));
+
       // Mock get table with fields response
       when(mockClient.get(
         Uri.parse('http://localhost/api/database/tables/1/'),
@@ -66,7 +74,7 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/1/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-          '{"fields": [{"id": 1, "name": "Name", "type": "text", "order": 1, "primary": true}]}',
+          '[{"id": 1, "name": "Name", "type": "text", "order": 1, "primary": true}]',
           200));
 
       final table = await client.ensureTable(
@@ -104,7 +112,7 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/1/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-          '{"fields": [{"id": 1, "name": "Name", "type": "text", "order": 1, "primary": true}]}',
+          '[{"id": 1, "name": "Name", "type": "text", "order": 1, "primary": true}]',
           200));
 
       // Mock list views response
@@ -233,7 +241,7 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/1/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-          '{"fields": [{"id": 1, "name": "ID", "type": "uuid", "order": 1, "primary": true}]}',
+          '[{"id": 1, "name": "ID", "type": "uuid", "order": 1, "primary": true}]',
           200));
 
       final table = await client.ensureTable(
@@ -275,7 +283,7 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/1/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-          '{"fields": [{"id": 1, "name": "Name", "type": "text", "order": 1, "primary": true}, {"id": 2, "name": "ID", "type": "uuid", "order": 2}]}',
+          '[{"id": 1, "name": "Name", "type": "text", "order": 1, "primary": true}, {"id": 2, "name": "ID", "type": "uuid", "order": 2}]',
           200));
 
       // Mock list views response

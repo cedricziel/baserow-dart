@@ -48,7 +48,7 @@ mixin FieldOperationsMixin implements FieldOperations {
   @override
   Future<List<Field>> listFields(int tableId) async {
     final response = await get('database/fields/table/$tableId/');
-    final List<dynamic> data = response['fields'] as List<dynamic>;
+    final List<dynamic> data = response as List<dynamic>;
 
     return data
         .map((field) => Field.fromJson(field as Map<String, dynamic>))
