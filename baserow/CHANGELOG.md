@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.2](https://github.com/cedricziel/baserow-dart/compare/v3.2.1...v3.2.2) (2025-01-26)
+
+
+### Bug Fixes
+
+* marking a field primary that already is primary shouldnt fail ([#67](https://github.com/cedricziel/baserow-dart/issues/67)) ([72a48ff](https://github.com/cedricziel/baserow-dart/commit/72a48ff6fae710247b4b1c1778ad375fbf32b95e))
+
 ## [3.2.1](https://github.com/cedricziel/baserow-dart/compare/v3.2.0...v3.2.1) (2025-01-26)
 
 
