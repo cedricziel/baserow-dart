@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.1](https://github.com/cedricziel/baserow-dart/compare/v3.2.0...v3.2.1) (2025-01-26)
+
+
+### Bug Fixes
+
+* list fields for table assumes wrong response ([#65](https://github.com/cedricziel/baserow-dart/issues/65)) ([9a88527](https://github.com/cedricziel/baserow-dart/commit/9a885276e421f9979b7c905d807fbe458d377490))
+
 ## [3.2.0](https://github.com/cedricziel/baserow-dart/compare/v3.1.0...v3.2.0) (2025-01-25)
 
 
