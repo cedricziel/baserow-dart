@@ -127,24 +127,22 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/$tableId/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-            json.encode({
-              'fields': [
-                {
-                  'id': 1,
-                  'name': 'Name',
-                  'type': 'text',
-                  'order': 1,
-                  'primary': true,
-                },
-                {
-                  'id': 2,
-                  'name': 'Price',
-                  'type': 'number',
-                  'order': 2,
-                  'primary': false,
-                },
-              ],
-            }),
+            json.encode([
+              {
+                'id': 1,
+                'name': 'Name',
+                'type': 'text',
+                'order': 1,
+                'primary': true,
+              },
+              {
+                'id': 2,
+                'name': 'Price',
+                'type': 'number',
+                'order': 2,
+                'primary': false,
+              },
+            ]),
             200,
           ));
 

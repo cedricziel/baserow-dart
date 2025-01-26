@@ -62,24 +62,22 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/$tableId/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-            json.encode({
-              'fields': [
-                {
-                  'id': 1,
-                  'name': 'Field 1',
-                  'type': 'text',
-                  'order': 1,
-                  'primary': false,
-                },
-                {
-                  'id': 2,
-                  'name': 'Field 2',
-                  'type': 'number',
-                  'order': 2,
-                  'primary': false,
-                },
-              ],
-            }),
+            json.encode([
+              {
+                'id': 1,
+                'name': 'Field 1',
+                'type': 'text',
+                'order': 1,
+                'primary': false,
+              },
+              {
+                'id': 2,
+                'name': 'Field 2',
+                'type': 'number',
+                'order': 2,
+                'primary': false,
+              },
+            ]),
             200,
           ));
 
@@ -114,24 +112,22 @@ void main() {
         Uri.parse('http://localhost/api/database/fields/table/$tableId/'),
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response(
-            json.encode({
-              'fields': [
-                {
-                  'id': 1,
-                  'name': 'Field 1',
-                  'type': 'text',
-                  'order': 1,
-                  'primary': false,
-                },
-                {
-                  'id': 2,
-                  'name': 'Field 2',
-                  'type': 'number',
-                  'order': 2,
-                  'primary': false,
-                },
-              ],
-            }),
+            json.encode([
+              {
+                'id': 1,
+                'name': 'Field 1',
+                'type': 'text',
+                'order': 1,
+                'primary': false,
+              },
+              {
+                'id': 2,
+                'name': 'Field 2',
+                'type': 'number',
+                'order': 2,
+                'primary': false,
+              },
+            ]),
             200,
           ));
 
