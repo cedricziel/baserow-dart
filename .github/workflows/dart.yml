@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dart-lang/setup-dart@v1.7.0
+      - uses: dart-lang/setup-dart@v1.7.1
         with:
           working-directory: ${{ matrix.package }}
 
